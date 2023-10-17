@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>Strona głowna</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Navbar</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Features</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Pricing</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="container">
+        <h1 class="h1Title mt-5">Wyszukiwarka ofert</h1>
+        <div class="row">
+            <div class="col bg-warning d-flex justify-content-center">
+                <div class="mainSearch">
+                <div class="mainSearchInputs">
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-3 col-xl-3">
+                            <div class="form-floating">
+                                <input class="form-control" type="text" placeholder="Stanowisko" id="stanowiskoInput">
+                                <label for="stanowiskoInput">Stanowisko</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-3 col-xl-3">
+                          <div class="form-floating">
+                            
+                            <input class="form-control" type="text" placeholder="Kategoria" id="kategoriaInput">
+                            <label for="kategoriaInput">Kategoria</label>
+                        </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-3 col-xl-3">
+                            <div class="form-floating">
+                                <input class="form-control" type="text" placeholder="Lokalizacja" id="lokalizacjaInput">
+                                <label for="lokalizacjaInput">Lokalizacja</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-3 col-xl-3">
+                            <div class="form-floating">
+                                <input class="form-control" type="text" value="10KM" placeholder="Odleglosc" id="odlegloscInput">
+                                <label for="odlegloscInput">Odgległość (km)</label>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="row mt-4">
+                            <div class="col-lg-4 col-sm-4 col-xl-4 d-flex justify-content-center">
+                              <button type="button" class="btn filtryZaawansowane" data-bs-toggle="modal" data-bs-target="#exampleModal">Filtry Zaawansowane</button>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-xl-4">
+                                <button class="btn violetButtons">Szukaj</button>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-xl-4">
+                            </div>
+                        </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        <h1 class="h1Title mt-5">Oferty</h1>
+        <h5 class="mt-5">Poznaj oferty od pracodawców.</h5>
+
+    </div>
+    
+    <div class="modal fade custom-modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Filtry Zaawansowane</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="kategoriaGroup">
+              <h5>Poziom stanowiska</h5>
+              <div class="form-check">
+               <input class="form-check-input" type="checkbox" value="" id="option1">
+               <label class="form-check-label" for="option1">
+                 Praktykant / stażysta
+               </label>
+             </div>
+             <div class="form-check">
+               <input class="form-check-input" type="checkbox" value="" id="option2">
+               <label class="form-check-label" for="option2">
+                 Asystent
+               </label>
+             </div>
+             <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="option3">
+              <label class="form-check-label" for="option3">
+                Młodszy specjalista (junior)
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="option4">
+              <label class="form-check-label" for="option4">
+                Specjalista (mid)
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="option5">
+              <label class="form-check-label" for="option5">
+                Starszy specjalista (senior)
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="option6">
+              <label class="form-check-label" for="option6">
+                Ekspert
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="option7">
+              <label class="form-check-label" for="option7">
+                Kierownik / koordynator
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="option8">
+              <label class="form-check-label" for="option8">
+                Menedżer
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="option9">
+              <label class="form-check-label" for="option9">
+                Dyrektor
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="option10">
+              <label class="form-check-label" for="option10">
+                Prezes
+              </label>
+            </div>
+            </div>
+            <div class="kategoriaGroup">
+              <h5>Rodzaj umowy</h5>
+              <div class="form-check">
+               <input class="form-check-input" type="checkbox" value="" id="2option1">
+               <label class="form-check-label" for="2option1">
+                 Umowa o pracę
+               </label>
+             </div>
+             <div class="form-check">
+               <input class="form-check-input" type="checkbox" value="" id="2option2">
+               <label class="form-check-label" for="2option2">
+                 Umowa o dzieło
+               </label>
+             </div>
+             <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="2option3">
+              <label class="form-check-label" for="2option3">
+                Umowa zlecenie
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="2option4">
+              <label class="form-check-label" for="2option4">
+                Umowa B2B
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="2option5">
+              <label class="form-check-label" for="2option5">
+                Umowa na zastępstwo
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="2option6">
+              <label class="form-check-label" for="2option6">
+                Umowa o staż / praktyki
+              </label>
+            </div>
+            </div>
+            <div class="kategoriaGroup">
+              <h5>Wymiar etatu</h5>
+              <div class="form-check">
+               <input class="form-check-input" type="checkbox" value="" id="3option1">
+               <label class="form-check-label" for="3option1">
+                 Część etatu
+               </label>
+             </div>
+             <div class="form-check">
+               <input class="form-check-input" type="checkbox" value="" id="3option2">
+               <label class="form-check-label" for="3option2">
+                 Cały etat
+               </label>
+             </div>
+             <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="3option3">
+              <label class="form-check-label" for="3option3">
+                Dodatkowa / tymczasowa
+              </label>
+            </div>
+            </div>
+            <div class="kategoriaGroup">
+              <h5>Tryb pracy</h5>
+              <div class="form-check">
+               <input class="form-check-input" type="checkbox" value="" id="4option1">
+               <label class="form-check-label" for="4option1">
+                 Stacjonarnie
+               </label>
+             </div>
+             <div class="form-check">
+               <input class="form-check-input" type="checkbox" value="" id="4option2">
+               <label class="form-check-label" for="4option2">
+                 Hybrydowo
+               </label>
+             </div>
+             <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="4option3">
+              <label class="form-check-label" for="4option3">
+                Zdalnie
+              </label>
+            </div>
+            </div>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn modalExit" data-bs-dismiss="modal">Zamknij</button>
+            <button type="button" class="btn modalSave">Zapisz</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>

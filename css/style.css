@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,500&display=swap');
+*{
+    font-family: 'Rubik', sans-serif;
+}
+
+h1{
+    text-align: center;
+}
+
+.h1Title{
+    font-weight: 600;
+}
+
+.mainSearch {
+    background-color: white;
+    height: 250px;
+    width: 900px;
+    border-radius: 30px;
+    box-shadow: 0px 5px 16px -6px rgba(66, 68, 90, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainSearchInputs{
+    text-align: center;
+    width: 90%;
+}
+
+.violetButtons, .modalSave{
+    background-color: #400DD0 !important;
+    color: white !important;
+    border-radius: 20px !important;
+    width: 200px;
+    height: 45px;
+}
+
+.modalSave{
+    width: 80px;
+}
+
+.modalExit{
+    border-radius: 20px !important;
+    background-color: rgb(129, 129, 129) !important;
+    color: white !important;
+    height: 45px;
+}
+
+.filtryZaawansowane{
+    color: #400DD0 !important;
+}
+
+.form-check-input:checked{
+    background-color: #400DD0 !important;
+    border-width: 0px;
+}
+
+.modal-backdrop {
+    background-color: rgba(0,0,0,.0001) !important;
+}
+
+.kategoriaGroup{
+    font-size: 20px;
+    margin-bottom: 40px;
+}
+
+.custom-modal .modal-content {
+    background: transparent; /* Kolor tła modalu z przezroczystością */
+    backdrop-filter: blur(30px); /* Rozmycie tła */
+    -webkit-backdrop-filter: blur(5px); /* Dla przeglądarek bazujących na silniku WebKit (np. Safari) */
+    border-radius: 30px;
+  }
+  
+
+.modal-body {
+    max-height: 500px; /* Maksymalna wysokość do przewijania */
+    overflow-y: auto;   /* Włącz przewijanie pionowe, gdy zawartość jest dłuższa niż okno modalu */
+  }
+
+@media (max-width: 576px) {
+    .mainSearch {
+      height: 450px;
+    }
+    #stanowiskoInput,#kategoriaInput,#lokalizacjaInput,#odlegloscInput,.filtryZaawansowane{
+        margin-bottom: 10px;
+    }
+  }
