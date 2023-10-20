@@ -8,30 +8,35 @@
     <title>Strona głowna</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Navbar</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Strona główna</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Oferty pracy</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+          </li>
+        </ul>
+        <span class="navbar-text" style="margin-left: auto;">
+          Navbar text with an inline element
+        </span>
+      </div>
+    </div>
+  </nav>
+  
+  
       <div class="container">
         <h1 class="h1Title mt-5">Wyszukiwarka ofert</h1>
         <div class="row">
@@ -82,32 +87,35 @@
         <h1 class="h1Title mt-5">Oferty</h1>
         <h5 class="h1TitleDescription mt-3">Poznaj oferty od pracodawców.</h5>
         <div class="row bg-warning">
-          <div class="col-lg-4 d-flex justify-content-center">
+          <div class="col-lg-6 col-md-12 col-xl-4 d-flex justify-content-center">
             <div class="offerBox ">
-              <div class="row">
-                <div class="col-lg-6 col-6 bg-danger testcol">
-                  Sprzedawca - kasjer
+              <div class="row xdd">
+                <div class="col-lg-6 col-6 testcol">
+                  <h5 class="boxTitle">Magazynier - Kasjer</h5>
                 </div>
               </div>
               <div class="row">
-                <div class="col-lg-6 col-6 bg-danger testcol2 d-flex justify-content-center align-items-center">
+                <div class="col-lg-6 col-6 testcol2 d-flex justify-content-center align-items-center">
                     <h5 class="testt">MGsolutions MGJJ Sp. z o. o. Sp. k.</h5>
                 </div>
-                <div class="col-lg-3 col-3 bg-danger testcol3 boxImageplace" >
+                <div class="col-lg-3 col-3 testcol3 boxImageplace" >
                   <img class="boxImage" src="https://logos-world.net/wp-content/uploads/2020/04/Adidas-Logo.png">
                 </div>
             </div>
               <div class="row">
-                <div class="col-lg-10 col-10 bg-danger testcol4">
-                  1
+                <div class="col-lg-6 col-3 testcol4 d-flex justify-content-center">
+                  <span class="bi bi-geo-alt-fill boxIcon"><div class="geoName">Warszawa</div></span>
+                </div>
+                <div class="col-lg-6 col-3 testcol42 d-flex justify-content-center">
+                  <span class="bi bi-currency-exchange boxIcon"><div class="geoName">2500 - 3000 zł</div></span>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-lg-4 bg-info">
+          <div class="col-lg-6 col-md-12 col-sm-12 col-xl-4 bg-info">
             1
           </div>
-          <div class="col-lg-4 bg-primary">
+          <div class="col-lg-6 col-md-12 col-sm-12 col-xl-4 bg-primary">
             1
           </div>
         </div>
