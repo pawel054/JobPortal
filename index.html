@@ -29,9 +29,26 @@
             <a class="nav-link disabled" aria-disabled="true">Disabled</a>
           </li>
         </ul>
-        <span class="navbar-text" style="margin-left: auto;">
-          Navbar text with an inline element
-        </span>
+          <div class="dropdown ms-auto ">
+            <button type="button" class="btn violetButtonsDropdown dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+              Konto
+            </button>
+            <div class="dropdown-menu p-4" style="width: 300px !important; margin-left: -200px !important;">
+              <div class="mb-4">
+                <h4 class="kontoTitle">Witaj w JobPortal!</h4>
+                <p class="kontoDescription">Logując się na konto zyskujesz dostęp do profilu, zapisywania ofert i wielu innych funkcji!</p>
+              </div>
+              <div class="mb-5 d-flex justify-content-center align-items-center">
+                <a href="login.html"><button class="btn violetButtons">Zaloguj się</button></a>
+              </div>
+              <div class="mb-1 d-flex justify-content-center align-items-center">
+                <p class="coloredFont">Nie masz jeszcze konta?</p>
+              </div>
+              <div class="mb-1 d-flex justify-content-center align-items-center">
+                <a href="#"><button class="btn violetButtonsFrame">Utwórz konto</button></a>
+              </div>
+            </div>
+          </div>
       </div>
     </div>
   </nav>
@@ -72,7 +89,7 @@
                     </div>
                         <div class="row mt-4">
                             <div class="col-lg-4 col-sm-4 col-xl-4 d-flex justify-content-center">
-                              <button type="button" class="btn filtryZaawansowane" data-bs-toggle="modal" data-bs-target="#exampleModal">Filtry Zaawansowane</button>
+                              <button type="button" class="btn coloredFont" data-bs-toggle="modal" data-bs-target="#exampleModal">Filtry Zaawansowane</button>
                             </div>
                             <div class="col-lg-4 col-sm-4 col-xl-4">
                                 <button class="btn violetButtons">Szukaj</button>
@@ -90,16 +107,16 @@
           <div class="col-lg-6 col-md-12 col-xl-4 d-flex justify-content-center">
             <div class="offerBox ">
               <div class="row xdd">
-                <div class="col-lg-6 col-6 testcol">
-                  <h5 class="boxTitle">Magazynier - Kasjer</h5>
+                <div class="col-lg-6 col-6 testcol d-flex justify-content-center align-items-center">
+                  <h5 class="boxTitle">Doradca klienta</h5>
                 </div>
               </div>
               <div class="row">
                 <div class="col-lg-6 col-6 testcol2 d-flex justify-content-center align-items-center">
-                    <h5 class="testt">MGsolutions MGJJ Sp. z o. o. Sp. k.</h5>
+                    <h5 class="testt">Media Markt</h5>
                 </div>
                 <div class="col-lg-3 col-3 testcol3 boxImageplace" >
-                  <img class="boxImage" src="https://logos-world.net/wp-content/uploads/2020/04/Adidas-Logo.png">
+                  <img class="boxImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Media_Markt_logo.svg/2560px-Media_Markt_logo.svg.png">
                 </div>
             </div>
               <div class="row">
@@ -285,5 +302,6 @@
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
