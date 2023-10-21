@@ -104,6 +104,8 @@
     box-shadow: 0px 0px 18px 1px rgba(66, 68, 90, 1);
     border-radius: 30px;
     transition: transform 0.3s ease;
+    text-decoration: none;
+    color: black;
 }
 
 .offerBox:hover{
