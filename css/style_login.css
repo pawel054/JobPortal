@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,500&display=swap');
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css");
+*{
+    font-family: 'Rubik', sans-serif;
+}
+body{
+    background: url(../imgs/login_background.jpg)
+}
+
+.boxLogin{
+    background-color: rgba(255, 255, 255, 0.77);
+    width: 550px;
+    height: 700px;
+    border-radius: 30px;
+    box-shadow: 0px 5px 16px -6px rgba(66, 68, 90, 1);
+}
+.container {
+    display: flex;
+    justify-content: center; /* Wyrównanie w poziomie na środek */
+    align-items: center; /* Wyrównanie w pionie na środek */
+    height: 100vh; /* Ustala kontener na całą wysokość okna przeglądarki */
+  }
+
+.boxTitle{
+    text-align: center;
+    color: #400DD0;
+    font-weight: 700;
+    margin-top: 50px;
+}
+
+.boxAvatar{
+    width: 200px;
+    height: 200px;
+    margin-top: 30px
+}
+
+input{
+    border-radius: 30px !important;
+    width: 400px !important;
+    height: 50px;
+    font-size: 20px !important;
+    text-align: center;
+    box-shadow: 0px 5px 16px -6px rgba(66, 68, 90, 1);
+}
+  
+
+.boxForm{
+    margin-top: 30px;
+}
+
+.forgotPassword{
+    color: #400DD0 !important;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+.violetButton{
+    background-color: #400DD0 !important;
+    color: white !important;
+    border-radius: 30px !important;
+    width: 220px;
+    height: 50px;
+    font-size: 22px !important;
+}
+
+.violetMark{
+    color: #400DD0;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.sendButton{
+    margin-top: 30px;
+}
+
+.linkRegistration{
+    margin-top: 30px;
+}
+
+  

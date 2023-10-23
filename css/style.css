@@ -59,9 +59,10 @@
 }
 
 .modalExit{
+    border-color: #400DD0 !important;
+    color: #400DD0 !important;
     border-radius: 20px !important;
-    background-color: rgb(129, 129, 129) !important;
-    color: white !important;
+    border: 2px solid !important;
     height: 45px;
 }
 
