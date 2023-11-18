@@ -68,6 +68,13 @@
     background-color: white;
 }
 
+.jobBenefitsBox{
+    border-radius: 30px;
+    box-shadow: 0px 5px 16px -6px rgba(66, 68, 90, 1);
+    height: 100%;
+    background-color: white;
+}
+
 .jobDetailsIcon{
     width: 290px;
     height: 70px;
@@ -120,3 +127,124 @@
 .jobDetailsTitle{
     margin-bottom: 40px;
 }
+
+.dutiesDiv{
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-left: 8%;
+}
+
+.dutiesDiv p{
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.bi-check2-circle{
+    color: #400DD0;
+    font-size: 20px;
+}
+
+.benefitBox {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    width: 85%;
+    height: 60px;
+    background-color: rgba(64, 13, 208, 0.13);
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.benefitBox p{
+    margin: 0;
+    font-size: 20px;
+}
+
+.bi-star-fill{
+    color: #400DD0;
+    font-size: 35px;
+    margin-left: 10px;
+}
+
+.jobBenefitsBox .benefitContainer:last-child .benefitBox{
+    margin-bottom: 0px;
+}
+
+.applyButton{
+    background-color: #400DD0;
+    border-radius: 20px;
+    color: white;
+    width: 60%;
+    height: 45px;
+    font-size: 20px;
+}
+
+a{
+    text-decoration: none !important;
+}
+
+.relativeCol{
+    position: fixed !important;
+}
+
+.bi-geo-alt-fill{
+    color: #400DD0;
+    font-size: 30px;
+}
+
+.locationDiv h5{
+    font-size: 17px;
+}
+
+.locationDiv h6{
+    margin-top: -10px;
+    font-weight: 400;
+    color: grey;
+    font-size: 15px;
+}
+
+.moreDescription{
+    font-size: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+
+
+
+
+
+
+
+@media (max-width: 992px) {
+
+    body{
+        background-color: #f1f3f8 !important;
+    }
+
+    .navbar{
+        background-color: white;
+    }
+    .secondCol{
+        margin-bottom: 50px;
+    }
+
+    .jobDetailsBox, .jobBenefitsBox, .titleBox{
+        border-radius: 10px;
+        box-shadow: none;
+    }
+
+    .applyCol{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        border: 1px solid #400DD0;
+        background-color: white;
+        display: flex;
+    }
+
+    .applyBottom{
+       width: 100%;
+    }
+  }
