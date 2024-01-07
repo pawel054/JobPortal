@@ -16,9 +16,9 @@ body{
 }
 .container {
     display: flex;
-    justify-content: center; /* Wyrównanie w poziomie na środek */
-    align-items: center; /* Wyrównanie w pionie na środek */
-    height: 100vh; /* Ustala kontener na całą wysokość okna przeglądarki */
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
   }
 
 .boxTitle{
