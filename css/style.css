@@ -279,7 +279,7 @@
     background-attachment: fixed;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 992px) {
     .mainSearch {
       height: 450px;
     }
@@ -294,8 +294,4 @@
     .secondCol{
         margin-top: 50px !important;
     }
-
-    .offerBox{
-        margin-top: 50px;
-    }
-  }
+}
