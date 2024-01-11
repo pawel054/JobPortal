@@ -13,6 +13,12 @@
     text-align: center;
 }
 
+.offerCountIcon{
+    color: #400DD0;
+    font-size: 60px;
+    margin-right: 2%;
+}
+
 .mainSearch {
     background-color: white;
     height: 250px;
@@ -271,6 +277,11 @@
     justify-content: center;
     margin: auto;
     margin-top: 4%;
+}
+
+.offersCountMark{
+    color: #400DD0;
+    font-size: 40px;
 }
 
 #profileBody{

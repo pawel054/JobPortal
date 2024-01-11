@@ -65,7 +65,7 @@
                             </div>
                         </div>
                         <div class="col-lg-2 col-2 d-flex justify-content-center align-items-center">
-                            <i class="bi bi-star"></i>
+                            <i class="bi bi-star favoriteIcon" id="starIcon"></i>
                         </div>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
                                         <i class="bi bi-bar-chart"></i><h5>Pracownik fizyczny</h5>
                                     </div>
                                     <div class="jobDetailsIcon d-flex align-items-center">
-                                        <i class="bi bi-file-earmark-text-fill"></i><h5>Umowa o pracę</h5>
+                                        <i class="bi bi-file-earmark-text-fill"></i><h5>Umowa o staż / praktyki</h5>
                                     </div>
                                     <div class="jobDetailsIcon d-flex align-items-center">
                                       <i class="bi bi-clock"></i><h5>Pełny etat</h5>
@@ -164,13 +164,13 @@
                         <h3 class="text-center jobDetailsTitle">Co oferujemy</h3>
                         <div class="d-flex justify-content-center benefitContainer">
                           <div class="benefitBox">
-                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill benefitIcon"></i>
                             <p>Możliwości rozwoju i awansu w strukturach firmy.</p>
                           </div>
                         </div>
                         <div class="d-flex justify-content-center benefitContainer">
                           <div class="benefitBox">
-                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill benefitIcon"></i>
                             <p>Możliwości rozwoju i awansu w strukturach firmy.</p>
                           </div>
                         </div>
@@ -215,5 +215,11 @@
         </div>
       </div>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+      <script>
+        var starIcon = document.getElementById("starIcon");
+        starIcon.addEventListener("click", function(){
+          starIcon.className = 'bi bi-star-fill favoriteIcon';
+        });
+    </script>
 </body>
 </html>

@@ -1,11 +1,10 @@
 <?php
     session_start();
-
-    if ((isset($_SESSION['registered_success'])) && ($_SESSION['registered_success']==true))
-	{
-		header('Location: ../index.php');
-		exit();
-	}
+    if ((isset($_SESSION['logged_in'])) && ($_SESSION['logged_in']==true))
+    {
+      header('Location: ../index.php');
+      exit();
+    }
 ?>
 
 <!DOCTYPE html>

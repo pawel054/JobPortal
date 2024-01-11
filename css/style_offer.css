@@ -51,7 +51,7 @@
     background-color: white;
 }
 
-.bi-star{
+.favoriteIcon{
     font-size: 35px;
     color: rgb(226, 182, 87);
 }
@@ -81,6 +81,7 @@
     background: rgba(64, 13, 208, 0.13);
     border-radius: 10px;
     margin-bottom: 20px;
+    padding-right: 20px;
 }
 
 .jobDetailsIcon2{
@@ -161,7 +162,7 @@
     font-size: 20px;
 }
 
-.bi-star-fill{
+.benefitIcon{
     color: #400DD0;
     font-size: 35px;
     margin-left: 10px;
