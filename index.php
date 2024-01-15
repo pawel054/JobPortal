@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    require_once 'actions/connection.php';
+    $offersResult = $conn->query("SELECT * FROM `offer` INNER JOIN company USING(company_id) INNER JOIN category USING(category_id);");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +16,7 @@
 <body>
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <a class="navbar-brand" href="#"><img src="imgs/UI/logo.png" width="120px"></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -28,6 +34,26 @@
               Konto
             </button>
             <div class="dropdown-menu p-4 dropdownLogowanie">
+              <?php if(isset($_SESSION['logged_in'])){ ?>
+                <div class="mb-4">
+                <h4 class="kontoTitle">Moje konto</h4>
+                <p class="kontoDescription"><?php echo $_SESSION['email']; ?></p>
+              </div>
+              <?php if($_SESSION['isadmin']==1){ ?>
+              <div class="mb-3 d-flex justify-content-center align-items-center">
+                <a href="user/login.php"><button class="btn violetButtonsFrame">Panel administratora</button></a>
+              </div>
+              <?php } ?>
+              <div class="mb-3 d-flex justify-content-center align-items-center">
+                <a href="user/login.php"><button class="btn violetButtonsFrame">Profil użytkownika</button></a>
+              </div>
+              <div class="mb-3 d-flex justify-content-center align-items-center">
+                <a href="user/login.php"><button class="btn violetButtonsFrame">Zapisane oferty</button></a>
+              </div>
+              <div class="mb-1 d-flex justify-content-center align-items-center">
+                <a href="actions/actionLogout.php"><button class="btn violetButtons">Wyloguj</button></a>
+              </div>
+                <?php }else{?>
               <div class="mb-4">
                 <h4 class="kontoTitle">Witaj w JobPortal!</h4>
                 <p class="kontoDescription">Logując się na konto zyskujesz dostęp do profilu, zapisywania ofert i wielu innych funkcji!</p>
@@ -41,6 +67,7 @@
               <div class="mb-1 d-flex justify-content-center align-items-center">
                 <a href="#"><button class="btn violetButtonsFrame">Utwórz konto</button></a>
               </div>
+              <?php } ?>
             </div>
           </div>
       </div>
@@ -100,81 +127,35 @@
         <h1 class="h1Title mt-5">Ostatnio dodane oferty</h1>
         <h5 class="h1TitleDescription mt-3 mb-5">Poznaj ostatnio dodane ogłoszenia od pracodawców.</h5>
         <div class="row">
+          <?php
+            while($row = mysqli_fetch_assoc($offersResult)){
+          ?>
           <div class="col-12 col-lg-6 col-xl-4 d-flex justify-content-center">
-            <a class="offerBox mb-5" href="offers/offer.php">
+            <a class="offerBox mb-5" href="offers/offer.php?id=<?php echo $row['offer_id'] ?>">
               <div class="row xdd">
-                <div class="col-lg-6 col-6 testcol d-flex justify-content-center align-items-center">
-                  <h5 class="boxTitle">Doradca klienta</h5>
+                <div class="col-lg-6 col-6 testcol d-flex align-items-center">
+                  <h5 class="boxTitle"><?php echo $row["position_name"];?></h5>
                 </div>
               </div>
               <div class="row">
-                <div class="col-lg-6 col-6 testcol2 d-flex justify-content-center align-items-center">
-                    <h5 class="testt">Media Markt</h5>
+                <div class="col-lg-6 col-6 testcol2 d-flex align-items-center">
+                    <h5 class="testt"><?php echo $row["company_name"];?></h5>
                 </div>
                 <div class="col-lg-3 col-3 testcol3 boxImageplace" >
-                  <img class="boxImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Media_Markt_logo.svg/2560px-Media_Markt_logo.svg.png">
+                  <img class="boxImage" src="<?php echo $row["logo_src"];?>">
                 </div>
             </div>
               <div class="row">
                 <div class="col-lg-6 col-3 testcol4 d-flex justify-content-center">
-                  <span class="bi bi-geo-alt-fill boxIcon"><div class="geoName">Warszawa</div></span>
+                  <span class="bi bi-geo-alt-fill boxIcon"><div class="geoName"><?php $adress=explode(":", $row['adress'], 2); echo trim($adress[1]);?></div></span>
                 </div>
                 <div class="col-lg-6 col-3 testcol42 d-flex justify-content-center">
-                  <span class="bi bi-currency-exchange boxIcon"><div class="geoName">2500 - 3000 zł</div></span>
+                  <span class="bi bi-currency-exchange boxIcon"><div class="geoName"><?php echo $row["salary"];?> zł</div></span>
                 </div>
               </div>
             </a>
           </div>
-          <div class="col-12 col-lg-6 col-xl-4 d-flex justify-content-center">
-            <a class="offerBox mb-5" href="offers/offer.php">
-              <div class="row xdd">
-                <div class="col-lg-6 col-6 testcol d-flex justify-content-center align-items-center">
-                  <h5 class="boxTitle">Doradca klienta</h5>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-lg-6 col-6 testcol2 d-flex justify-content-center align-items-center">
-                    <h5 class="testt">Media Markt</h5>
-                </div>
-                <div class="col-lg-3 col-3 testcol3 boxImageplace" >
-                  <img class="boxImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Media_Markt_logo.svg/2560px-Media_Markt_logo.svg.png">
-                </div>
-            </div>
-              <div class="row">
-                <div class="col-lg-6 col-3 testcol4 d-flex justify-content-center">
-                  <span class="bi bi-geo-alt-fill boxIcon"><div class="geoName">Warszawa</div></span>
-                </div>
-                <div class="col-lg-6 col-3 testcol42 d-flex justify-content-center">
-                  <span class="bi bi-currency-exchange boxIcon"><div class="geoName">2500 - 3000 zł</div></span>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="col-12 col-lg-6 col-xl-4 d-flex justify-content-center">
-            <a class="offerBox mb-5" href="offers/offer.php">
-              <div class="row xdd">
-                <div class="col-lg-6 col-6 testcol d-flex justify-content-center align-items-center">
-                  <h5 class="boxTitle">Doradca klienta</h5>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-lg-6 col-6 testcol2 d-flex justify-content-center align-items-center">
-                    <h5 class="testt">Media Markt</h5>
-                </div>
-                <div class="col-lg-3 col-3 testcol3 boxImageplace" >
-                  <img class="boxImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Media_Markt_logo.svg/2560px-Media_Markt_logo.svg.png">
-                </div>
-            </div>
-              <div class="row">
-                <div class="col-lg-6 col-3 testcol4 d-flex justify-content-center">
-                  <span class="bi bi-geo-alt-fill boxIcon"><div class="geoName">Warszawa</div></span>
-                </div>
-                <div class="col-lg-6 col-3 testcol42 d-flex justify-content-center">
-                  <span class="bi bi-currency-exchange boxIcon"><div class="geoName">2500 - 3000 zł</div></span>
-                </div>
-              </div>
-            </a>
-          </div>
+          <?php } ?>
         </div>
     </div>
     

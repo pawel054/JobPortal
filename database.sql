@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 06 Lis 2023, 21:01
+-- Czas generowania: 15 Sty 2024, 23:01
 -- Wersja serwera: 10.4.25-MariaDB
 -- Wersja PHP: 7.4.30
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `category` (
   `category_id` int(11) NOT NULL,
-  `name` varchar(60) COLLATE utf8mb4_polish_ci NOT NULL
+  `category_name` varchar(60) COLLATE utf8mb4_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 -- --------------------------------------------------------
@@ -40,9 +40,11 @@ CREATE TABLE `category` (
 
 CREATE TABLE `company` (
   `company_id` int(11) NOT NULL,
-  `name` varchar(50) COLLATE utf8mb4_polish_ci NOT NULL,
+  `company_name` varchar(50) COLLATE utf8mb4_polish_ci NOT NULL,
   `adress` varchar(80) COLLATE utf8mb4_polish_ci NOT NULL,
-  `gmaps_url` text COLLATE utf8mb4_polish_ci NOT NULL
+  `gmaps_url` text COLLATE utf8mb4_polish_ci NOT NULL,
+  `logo_src` text COLLATE utf8mb4_polish_ci NOT NULL,
+  `information` varchar(100) COLLATE utf8mb4_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 -- --------------------------------------------------------
@@ -59,11 +61,10 @@ CREATE TABLE `offer` (
   `contract_type` varchar(60) COLLATE utf8mb4_polish_ci NOT NULL,
   `job_type` varchar(60) COLLATE utf8mb4_polish_ci NOT NULL,
   `salary` varchar(50) COLLATE utf8mb4_polish_ci NOT NULL,
-  `working_type` varchar(50) COLLATE utf8mb4_polish_ci NOT NULL,
+  `working_time` varchar(50) COLLATE utf8mb4_polish_ci NOT NULL,
   `working_hours` varchar(40) COLLATE utf8mb4_polish_ci NOT NULL,
   `working_days` varchar(40) COLLATE utf8mb4_polish_ci NOT NULL,
   `expiration_date` date NOT NULL,
-  `information` varchar(100) COLLATE utf8mb4_polish_ci NOT NULL,
   `category_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
@@ -82,24 +83,24 @@ CREATE TABLE `offer_benefits` (
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `offer_requirements`
+-- Struktura tabeli dla tabeli `offer_duties`
 --
 
-CREATE TABLE `offer_requirements` (
-  `requirement_id` int(11) NOT NULL,
-  `Requirement` varchar(60) COLLATE utf8mb4_polish_ci NOT NULL,
+CREATE TABLE `offer_duties` (
+  `duty_id` int(11) NOT NULL,
+  `duty` varchar(60) COLLATE utf8mb4_polish_ci NOT NULL,
   `offer_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `offer_responsibilities`
+-- Struktura tabeli dla tabeli `offer_requirements`
 --
 
-CREATE TABLE `offer_responsibilities` (
-  `responsibility_id` int(11) NOT NULL,
-  `responsibility` varchar(60) COLLATE utf8mb4_polish_ci NOT NULL,
+CREATE TABLE `offer_requirements` (
+  `requirement_id` int(11) NOT NULL,
+  `requirement` varchar(60) COLLATE utf8mb4_polish_ci NOT NULL,
   `offer_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
@@ -216,18 +217,10 @@ CREATE TABLE `profile_urls` (
 
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
-  `username` varchar(30) COLLATE utf8mb4_polish_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_polish_ci NOT NULL,
   `email` varchar(60) COLLATE utf8mb4_polish_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_polish_ci NOT NULL,
   `isadmin` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
-
---
--- Zrzut danych tabeli `users`
---
-
-INSERT INTO `users` (`user_id`, `username`, `password`, `email`, `isadmin`) VALUES
-(1, 'admin', '', 't@admin.com', 1);
 
 -- --------------------------------------------------------
 
@@ -249,7 +242,8 @@ CREATE TABLE `user_applications` (
 
 CREATE TABLE `user_favourites` (
   `favourite_id` int(11) NOT NULL,
-  `offer_id` int(11) NOT NULL
+  `offer_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
@@ -284,17 +278,17 @@ ALTER TABLE `offer_benefits`
   ADD KEY `offer_id` (`offer_id`);
 
 --
+-- Indeksy dla tabeli `offer_duties`
+--
+ALTER TABLE `offer_duties`
+  ADD PRIMARY KEY (`duty_id`),
+  ADD KEY `offer_id` (`offer_id`);
+
+--
 -- Indeksy dla tabeli `offer_requirements`
 --
 ALTER TABLE `offer_requirements`
   ADD PRIMARY KEY (`requirement_id`),
-  ADD KEY `offer_id` (`offer_id`);
-
---
--- Indeksy dla tabeli `offer_responsibilities`
---
-ALTER TABLE `offer_responsibilities`
-  ADD PRIMARY KEY (`responsibility_id`),
   ADD KEY `offer_id` (`offer_id`);
 
 --
@@ -363,7 +357,8 @@ ALTER TABLE `user_applications`
 --
 ALTER TABLE `user_favourites`
   ADD PRIMARY KEY (`favourite_id`),
-  ADD KEY `offer_id` (`offer_id`);
+  ADD KEY `offer_id` (`offer_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- AUTO_INCREMENT dla zrzuconych tabel
@@ -394,16 +389,16 @@ ALTER TABLE `offer_benefits`
   MODIFY `benetif_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT dla tabeli `offer_duties`
+--
+ALTER TABLE `offer_duties`
+  MODIFY `duty_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT dla tabeli `offer_requirements`
 --
 ALTER TABLE `offer_requirements`
   MODIFY `requirement_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT dla tabeli `offer_responsibilities`
---
-ALTER TABLE `offer_responsibilities`
-  MODIFY `responsibility_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT dla tabeli `profile`
@@ -445,7 +440,7 @@ ALTER TABLE `profile_skills`
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT dla tabeli `user_applications`
@@ -477,16 +472,16 @@ ALTER TABLE `offer_benefits`
   ADD CONSTRAINT `offer_benefits_ibfk_1` FOREIGN KEY (`offer_id`) REFERENCES `offer` (`offer_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Ograniczenia dla tabeli `offer_duties`
+--
+ALTER TABLE `offer_duties`
+  ADD CONSTRAINT `offer_duties_ibfk_1` FOREIGN KEY (`offer_id`) REFERENCES `offer` (`offer_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Ograniczenia dla tabeli `offer_requirements`
 --
 ALTER TABLE `offer_requirements`
   ADD CONSTRAINT `offer_requirements_ibfk_1` FOREIGN KEY (`offer_id`) REFERENCES `offer` (`offer_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Ograniczenia dla tabeli `offer_responsibilities`
---
-ALTER TABLE `offer_responsibilities`
-  ADD CONSTRAINT `offer_responsibilities_ibfk_1` FOREIGN KEY (`offer_id`) REFERENCES `offer` (`offer_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ograniczenia dla tabeli `profile`
@@ -540,7 +535,8 @@ ALTER TABLE `user_applications`
 -- Ograniczenia dla tabeli `user_favourites`
 --
 ALTER TABLE `user_favourites`
-  ADD CONSTRAINT `user_favourites_ibfk_1` FOREIGN KEY (`offer_id`) REFERENCES `offer` (`offer_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `user_favourites_ibfk_1` FOREIGN KEY (`offer_id`) REFERENCES `offer` (`offer_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_favourites_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

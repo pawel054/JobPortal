@@ -31,13 +31,15 @@
                     unset($_SESSION['error']);
                     $result->free_result();
                     if($_SESSION['isadmin']==1)
-                        header('Location: ../admin/index.php');
+                        //header('Location: ../admin/index.php');
+                        header('Location: ../index.php');
                     else
                         header('Location: ../index.php');
                     }
                     else 
                     {
                         $_SESSION['error'] = 0;
+                        $_SESSION['error2'] = 0;
                         header('Location: ../user/login.php');
                     }
                 }
@@ -45,6 +47,7 @@
                 else
                 {
                     $_SESSION['error'] = 0;
+                    $_SESSION['error2'] = 0;
                     header('Location: ../user/login.php');
                 }
             }

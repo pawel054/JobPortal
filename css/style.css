@@ -119,6 +119,17 @@
     color: black;
 }
 
+.offerBox2{
+    width: 100%;
+    height: 250px;
+    background-color: White;
+    box-shadow: 0px 7px 18px -8px rgba(66, 68, 90, 1);
+    border-radius: 30px;
+    transition: transform 0.3s ease;
+    text-decoration: none;
+    color: black;
+}
+
 .offerBox:hover{
     transform: scale(1.02);
 }
@@ -282,6 +293,23 @@
 .offersCountMark{
     color: #400DD0;
     font-size: 40px;
+}
+
+.favoriteButtons{
+    background-color: #400DD0 !important;
+    color: white !important;
+    border-radius: 20px !important;
+    width: 250px;
+    height: 60px;
+    text-decoration: none;
+}
+
+.favoriteBadge{
+    font-size: 17px !important;
+}
+
+.favoriteCol{
+    gap: 10% !important;
 }
 
 #profileBody{
