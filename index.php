@@ -2,6 +2,13 @@
     session_start();
     require_once 'actions/connection.php';
     $offersResult = $conn->query("SELECT * FROM `offer` INNER JOIN company USING(company_id) INNER JOIN category USING(category_id);");
+    
+    function DisplayShortText($text, $maxSymbols){
+      if(strlen($text) > $maxSymbols)
+        echo substr($text, 0, $maxSymbols) . '...';
+      else
+        echo $text;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -36,21 +43,25 @@
             <div class="dropdown-menu p-4 dropdownLogowanie">
               <?php if(isset($_SESSION['logged_in'])){ ?>
                 <div class="mb-4">
-                <h4 class="kontoTitle">Moje konto</h4>
-                <p class="kontoDescription"><?php echo $_SESSION['email']; ?></p>
+                <div class="d-flex align-items-center mt-2 mb-2">
+                  <img src="imgs/UI/login_user.png" class="rounded-circle" width="50px">
+                  <p class="kontoDescription m-auto ms-3"><?php DisplayShortText($_SESSION['email'], 20) ?></p>
+                </div>
+                <hr class="w-100">
               </div>
               <?php if($_SESSION['isadmin']==1){ ?>
-              <div class="mb-3 d-flex justify-content-center align-items-center">
-                <a href="user/login.php"><button class="btn violetButtonsFrame">Panel administratora</button></a>
+              <div class="p-1 dropdownElement">
+                <a href="user/login.php" class="text-decoration-none"><div class="d-flex align-items-center text-dark"><i class="bi bi-tools mx-3 fs-3 panelIcons"></i>Panel administratora</div></a>
               </div>
               <?php } ?>
-              <div class="mb-3 d-flex justify-content-center align-items-center">
-                <a href="user/login.php"><button class="btn violetButtonsFrame">Profil użytkownika</button></a>
+              <div class="p-1 dropdownElement">
+              <a href="user/profile.php" class="text-decoration-none"><div class="d-flex align-items-center text-dark"><i class="bi bi-person-fill mx-3 fs-3 panelIcons"></i>Profil użytkownika</div></a>
               </div>
-              <div class="mb-3 d-flex justify-content-center align-items-center">
-                <a href="user/login.php"><button class="btn violetButtonsFrame">Zapisane oferty</button></a>
+              <div class="p-1 dropdownElement">
+              <a href="user/login.php" class="text-decoration-none"><div class="d-flex align-items-center text-dark"><i class="bi bi-bookmarks-fill mx-3 fs-3 panelIcons"></i>Zapisane oferty</div></a>
               </div>
-              <div class="mb-1 d-flex justify-content-center align-items-center">
+              <hr class="w-100">
+              <div class="mt-4 d-flex justify-content-center align-items-center">
                 <a href="actions/actionLogout.php"><button class="btn violetButtons">Wyloguj</button></a>
               </div>
                 <?php }else{?>
@@ -133,7 +144,7 @@
           <div class="col-12 col-lg-6 col-xl-4 d-flex justify-content-center">
             <a class="offerBox mb-5" href="offers/offer.php?id=<?php echo $row['offer_id'] ?>">
               <div class="row xdd">
-                <div class="col-lg-6 col-6 testcol d-flex align-items-center">
+                <div class="col-12 testcol d-flex align-items-center">
                   <h5 class="boxTitle"><?php echo $row["position_name"];?></h5>
                 </div>
               </div>
