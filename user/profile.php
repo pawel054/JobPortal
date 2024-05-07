@@ -3,20 +3,40 @@
   require_once '../actions/connection.php';
 
   $userID = $_SESSION['user_id'];
+  $email = $_SESSION['email'];
+  $contentType = null;
   
   $profileInfoResult = $conn->query("SELECT * FROM `profile` WHERE user_id='$userID'");
   if($profileInfoResult->num_rows > 0){
     $row = mysqli_fetch_assoc($profileInfoResult);
+    $profileID = $row['profile_id'];
     $name = $row['name'];
     $surname = $row['surname'];
     $birthdate = $row['birth_date'];
+    $phoneNumber = $row['phone_number'];
+    $avatarSrc = $row['avatar_src'];
+    $adress = $row['user_adress'];
+    $jobPosition = $row['job_position'];
+    $jobPositionDesc = $row['job_position_description'];
+    $careerSummary = $row['career_summary'];
   }
+
+  $urlsResult = $conn->query("SELECT * FROM `profile_urls` WHERE profile_id='$profileID';");
+  $languageResult = $conn->query("SELECT * FROM `profile_languages` WHERE profile_id='$profileID';");
+  $experienceResult = $conn->query("SELECT * FROM `profile_experience` WHERE profile_id='$profileID';");
+  $educationResult = $conn->query("SELECT * FROM `profile_education` WHERE profile_id='$profileID';");
+  $certificatesResult = $conn->query("SELECT * FROM `profile_certificates` WHERE profile_id='$profileID';");
+  $skillsResult = $conn->query("SELECT * FROM `profile_skills` WHERE profile_id='$profileID';");
 
   function DisplayShortText($text, $maxSymbols){
     if(strlen($text) > $maxSymbols)
       echo substr($text, 0, $maxSymbols) . '...';
     else
       echo $text;
+  }
+
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    echo $contentType;
   }
 ?>
 
@@ -99,31 +119,35 @@
                 <div class="profileBox">
                     <div class="profileBoxPart d-flex">
                         <h4 class="text-light mx-4 align-items-center d-flex profileInfoTitle">Podstawowe informacje</h4>
-                        <a href="#" class="text-light ms-auto me-4 fs-5 profileBtnLink  profileInfoTitle align-items-center d-flex"><span class="bi bi-pencil-fill profileIcon me-2"></span>Edytuj</a>
+                        <a href="#" style="visibility: collapse;" class="text-light ms-auto mx-2 fs-5 profileBtnLink profileInfoTitle align-items-center d-flex"  id="dataCancel"><span class="bi bi-x-lg profileIcon me-2"></span><span class="actionText">Anuluj</span></a>
+                        <a href="#" onclick="replaceParagraphsWithInputs()" class="text-light ms-auto me-4 fs-5 profileBtnLink profileInfoTitle align-items-center d-flex"><span class="bi bi-pencil-fill profileIcon me-2"></span><span class="actionText">Edytuj</span></a>
                     </div>                    
                     <div class="profileInfoData mx-4">
-                        <img src="../imgs/UI/login_user.png" width="110" height="110">
+                      <form method="post">
+                      <img src="<?php echo $avatarSrc; ?>" width="110" height="110" class="rounded-circle">
                         <h4 class="mt-4 mb-3 fw-semibold">Twoje dane</h4>
                         <div class="d-flex align-items-center mb-2">
-                            <i class="bi bi-person fs-2 violetColor"></i><p class="m-0 mx-3 fs-5">Jan Kowalski</p>
+                            <i class="bi bi-person fs-2 violetColor"></i><p class="m-0 mx-3 fs-5" id="nameSurname"><?php echo $name." ".$surname; ?></p>
                         </div>
                         <div class="d-flex align-items-center mb-2">
-                            <i class="bi bi-cake2 fs-2 violetColor"></i><p class="m-0 mx-3 fs-5">04.10.2005</p>
+                            <i class="bi bi-cake2 fs-2 violetColor"></i><p class="m-0 mx-3 fs-5" id="birthdate"><?php echo $birthdate; ?></p>
                         </div>
                         <div class="d-flex align-items-center mb-2">
-                            <i class="bi bi-envelope-at fs-2 violetColor"></i><p class="m-0 mx-3 fs-5">jan.kowalski@mail.com</p>
+                            <i class="bi bi-envelope-at fs-2 violetColor"></i><p class="m-0 mx-3 fs-5" id="email"><?php echo $email; ?></p>
                         </div>
                         <div class="d-flex align-items-center mb-2">
-                            <i class="bi bi-telephone fs-2 violetColor"></i><p class="m-0 mx-3 fs-5">780 034 024</p>
+                            <i class="bi bi-telephone fs-2 violetColor"></i><p class="m-0 mx-3 fs-5" id="number"><?php echo $phoneNumber; ?></p>
                         </div>
                         <div class="d-flex align-items-center">
-                            <i class="bi bi-house fs-2 violetColor"></i><p class="m-0 mx-3 fs-5">Limanowa 123</p>
+                            <i class="bi bi-house fs-2 violetColor"></i><p class="m-0 mx-3 fs-5" id="adress"><?php echo $adress; ?></p>
                         </div>
                         <h4 class="mt-5 mb-3 fw-semibold">Linki</h4>
                         <div class="d-flex align-items-center">
                             <i class="bi bi-link-45deg fs-2 violetColor"></i><p class="m-0 mx-3 fs-5"><span class="me-2 linkMark">Youtube:</span> https://www.youtube.com/@user</p>
                         </div>
                         <span>&nbsp;</span>
+                        <input type="submit">
+                      </form>
                     </div>
                 </div>
                 <div class="profileBox mt-5">
@@ -132,9 +156,9 @@
                         <a href="#" class="text-light ms-auto me-4 fs-5 profileBtnLink align-items-center d-flex"><span class="bi bi-plus-lg profileIcon me-2"></span>Dodaj</a>
                         <a href="#" class="text-light me-4 fs-5 profileBtnLink align-items-center d-flex"><span class="bi bi-pencil-fill profileIcon me-2"></span>Edytuj</a>
                     </div>                   
-                    <h4 class="fs-3 fw-bold mx-4 mt-4">Programista</h4>
+                    <h4 class="fs-3 fw-bold mx-4 mt-4"><?php echo $jobPosition; ?></h4>
                     <p class="mx-4 mb-1 mt-3 fs-5 fw-bold violetColor">Opis</p>
-                    <p class="mx-4 mb-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                    <p class="mx-4 mb-1"><?php echo $jobPositionDesc; ?></p>
                     <span>&nbsp;</span>
                 </div>
                 <div class="profileBox mt-5">
@@ -142,10 +166,12 @@
                         <h4 class="text-light mx-4 align-items-center d-flex">Języki</h4>
                         <a href="#" class="text-light ms-auto me-4 fs-5 profileBtnLink align-items-center d-flex"><span class="bi bi-plus-lg profileIcon me-2"></span>Dodaj</a>
                         <a href="#" class="text-light me-4 fs-5 profileBtnLink align-items-center d-flex"><span class="bi bi-pencil-fill profileIcon me-2"></span>Edytuj</a>
-                    </div>                    
-                    <div class="d-flex align-items-center mx-4 mt-2">
-                        <i class="bi bi-globe-americas fs-2 violetColor"></i><p class="m-0 mx-3 fs-5">Angielski <span class="linkMark">B2</span></p>
                     </div>
+                    <?php while($row = mysqli_fetch_assoc($languageResult)){ ?>
+                    <div class="d-flex align-items-center mx-4 mt-2">
+                        <i class="bi bi-globe-americas fs-2 violetColor"></i><p class="m-0 mx-3 fs-5"><?php echo $row['language']; ?> <span class="linkMark"><?php echo $row['level']; ?></span></p>
+                    </div>
+                    <?php } ?>
                     <span>&nbsp;</span>
                 </div>
             </div>
@@ -157,7 +183,7 @@
                   <a href="#" class="text-light me-4 fs-5 profileBtnLink align-items-center d-flex"><span class="bi bi-pencil-fill profileIcon me-2"></span>Edytuj</a>
               </div>                   
               <p class="mx-4 mb-1 mt-4 fs-5 fw-bold violetColor">Opis</p>
-              <p class="mx-4 mb-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque venenatis placerat massa vel bibendum. </p>
+              <p class="mx-4 mb-1"><?php echo $careerSummary; ?></p>
               <span>&nbsp;</span>
               </div>
               <div class="profileBox mt-5">
@@ -243,5 +269,19 @@
         </div>
       </div>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+      <script>
+        function replaceParagraphsWithInputs() {
+    var profileInfoData = document.querySelector('.profileInfoData');
+    var paragraphs = profileInfoData.querySelectorAll('p');
+    
+    paragraphs.forEach(function(paragraph) {
+        var input = document.createElement('input');
+        input.setAttribute('type', 'text');
+        input.setAttribute('value', paragraph.textContent.trim());
+        input.classList.add('form-control'); // Dodajemy klasę form-control dla stylowania, można ją zmienić na inną
+        paragraph.parentNode.replaceChild(input, paragraph);
+    });
+}
+      </script>
 </body>
 </html>

@@ -1,22 +1,18 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css");
 
+*{
+    font-family:'Inter';
+}
 
 .leftCol{
-    border-radius: 30px 0px 0px 30px;
-    background: rgba(64, 13, 208, 0.13);
-    height: 90vh;
+    background-color: #101727;
+    height: 100vb;
+    width: 12% !important;
 }
 
 .rightCol{
-    border-radius: 0px 30px 30px 0px;
-    background: #FFF;
-}
-
-.mainRow{
-    border-radius: 30px;
-    box-shadow: 0px 4px 12px 7px rgba(0, 0, 0, 0.25);
-    margin-left: 100px !important;
-    margin-right: 100px !important;
+    background-color: #efefef;
+    width: 88% !important;
 }
 
 .violetMark{
@@ -29,14 +25,26 @@
     font-size: 48px;
 }
 
+.adminMenuLinks{
+    color: #a4a9b6;
+    margin: 10px;
+}
+
+.adminMenuLinkSelected{
+    background-color: #1a2130;
+}
+
+.adminMenuLinks:hover{
+    background-color: #1a2130;
+
+}
+
 .menuIcon{
-    font-size: 45px;
     color: gray;
 }
 
 .menuIconClicked{
-    font-size: 45px;
-    color: #400DD0;
+    color: black;
 }
 
 .menuIcon:hover{
@@ -48,9 +56,7 @@ a{
 }
 
 .menuAvatar{
-    width: 65px;
-    height: 65px;
-    margin-bottom: 30px;
+    width: 45px;
 }
 
 .viewButton{
@@ -129,4 +135,78 @@ a{
 
 .statsboxIcon{
     height: 60px;
+}
+
+.bottom-menu {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #400dd0;
+    color: #fff;
+    padding: 20px 0;
+}
+
+.adminAddButton{
+    background-color:#979797 !important;
+    padding: 7px;
+    width: 150px;
+    border-radius: 22px;
+}
+
+.adminDataColumns{
+    height: 80%;
+}
+
+.adminInput{
+    border: 1px solid #C6C6C6 !important;
+    border-radius: 15px !important;
+}
+
+.adminAddOfferSpecial{
+    background-color: #400DD0;
+    color: white;
+}
+
+.errorClass{
+    border: 1px solid red !important;
+}
+
+
+@media (max-width: 1199px) {
+    .bottom-menu {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+    }
+
+    .menuIcon{
+        color: white;
+    }
+
+    .menuIconClicked{
+        color: #3e3361;
+    }
+
+    .leftCol {
+        display: none;
+    }
+
+    .rightCol{
+        width: 100% !important;
+    }
+
+    .menuAvatar{
+        display: none;
+    }
+
+    .statsCol{
+        height: 90% !important;
+    }
+
+    .container-fluid{
+        margin-bottom: 620px !important;
+    }
 }

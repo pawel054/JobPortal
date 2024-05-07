@@ -175,6 +175,7 @@
                             <span>&nbsp;</span>
                         </div>
                     </div>
+                    <?php if($dutiesResult->num_rows > 0){ ?>
                     <div class="col-12 mt-5">
                         <div class="jobDetailsBox">
                           <span>&nbsp;</span>
@@ -190,6 +191,7 @@
                           <span>&nbsp;</span>
                         </div>
                     </div>
+                    <?php } if($requirementsResult->num_rows > 0){ ?>
                     <div class="col-12 mt-5">
                       <div class="jobDetailsBox">
                         <span>&nbsp;</span>
@@ -205,6 +207,7 @@
                       </div>
                       <span>&nbsp;</span>
                     </div>
+                    <?php } if($benefitsResult->num_rows > 0){?>
                     <div class="col-12 mt-5 aaa">
                       <div class="jobBenefitsBox">
                         <span>&nbsp;</span>
@@ -222,6 +225,7 @@
                       </div>
                       <span>&nbsp;</span>
                     </div>
+                    <?php } ?>
                 </div>
             </div>
             <div class="col-12 col-lg-4 mt-5">

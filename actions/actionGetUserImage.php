@@ -6,10 +6,10 @@
 	}
     else{
         $email = $_GET['email'];
-        $result = $conn->query("SELECT picture_src FROM `profile` INNER JOIN users USING(user_id) WHERE email='$email';");
+        $result = $conn->query("SELECT avatar_src FROM `profile` INNER JOIN users USING(user_id) WHERE email='$email';");
         if($result->num_rows > 0){
             $row = mysqli_fetch_assoc($result);
-            echo $row['picture_src'];
+            echo $row['avatar_src'];
         }
         else{
             echo "../imgs/UI/login_user.png";

@@ -1,0 +1,23 @@
+.bounce-in {
+    animation: bounce-in 1s ease;
+}
+
+@keyframes bounce-in {
+    0% {
+        opacity: 0;
+        transform: scale(.3);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.04);
+    }
+
+    70% {
+        transform: scale(.99);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
