@@ -118,28 +118,28 @@
             <div class="col-lg-5">
                 <div class="profileBox">
                     <div class="profileBoxPart d-flex">
-                        <h4 class="text-light mx-4 align-items-center d-flex profileInfoTitle">Podstawowe informacje</h4>
+                        <h4 class="text-light mx-4 align-items-center d-flex profileInfoTitle">Mój profil</h4>
                         <a href="#" style="visibility: collapse;" class="text-light ms-auto mx-2 fs-5 profileBtnLink profileInfoTitle align-items-center d-flex"  id="dataCancel"><span class="bi bi-x-lg profileIcon me-2"></span><span class="actionText">Anuluj</span></a>
                         <a href="#" onclick="replaceParagraphsWithInputs()" class="text-light ms-auto me-4 fs-5 profileBtnLink profileInfoTitle align-items-center d-flex"><span class="bi bi-pencil-fill profileIcon me-2"></span><span class="actionText">Edytuj</span></a>
                     </div>                    
                     <div class="profileInfoData mx-4">
                       <form method="post">
                       <img src="<?php echo $avatarSrc; ?>" width="110" height="110" class="rounded-circle">
-                        <h4 class="mt-4 mb-3 fw-semibold">Twoje dane</h4>
+                        <h4 class="mt-4 mb-3 fw-semibold">Podstawowe dane</h4>
                         <div class="d-flex align-items-center mb-2">
-                            <i class="bi bi-person fs-2 violetColor"></i><p class="m-0 mx-3 fs-5" id="nameSurname"><?php echo $name." ".$surname; ?></p>
+                            <i class="bi bi-person-fill fs-2 violetColor"></i><p class="m-0 mx-3 fs-5" id="nameSurname"><?php echo $name." ".$surname; ?></p>
                         </div>
                         <div class="d-flex align-items-center mb-2">
-                            <i class="bi bi-cake2 fs-2 violetColor"></i><p class="m-0 mx-3 fs-5" id="birthdate"><?php echo $birthdate; ?></p>
+                            <i class="bi bi-cake2-fill fs-2 violetColor"></i><p class="m-0 mx-3 fs-5" id="birthdate"><?php echo $birthdate; ?></p>
                         </div>
                         <div class="d-flex align-items-center mb-2">
-                            <i class="bi bi-envelope-at fs-2 violetColor"></i><p class="m-0 mx-3 fs-5" id="email"><?php echo $email; ?></p>
+                            <i class="bi bi-envelope-fill fs-2 violetColor"></i><p class="m-0 mx-3 fs-5" id="email"><?php echo $email; ?></p>
                         </div>
                         <div class="d-flex align-items-center mb-2">
-                            <i class="bi bi-telephone fs-2 violetColor"></i><p class="m-0 mx-3 fs-5" id="number"><?php echo $phoneNumber; ?></p>
+                            <i class="bi bi-telephone-fill fs-2 violetColor"></i><p class="m-0 mx-3 fs-5" id="number"><?php echo $phoneNumber; ?></p>
                         </div>
                         <div class="d-flex align-items-center">
-                            <i class="bi bi-house fs-2 violetColor"></i><p class="m-0 mx-3 fs-5" id="adress"><?php echo $adress; ?></p>
+                            <i class="bi bi-house-fill fs-2 violetColor"></i><p class="m-0 mx-3 fs-5" id="adress"><?php echo $adress; ?></p>
                         </div>
                         <h4 class="mt-5 mb-3 fw-semibold">Linki</h4>
                         <div class="d-flex align-items-center">
@@ -150,120 +150,126 @@
                       </form>
                     </div>
                 </div>
-                <div class="profileBox mt-5">
-                    <div class="profileBoxPart2 d-flex">
-                        <h4 class="text-light mx-4 align-items-center d-flex">Aktualne stanowisko</h4>
-                        <a href="#" class="text-light ms-auto me-4 fs-5 profileBtnLink align-items-center d-flex"><span class="bi bi-plus-lg profileIcon me-2"></span>Dodaj</a>
-                        <a href="#" class="text-light me-4 fs-5 profileBtnLink align-items-center d-flex"><span class="bi bi-pencil-fill profileIcon me-2"></span>Edytuj</a>
-                    </div>                   
+                <div class="mt-5">
+                  <div class="d-flex mb-3">
+                      <h4 class="align-items-center d-flex fw-regular m-0">Aktualne stanowisko</h4>
+                      <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
+                      <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex"><span class="bi bi-pencil-fill fs-6 me-2"></span>Edytuj</a>
+                  </div>
+                  <div class="profileBox2">
                     <h4 class="fs-3 fw-bold mx-4 mt-4"><?php echo $jobPosition; ?></h4>
                     <p class="mx-4 mb-1 mt-3 fs-5 fw-bold violetColor">Opis</p>
                     <p class="mx-4 mb-1"><?php echo $jobPositionDesc; ?></p>
-                    <span>&nbsp;</span>
+                  </div>
                 </div>
-                <div class="profileBox mt-5">
-                    <div class="profileBoxPart2 d-flex mb-4">
-                        <h4 class="text-light mx-4 align-items-center d-flex">Języki</h4>
-                        <a href="#" class="text-light ms-auto me-4 fs-5 profileBtnLink align-items-center d-flex"><span class="bi bi-plus-lg profileIcon me-2"></span>Dodaj</a>
-                        <a href="#" class="text-light me-4 fs-5 profileBtnLink align-items-center d-flex"><span class="bi bi-pencil-fill profileIcon me-2"></span>Edytuj</a>
-                    </div>
+                <div class="mt-5">
+                  <div class="d-flex mb-3">
+                      <h4 class="align-items-center d-flex fw-regular m-0">Języki</h4>
+                      <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
+                      <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex"><span class="bi bi-pencil-fill fs-6 me-2"></span>Edytuj</a>
+                  </div>
+                  <div class="profileBox2">
                     <?php while($row = mysqli_fetch_assoc($languageResult)){ ?>
-                    <div class="d-flex align-items-center mx-4 mt-2">
-                        <i class="bi bi-globe-americas fs-2 violetColor"></i><p class="m-0 mx-3 fs-5"><?php echo $row['language']; ?> <span class="linkMark"><?php echo $row['level']; ?></span></p>
-                    </div>
-                    <?php } ?>
-                    <span>&nbsp;</span>
+                      <div class="d-flex align-items-center mx-4 mt-2">
+                          <i class="bi bi-globe-americas fs-2 violetColor"></i><p class="m-0 mx-3 fs-5"><?php echo $row['language']; ?> <span class="linkMark"><?php echo $row['level']; ?></span></p>
+                      </div>
+                      <?php } ?>
+                  </div>
                 </div>
             </div>
             <div class="col-lg-7 secondCol">
-              <div class="profileBox">
-                <div class="profileBoxPart2 d-flex">
-                  <h4 class="text-light mx-4 align-items-center d-flex">Podsumowanie zawodowe</h4>
-                  <a href="#" class="text-light ms-auto me-4 fs-5 profileBtnLink align-items-center d-flex"><span class="bi bi-plus-lg profileIcon me-2"></span>Dodaj</a>
-                  <a href="#" class="text-light me-4 fs-5 profileBtnLink align-items-center d-flex"><span class="bi bi-pencil-fill profileIcon me-2"></span>Edytuj</a>
-              </div>                   
-              <p class="mx-4 mb-1 mt-4 fs-5 fw-bold violetColor">Opis</p>
-              <p class="mx-4 mb-1"><?php echo $careerSummary; ?></p>
-              <span>&nbsp;</span>
+              <div>
+                <div class="d-flex mb-3">
+                    <h4 class="align-items-center d-flex fw-regular m-0">Podsumowanie zawodowe</h4>
+                    <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
+                    <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex"><span class="bi bi-pencil-fill fs-6 me-2"></span>Edytuj</a>
+                </div>
+                <div class="profileBox2">
+                  <p class="mx-4 mb-1"><?php echo $careerSummary; ?></p>
+                </div>
               </div>
-              <div class="profileBox mt-5">
-                <div class="profileBoxPart2 d-flex mb-4">
-                    <h4 class="text-light mx-4 align-items-center d-flex">Doświadczenie zawodowe</h4>
-                    <a href="#" class="text-light ms-auto me-4 fs-5 profileBtnLink align-items-center d-flex"><span class="bi bi-plus-lg profileIcon me-2"></span>Dodaj</a>
-                    <a href="#" class="text-light me-4 fs-5 profileBtnLink align-items-center d-flex"><span class="bi bi-pencil-fill profileIcon me-2"></span>Edytuj</a>
+              <div class="mt-5">
+                <div class="d-flex mb-3">
+                    <h4 class="align-items-center d-flex fw-regular m-0">Doświadczenie zawodowe</h4>
+                    <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
+                    <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex"><span class="bi bi-pencil-fill fs-6 me-2"></span>Edytuj</a>
                 </div>
-                <h4 class="fs-3 fw-bold mx-4 mt-4">Stanowisko</h4>
-                <div class="d-flex align-items-center mx-4 mb-2">
-                  <i class="bi bi-buildings fs-4 violetColor"></i><p class="m-0 mx-2 fs-5">Firma</p>
+                <div class="profileBox2">
+                  <h4 class="fs-3 fw-bold mx-4">Stanowisko</h4>
+                  <div class="d-flex align-items-center mx-4 mb-2">
+                    <i class="bi bi-buildings fs-4 violetColor"></i><p class="m-0 mx-2 fs-5">Firma</p>
+                  </div>
+                  <div class="d-flex align-items-center mx-4 mb-2">
+                    <i class="bi bi-geo-alt fs-4 violetColor"></i><p class="m-0 mx-2 fs-5">Adres firmy</p>
+                  </div>
+                  <div class="d-flex align-items-center mx-4">
+                    <i class="bi bi-clock fs-4 violetColor"></i><p class="m-0 mx-2 fs-5">okres zatrudnienia</p>
+                  </div>
+                  <hr class="profileBoxLine border border-1 opacity-100">
+                  <h4 class="fs-3 fw-bold mx-4 mt-4">Stanowisko</h4>
+                  <div class="d-flex align-items-center mx-4 mb-2">
+                    <i class="bi bi-buildings fs-4 violetColor"></i><p class="m-0 mx-2 fs-5">Firma</p>
+                  </div>
+                  <div class="d-flex align-items-center mx-4 mb-2">
+                    <i class="bi bi-geo-alt fs-4 violetColor"></i><p class="m-0 mx-2 fs-5">Adres firmy</p>
+                  </div>
+                  <div class="d-flex align-items-center mx-4">
+                    <i class="bi bi-clock fs-4 violetColor"></i><p class="m-0 mx-2 fs-5">okres zatrudnienia</p>
+                  </div>
                 </div>
-                <div class="d-flex align-items-center mx-4 mb-2">
-                  <i class="bi bi-geo-alt fs-4 violetColor"></i><p class="m-0 mx-2 fs-5">Adres firmy</p>
-                </div>
-                <div class="d-flex align-items-center mx-4">
-                  <i class="bi bi-clock fs-4 violetColor"></i><p class="m-0 mx-2 fs-5">okres zatrudnienia</p>
-                </div>
-                <hr class="profileBoxLine border border-1 opacity-100">
-                <h4 class="fs-3 fw-bold mx-4 mt-4">Stanowisko</h4>
-                <div class="d-flex align-items-center mx-4 mb-2">
-                  <i class="bi bi-buildings fs-4 violetColor"></i><p class="m-0 mx-2 fs-5">Firma</p>
-                </div>
-                <div class="d-flex align-items-center mx-4 mb-2">
-                  <i class="bi bi-geo-alt fs-4 violetColor"></i><p class="m-0 mx-2 fs-5">Adres firmy</p>
-                </div>
-                <div class="d-flex align-items-center mx-4">
-                  <i class="bi bi-clock fs-4 violetColor"></i><p class="m-0 mx-2 fs-5">okres zatrudnienia</p>
-                </div>
-                <span>&nbsp;</span>
             </div>
-            <div class="profileBox mt-5">
-              <div class="profileBoxPart2 d-flex mb-4">
-                  <h4 class="text-light mx-4 align-items-center d-flex">Wykształcenie</h4>
-                  <a href="#" class="text-light ms-auto me-4 fs-5 profileBtnLink align-items-center d-flex"><span class="bi bi-plus-lg profileIcon me-2"></span>Dodaj</a>
-                  <a href="#" class="text-light me-4 fs-5 profileBtnLink align-items-center d-flex"><span class="bi bi-pencil-fill profileIcon me-2"></span>Edytuj</a>
+            <div class="mt-5">
+              <div class="d-flex mb-3">
+                <h4 class="align-items-center d-flex fw-regular m-0">Wykształcenie</h4>
+                <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
+                <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex"><span class="bi bi-pencil-fill fs-6 me-2"></span>Edytuj</a>
               </div>
-              <h4 class="fs-3 fw-bold mx-4 mt-4">Nazwa szkoły</h4>
-              <div class="d-flex align-items-center mx-4 mb-2">
-                <i class="bi bi-bar-chart fs-4 violetColor"></i><p class="m-0 mx-2 fs-5">Poziom Wykształcenie</p>
+              <div class="profileBox2">
+                <h4 class="fs-3 fw-bold mx-4">Nazwa szkoły</h4>
+                <div class="d-flex align-items-center mx-4 mb-2">
+                  <i class="bi bi-bar-chart fs-4 violetColor"></i><p class="m-0 mx-2 fs-5">Poziom Wykształcenie</p>
+                </div>
+                <div class="d-flex align-items-center mx-4 mb-2">
+                  <i class="bi bi-mortarboard-fill fs-4 violetColor"></i><p class="m-0 mx-2 fs-5">Kierunek</p>
+                </div>
+                <div class="d-flex align-items-center mx-4 mb-2">
+                  <i class="bi bi-geo-alt fs-4 violetColor"></i><p class="m-0 mx-2 fs-5">Miejscowość</p>
+                </div>
+                <div class="d-flex align-items-center mx-4">
+                  <i class="bi bi-clock fs-4 violetColor"></i><p class="m-0 mx-2 fs-5">okres nauki</p>
+                </div>
               </div>
+          </div>
+          <div class="mt-5">
+            <div class="d-flex mb-3">
+              <h4 class="align-items-center d-flex fw-regular m-0">Kursy, szkolenia, certyfikaty</h4>
+              <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
+              <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex"><span class="bi bi-pencil-fill fs-6 me-2"></span>Edytuj</a>
+            </div>
+            <div class="profileBox2">
+              <h4 class="fs-3 fw-bold mx-4 mt-4">Nazwa kursu</h4>
               <div class="d-flex align-items-center mx-4 mb-2">
-                <i class="bi bi-mortarboard-fill fs-4 violetColor"></i><p class="m-0 mx-2 fs-5">Kierunek</p>
-              </div>
-              <div class="d-flex align-items-center mx-4 mb-2">
-                <i class="bi bi-geo-alt fs-4 violetColor"></i><p class="m-0 mx-2 fs-5">Miejscowość</p>
+                <i class="bi bi-person fs-4 violetColor"></i><p class="m-0 mx-2 fs-5">Ogranizator</p>
               </div>
               <div class="d-flex align-items-center mx-4">
                 <i class="bi bi-clock fs-4 violetColor"></i><p class="m-0 mx-2 fs-5">okres nauki</p>
               </div>
-              <span>&nbsp;</span>
+            </div>
           </div>
-          <div class="profileBox mt-5">
-            <div class="profileBoxPart2 d-flex mb-4">
-                <h4 class="text-light mx-4 align-items-center d-flex">Kursy, szkolenia, certyfikaty</h4>
-                <a href="#" class="text-light ms-auto me-4 fs-5 profileBtnLink align-items-center d-flex"><span class="bi bi-plus-lg profileIcon me-2"></span>Dodaj</a>
-                <a href="#" class="text-light me-4 fs-5 profileBtnLink align-items-center d-flex"><span class="bi bi-pencil-fill profileIcon me-2"></span>Edytuj</a>
+          <div class="mt-5 mb-5">
+            <div class="d-flex mb-3">
+              <h4 class="align-items-center d-flex fw-regular m-0">Umiejętności</h4>
+              <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
+              <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex"><span class="bi bi-pencil-fill fs-6 me-2"></span>Edytuj</a>
             </div>
-            <h4 class="fs-3 fw-bold mx-4 mt-4">Nazwa kursu</h4>
-            <div class="d-flex align-items-center mx-4 mb-2">
-              <i class="bi bi-person fs-4 violetColor"></i><p class="m-0 mx-2 fs-5">Ogranizator</p>
+            <div class="profileBox2">
+              <div class="d-flex align-items-center mx-4 mt-2">
+                  <i class="bi bi-star fs-2 violetColor"></i><p class="m-0 mx-3 fs-5">Umiejętność1</p>
+              </div>
+              <div class="d-flex align-items-center mx-4 mt-2">
+                <i class="bi bi-star fs-2 violetColor"></i><p class="m-0 mx-3 fs-5">Umiejętność2</p>
+              </div>
             </div>
-            <div class="d-flex align-items-center mx-4">
-              <i class="bi bi-clock fs-4 violetColor"></i><p class="m-0 mx-2 fs-5">okres nauki</p>
-            </div>
-            <span>&nbsp;</span>
-          </div>
-          <div class="profileBox mt-5">
-            <div class="profileBoxPart2 d-flex mb-4">
-                <h4 class="text-light mx-4 align-items-center d-flex">Umiejętności</h4>
-                <a href="#" class="text-light ms-auto me-4 fs-5 profileBtnLink align-items-center d-flex"><span class="bi bi-plus-lg profileIcon me-2"></span>Dodaj</a>
-                <a href="#" class="text-light me-4 fs-5 profileBtnLink align-items-center d-flex"><span class="bi bi-pencil-fill profileIcon me-2"></span>Edytuj</a>
-            </div>                    
-            <div class="d-flex align-items-center mx-4 mt-2">
-                <i class="bi bi-star fs-2 violetColor"></i><p class="m-0 mx-3 fs-5">Umiejętność1</p>
-            </div>
-            <div class="d-flex align-items-center mx-4 mt-2">
-              <i class="bi bi-star fs-2 violetColor"></i><p class="m-0 mx-3 fs-5">Umiejętność2</p>
-          </div>
-            <span>&nbsp;</span>
         </div>
           </div>
         </div>
