@@ -51,7 +51,7 @@
               </div>
               <?php if($_SESSION['isadmin']==1){ ?>
               <div class="p-1 dropdownElement">
-                <a href="user/login.php" class="text-decoration-none"><div class="d-flex align-items-center text-dark"><i class="bi bi-tools mx-3 fs-3 panelIcons"></i>Panel administratora</div></a>
+                <a href="admin/index.php" class="text-decoration-none"><div class="d-flex align-items-center text-dark"><i class="bi bi-tools mx-3 fs-3 panelIcons"></i>Panel administratora</div></a>
               </div>
               <?php } ?>
               <div class="p-1 dropdownElement">

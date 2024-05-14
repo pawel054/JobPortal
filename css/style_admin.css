@@ -1,4 +1,5 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
 *{
     font-family:'Inter';
@@ -150,9 +151,7 @@ a{
 
 .adminAddButton{
     background-color:#979797 !important;
-    padding: 7px;
-    width: 150px;
-    border-radius: 22px;
+    width: 130px;
 }
 
 .adminDataColumns{
@@ -171,6 +170,10 @@ a{
 
 .errorClass{
     border: 1px solid red !important;
+}
+
+.form-floating > input + label:after {
+    background: transparent !important;
 }
 
 

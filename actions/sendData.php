@@ -50,7 +50,99 @@
                 }
         
             }
+
+            if (isset($_POST["companyForm"])) {
+                $company_name = $_POST["company_name"];
+                $company_description = $_POST["company_description"];
+
+                if(isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+                    $fileTmpPath = $_FILES['file']['tmp_name'];
+                    $fileName = $_FILES['file']['name'];
+
+                    $allowedExtensions = array("jpg", "jpeg", "png", "gif");
+                    $uploadedFileType = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+                    if(in_array($uploadedFileType, $allowedExtensions)) {
+                        $newFileName = "companyLogo-" . bin2hex(random_bytes(16)) . "." . $uploadedFileType;
+                        $targetFilePath  = '../imgs/company/' . $newFileName;
+                        if(move_uploaded_file($fileTmpPath, $targetFilePath)) {
+                            $uploadedFilePath = 'imgs/company/' . $newFileName;
+                        }
+                        else{
+                            $uploadedFilePath = "nie przesieniono";
+                        }
+                    }
+                    else{
+                        $uploadedFilePath = "nie w tablicyt";
+                    }
+                }
+                else{
+                    $uploadedFilePath = "jakis error idk"; 
+                }
+                if($conn->query("INSERT INTO company VALUES (NULL, '$company_name', '$uploadedFilePath', '$company_description')")){
+                    header('Location: ../admin/companies.php');
+                }
+            }
+
+            if (isset($_POST["companyFormEdit"])) {
+                $company_name = $_POST["company_name"];
+                $company_id_edit = $_POST["companyFormEdit"];
+                $company_description = $_POST["company_description"];
+
+                if(isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+                    $fileTmpPath = $_FILES['file']['tmp_name'];
+                    $fileName = $_FILES['file']['name'];
+
+                    $allowedExtensions = array("jpg", "jpeg", "png", "gif");
+                    $uploadedFileType = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+                    if(in_array($uploadedFileType, $allowedExtensions)) {
+                        $newFileName = "companyLogo-" . bin2hex(random_bytes(16)) . "." . $uploadedFileType;
+                        $targetFilePath  = '../imgs/company/' . $newFileName;
+                        if(move_uploaded_file($fileTmpPath, $targetFilePath)) {
+                            $uploadedFilePath = 'imgs/company/' . $newFileName;
+                        }
+                        else{
+                            $uploadedFilePath = "nie przesieniono";
+                        }
+                    }
+                    else{
+                        $uploadedFilePath = "nie w tablicyt";
+                    }
+
+                    $result = $conn->query("SELECT logo_src FROM company WHERE company_id='$company_id_edit';");
+                    if($result->num_rows > 0){
+                        $row = $result->fetch_assoc();
+                        $imagePath = "../" . $row["logo_src"];
+                    }
+
+                    if($conn->query("UPDATE company SET company_name = '$company_name', logo_src = '$uploadedFilePath', information = '$company_description' WHERE company_id = '$company_id_edit';")){
+                        if(file_exists($imagePath)) {
+                            unlink($imagePath);
+                        }
+                        header('Location: ../admin/companies.php');
+                    }
+                }
+                else{
+                    if($conn->query("UPDATE company SET company_name = '$company_name', information = '$company_description' WHERE company_id = '$company_id_edit';")){
+                        header('Location: ../admin/companies.php');
+                    }
+                }
+            }
+
+            if(isset($_POST["categoryForm"])){
+                if($_POST["isEdit"] == "false"){
+                    $category_name = $_POST["category_name"];
+                    $conn->query("INSERT INTO category VALUES (NULL, '$category_name')");
+                }
+                else{
+                    $category_id_edit = $_POST["categoryForm"];
+                    $category_name = $_POST["category_name"];
+                    $conn->query("UPDATE category SET category_name = '$category_name' WHERE category_id = '$category_id_edit';");
+                }
+                header('Location: ../admin/categories.php');
+            }
         }
+
+        
     }
     mysqli_close($conn);
 ?>

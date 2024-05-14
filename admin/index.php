@@ -19,23 +19,13 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xl-1 leftCol">
-                <div class="leftCol2" style="height: 100%;">
-                    <div class="row" style="height: 100%;">
-                        <div class="col-xl-12" style="height: 25%;">
-                           21 
-                        </div>
-                        <div class="col-xl-12 d-flex flex-column justify-content-center align-items-center" style="height:50%;">
-                            <a href="#"><i class="bi bi-speedometer2 menuIconClicked"></i></a>
-                            <a href="offers.html"><i class="bi bi-file-earmark-text-fill menuIcon"></i></a>
-                            <a href="#"><i class="bi bi-buildings-fill menuIcon"></i></a>
-                            <a href="#"><i class="bi bi-people-fill menuIcon"></i></a>
-                        </div>
-                        <div class="col-xl-12 d-flex justify-content-center align-items-end" style="height: 25%;">
-                            <img src="../imgs/UI/login_user.png" class="menuAvatar">
-                        </div>
-                    </div>
-                </div>
+        <div class="leftCol">
+                <h3 class="text-white mx-3 mt-4 mb-3 fw-bold">Admin</h3>
+                <a href="#" class="d-flex align-items-center text-decoration-none p-1 rounded-3 adminMenuLinks adminMenuLinkSelected"><i class="bi bi-speedometer2 fs-4 mx-2"></i><p class="m-0 mx-1 fw-medium">Panel główny</p></a>
+                <a href="offers.php" class="d-flex align-items-center text-decoration-none p-1 rounded-3 adminMenuLinks"><i class="bi bi-file-earmark-text-fill fs-4 mx-2"></i><p class="m-0 mx-1 fw-medium">Ogłoszenia</p></a>
+                <a href="companies.php" class="d-flex align-items-center text-decoration-none p-1 rounded-3 adminMenuLinks"><i class="bi bi-buildings-fill fs-4 mx-2"></i><p class="m-0 mx-1 fw-medium">Firmy</p></a>
+                <a href="categories.php" class="d-flex align-items-center text-decoration-none p-1 rounded-3 adminMenuLinks"><i class="bi bi-grid-fill fs-4 mx-2"></i><p class="m-0 mx-1 fw-medium">Kategorie</p></a>
+                <a href="#" class="d-flex align-items-center text-decoration-none p-1 rounded-3 adminMenuLinks"><i class="bi bi-people-fill fs-4 mx-2"></i><p class="m-0 mx-1 fw-medium">Aplikacje</p></a>
             </div>
             <div class="bottom-menu">
                 <a href="#"><i class="bi bi-speedometer2 menuIconClicked"></i></a>
@@ -44,22 +34,16 @@
                 <a href="#"><i class="bi bi-people-fill menuIcon"></i></a>
                 <img src="../imgs/UI/login_user.png" class="menuAvatar">
             </div>
-            <div class="col-xl-11 rightCol">
-                <div class="row" style="height: 100%; padding: 25px;">
-                    <div class="col-xl-12 d-flex align-items-center" style="height: 5%;">
-                        <h5 class="me-auto"><span class="violetMark">Witaj,</span> <?php echo $_SESSION['email']; ?>!</h5>
+            <div class="rightCol">
+                <div class="row" style="height: 100%;">
+                <div class="col-xl-12 d-flex align-items-center bg-light" style="height: 8%;">
+                        <h3 class="m-0 me-auto fw-bold d-flex align-items-center">Witaj, admin!</h3>
                         <a href="#" class="viewButton"><i class="bi bi-eye-fill"></i>Widok strony</a>
-                    </div>                    
-                    <div class="col-xl-12 d-flex align-items-center mb-3" style="height: 10%;">
-                        <div class="categoryTitle d-flex align-items-center">
-                            <div>
-                                <i class="bi bi-speedometer2"></i>
-                            </div>
-                            <h4>Panel główny</h4>
-                        </div>
+                        <img src="../imgs/UI/login_user.png" class="menuAvatar mx-4">
                     </div>
-                    <div class="col-xl-12 statsCol" style="height: 20%;">
-                        <div class="statsboxPlace">
+                    <div class="col-xl-12 pe-5 px-5 statsCol" style="height: 20%;">
+                    <h3 class="m-0 mb-3 me-auto fw-bold d-flex align-items-center">Panel główny</h3>
+                        <div>
                             <div class="row d-flex align-items-center" style="height: 100%;">
                                 <div class="col-xl-3 d-flex justify-content-center align-items-center" style="height: 140px;">
                                     <div class="statsBox d-flex align-items-center">
