@@ -42,9 +42,14 @@
     align-items: center;
 }
 
+
 .mainSearchInputs{
     text-align: center;
     width: 90%;
+}
+
+.bg-violet{
+    background-color: #400DD0 !important;
 }
 
 .violetButtons, .modalSave{
@@ -278,7 +283,7 @@
 .profileBoxPart{
     background-color: #101727;;
     border-radius: 30px 30px 0px 0px;
-    height: 130px;
+    height: 150px;
 }
 .profileBoxPart2{
     background-color: #400DD0;
@@ -290,6 +295,7 @@
     text-decoration: none;
     border: 2px solid #101727;
     color: #101727;
+    height: 35px;
 }
 
 .profileInfoData{
@@ -352,6 +358,62 @@
 
 #profileBody{
     background-color: #efefef;
+}
+
+body{
+    background-color: #efefef !important;
+}
+
+/* SEARCH PAGE STYLES */
+
+.searchBox {
+    background-color: white;
+    height: 130px;
+    border-radius: 15px;
+    border: 1px solid rgb(209, 209, 209);
+    box-shadow: 0px 0px 23px -18px rgba(125, 125, 125, 1);
+}
+
+        .hidden-div {
+            display: none;
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            z-index: 1;
+        }
+
+.filtersBox{
+    background-color: white;
+    border-radius: 15px;
+    border: 1px solid rgb(209, 209, 209);
+    box-shadow: 0px 0px 23px -18px rgba(125, 125, 125, 1);
+    padding: 20px;
+}
+
+.searchOfferBox{
+    background-color: white;
+    border-radius: 15px;
+    border: 1px solid rgb(209, 209, 209);
+    box-shadow: 0px 0px 23px -18px rgba(125, 125, 125, 1);
+    padding: 20px;
+}
+
+.square-container {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.square-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
 
 @media (max-width: 992px) {

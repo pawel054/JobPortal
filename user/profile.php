@@ -151,19 +151,18 @@
                     </div>
                 </div>
                 <div class="mt-5">
-                  <div class="d-flex mb-3">
+                  <div class="d-flex mb-3 align-items-center">
                       <h4 class="align-items-center d-flex fw-regular m-0">Aktualne stanowisko</h4>
-                      <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
+                      <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
                       <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex"><span class="bi bi-pencil-fill fs-6 me-2"></span>Edytuj</a>
                   </div>
                   <div class="profileBox2">
                     <h4 class="fs-3 fw-bold mx-4 mt-4"><?php echo $jobPosition; ?></h4>
-                    <p class="mx-4 mb-1 mt-3 fs-5 fw-bold violetColor">Opis</p>
                     <p class="mx-4 mb-1"><?php echo $jobPositionDesc; ?></p>
                   </div>
                 </div>
                 <div class="mt-5">
-                  <div class="d-flex mb-3">
+                  <div class="d-flex mb-3 align-items-center">
                       <h4 class="align-items-center d-flex fw-regular m-0">Języki</h4>
                       <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
                       <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex"><span class="bi bi-pencil-fill fs-6 me-2"></span>Edytuj</a>
@@ -179,7 +178,7 @@
             </div>
             <div class="col-lg-7 secondCol">
               <div>
-                <div class="d-flex mb-3">
+                <div class="d-flex mb-3 align-items-center">
                     <h4 class="align-items-center d-flex fw-regular m-0">Podsumowanie zawodowe</h4>
                     <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
                     <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex"><span class="bi bi-pencil-fill fs-6 me-2"></span>Edytuj</a>
@@ -189,7 +188,7 @@
                 </div>
               </div>
               <div class="mt-5">
-                <div class="d-flex mb-3">
+                <div class="d-flex mb-3 align-items-center">
                     <h4 class="align-items-center d-flex fw-regular m-0">Doświadczenie zawodowe</h4>
                     <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
                     <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex"><span class="bi bi-pencil-fill fs-6 me-2"></span>Edytuj</a>
@@ -219,7 +218,7 @@
                 </div>
             </div>
             <div class="mt-5">
-              <div class="d-flex mb-3">
+              <div class="d-flex mb-3 align-items-center">
                 <h4 class="align-items-center d-flex fw-regular m-0">Wykształcenie</h4>
                 <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
                 <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex"><span class="bi bi-pencil-fill fs-6 me-2"></span>Edytuj</a>
@@ -241,7 +240,7 @@
               </div>
           </div>
           <div class="mt-5">
-            <div class="d-flex mb-3">
+            <div class="d-flex mb-3 align-items-center">
               <h4 class="align-items-center d-flex fw-regular m-0">Kursy, szkolenia, certyfikaty</h4>
               <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
               <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex"><span class="bi bi-pencil-fill fs-6 me-2"></span>Edytuj</a>
@@ -257,7 +256,7 @@
             </div>
           </div>
           <div class="mt-5 mb-5">
-            <div class="d-flex mb-3">
+            <div class="d-flex mb-3 align-items-center">
               <h4 class="align-items-center d-flex fw-regular m-0">Umiejętności</h4>
               <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
               <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex"><span class="bi bi-pencil-fill fs-6 me-2"></span>Edytuj</a>
@@ -284,7 +283,7 @@
         var input = document.createElement('input');
         input.setAttribute('type', 'text');
         input.setAttribute('value', paragraph.textContent.trim());
-        input.classList.add('form-control'); // Dodajemy klasę form-control dla stylowania, można ją zmienić na inną
+        input.classList.add('form-control');
         paragraph.parentNode.replaceChild(input, paragraph);
     });
 }
