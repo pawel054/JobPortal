@@ -2,6 +2,7 @@
 session_start();
 require_once 'actions/connection.php';
 $offersResult = $conn->query("SELECT * FROM `offer` INNER JOIN company USING(company_id) INNER JOIN category USING(category_id);");
+$categoriesResult = $conn->query("SELECT * FROM `category`;");
 
 function DisplayShortText($text, $maxSymbols)
 {
@@ -112,10 +113,22 @@ function DisplayShortText($text, $maxSymbols)
                     <label for="stanowiskoInput">Stanowisko</label>
                   </div>
                 </div>
-                <div class="col-12 col-lg-3">
-                  <div class="form-floating">
-                    <input class="form-control" type="text" placeholder="Kategoria" id="kategoriaInput" name="categor22y">
-                    <label for="kategoriaInput">Kategoria</label>
+                <div class="col-12 col-lg-3 bg-info">
+                  <div class="form-floating position-relative text-start">
+                    <span class="form-control rounded-3" id="categorySpan" placeholder="" onclick="ShowHiddenDiv('hiddenDiv','categorySpan')">21</span>
+                    <div class="hidden-div" id="hiddenDiv">
+                      <ul class="list-group">
+                        <?php
+                        while ($row = mysqli_fetch_assoc($categoriesResult)) {
+                        ?>
+                          <li class="list-group-item">
+                            <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox">
+                            <label class="form-check-label" for="firstCheckbox"><?php echo $row["category_name"]; ?></label>
+                          </li>
+                        <?php } ?>
+                      </ul>
+                    </div>
+                    <label>Kategoria</label>
                   </div>
                 </div>
                 <div class="col-12 col-lg-3">
@@ -355,7 +368,7 @@ function DisplayShortText($text, $maxSymbols)
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-  <script src="js/script.js"></script>
+  <script src="script.js"></script>
 </body>
 
 </html>

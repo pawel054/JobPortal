@@ -180,7 +180,7 @@ function DisplayShortText($text, $maxSymbols)
             <label>Firma</label>
           </div>
           <div class="form-floating position-relative" style="width: 250px;">
-            <span class="form-control rounded-3" id="categorySpan" placeholder="" onclick="toggleDiv()">21</span>
+            <span class="form-control rounded-3" id="categorySpan" placeholder="" onclick="ShowHiddenDiv('hiddenDiv','categorySpan')">21</span>
             <div class="hidden-div" id="hiddenDiv">
               <ul class="list-group">
                 <?php
@@ -329,6 +329,7 @@ function DisplayShortText($text, $maxSymbols)
       }
     });
   </script>
+  <script src="script.js"></script>
 </body>
 
 </html>
