@@ -3,6 +3,29 @@ session_start();
 require_once 'actions/connection.php';
 $offersResult = $conn->query("SELECT * FROM `offer` INNER JOIN company USING(company_id) INNER JOIN category USING(category_id);");
 $categoriesResult = $conn->query("SELECT * FROM `category`;");
+$companiesResult = $conn->query("SELECT * FROM `company`;");
+
+$filtersResult = $conn->query("SELECT * FROM `offer_filters`;");
+if ($filtersResult->num_rows > 0) {
+  while ($row = $filtersResult->fetch_assoc()) {
+    if ($row['filters_id'] == 'contract_type') {
+      $content = $row['items'];
+      $contractTypes = explode(";", $content);
+    }
+    if ($row['filters_id'] == 'job_type') {
+      $content2 = $row['items'];
+      $jobTypes = explode(";", $content2);
+    }
+    if ($row['filters_id'] == 'position_level') {
+      $content3 = $row['items'];
+      $positionTypes = explode(";", $content3);
+    }
+    if ($row['filters_id'] == 'working_time') {
+      $content4 = $row['items'];
+      $workingTypes = explode(";", $content4);
+    }
+  }
+}
 
 function DisplayShortText($text, $maxSymbols)
 {
@@ -95,35 +118,31 @@ function DisplayShortText($text, $maxSymbols)
     </div>
   </nav>
 
-
-  <div class="container">
-    <div class="d-flex align-items-center justify-content-center mt-4 mb-5">
-      <i class="bi bi-briefcase-fill offerCountIcon"></i>
-      <h1 class="h1Title mt-5 mb-5 fs-2"><span class="offersCountMark">64 258</span> oferty pracy od najlepszych pracodawców</h1>
-    </div>
+  <div class="container-fluid mainImageDiv d-flex align-items-center justify-content-center mb-5">
     <div class="row">
-      <div class="col d-flex justify-content-center mb-5">
+      <div class="col d-flex flex-column justify-content-center align-items-center">
+        <h1 class="mb-3 align-self-start fw-semibold" id="mainTitle">Ponad <b class="violetColor">64 271</b> ofert pracy<br> czeka na Ciebie.</h1>
         <div class="mainSearch">
-          <div class="mainSearchInputs">
+          <div class="mainSearchInputs w-100">
             <form action="search.php" method="GET">
-              <div class="row">
-                <div class="col-12 col-lg-3">
+              <div class="row inputsRow d-flex justify-content-center">
+                <div class="col-12 col-lg-4">
                   <div class="form-floating">
                     <input class="form-control" type="text" placeholder="Stanowisko" id="stanowiskoInput" name="job_position">
-                    <label for="stanowiskoInput">Stanowisko</label>
+                    <label for="stanowiskoInput">Stanowisko, firma</label>
                   </div>
                 </div>
-                <div class="col-12 col-lg-3 bg-info">
+                <div class="col-12 col-lg-3">
                   <div class="form-floating position-relative text-start">
-                    <span class="form-control rounded-3" id="categorySpan" placeholder="" onclick="ShowHiddenDiv('hiddenDiv','categorySpan')">21</span>
-                    <div class="hidden-div" id="hiddenDiv">
+                    <span class="form-control truncate rounded-3" id="categorySpan" placeholder="" onclick="ShowHiddenDiv('categorySelectDiv','categorySpan')">Wybierz</span>
+                    <div class="hidden-div" id="categorySelectDiv">
                       <ul class="list-group">
                         <?php
                         while ($row = mysqli_fetch_assoc($categoriesResult)) {
                         ?>
                           <li class="list-group-item">
-                            <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox">
-                            <label class="form-check-label" for="firstCheckbox"><?php echo $row["category_name"]; ?></label>
+                            <input class="form-check-input me-1 checkCategory" type="checkbox" value="<?php echo $row["category_name"]; ?>" id="<?php echo $row["category_name"]; ?>" name="category[]" onchange="UpdateSpanValue('categorySpan','.checkCategory')">
+                            <label class="form-check-label" for="<?php echo $row["category_name"]; ?>"><?php echo $row["category_name"]; ?></label>
                           </li>
                         <?php } ?>
                       </ul>
@@ -133,13 +152,7 @@ function DisplayShortText($text, $maxSymbols)
                 </div>
                 <div class="col-12 col-lg-3">
                   <div class="form-floating">
-                    <input class="form-control" type="text" placeholder="Lokalizacja" id="lokalizacjaInput">
-                    <label for="lokalizacjaInput">Firma</label>
-                  </div>
-                </div>
-                <div class="col-12 col-lg-3">
-                  <div class="form-floating">
-                    <input class="form-control" type="text" placeholder="Lokalizacja" id="lokalizacjaInput">
+                    <input class="form-control" type="text" placeholder="Lokalizacja" id="lokalizacjaInput" name="location">
                     <label for="lokalizacjaInput">Lokalizacja</label>
                   </div>
                 </div>
@@ -154,50 +167,110 @@ function DisplayShortText($text, $maxSymbols)
                 <div class="col-lg-4 col-sm-4 col-xl-4">
                 </div>
               </div>
-              <div>
-                <label>Kategorie:</label><br>
-                <input type="checkbox" name="category[]" value="okok"> Kategoria 1<br>
-                <input type="checkbox" name="category[]" value="obsługa klienta"> Kategoria 2<br>
-                <!-- Dodaj więcej checkboxów dla innych kategorii, jeśli jest taka potrzeba -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title fw-semibold" id="exampleModalLabel">Filtry Zaawansowane</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="ClearModalCheckbox()"></button>
+                    </div>
+                    <div class="modal-body text-start">
+                      <div class="kategoriaGroup">
+                        <h5>Poziom stanowiska</h5>
+                        <?php
+                        foreach ($positionTypes as $item) {
+                        ?>
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="<?php echo $item; ?>" id="<?php echo $item; ?>" name="position[]">
+                            <label class="form-check-label" for="<?php echo $item; ?>">
+                              <?php echo $item; ?>
+                            </label>
+                          </div>
+                        <?php } ?>
+                      </div>
+                      <div class="kategoriaGroup">
+                        <h5>Rodzaj umowy</h5>
+                        <?php
+                        foreach ($contractTypes as $item) {
+                        ?>
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="<?php echo $item; ?>" id="<?php echo $item; ?>" name="contact[]">
+                            <label class="form-check-label" for="<?php echo $item; ?>">
+                              <?php echo $item; ?>
+                            </label>
+                          </div>
+                        <?php } ?>
+                      </div>
+                      <div class="kategoriaGroup">
+                        <h5>Tryb pracy</h5>
+                        <?php
+                        foreach ($jobTypes as $item) {
+                        ?>
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="<?php echo $item; ?>" id="<?php echo $item; ?>" name="jobtype[]">
+                            <label class="form-check-label" for="<?php echo $item; ?>">
+                              <?php echo $item; ?>
+                            </label>
+                          </div>
+                        <?php } ?>
+                      </div>
+                      <div class="kategoriaGroup">
+                        <h5>Wymiar pracy</h5>
+                        <?php
+                        foreach ($workingTypes as $item) {
+                        ?>
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="<?php echo $item; ?>" id="<?php echo $item; ?>" name="worktime[]">
+                            <label class="form-check-label" for="<?php echo $item; ?>">
+                              <?php echo $item; ?>
+                            </label>
+                          </div>
+                        <?php } ?>
+                      </div>
+
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn modalExit" onclick="ClearModalCheckbox()">Wyczyść</button>
+                      <button type="button" class="btn modalSave" data-bs-dismiss="modal">Zapisz</button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </form>
           </div>
         </div>
       </div>
     </div>
-    <h1 class="h1Title mt-5">Ostatnio dodane oferty</h1>
-    <h5 class="h1TitleDescription mt-3 mb-5">Poznaj ostatnio dodane ogłoszenia od pracodawców.</h5>
+  </div>
+
+  <div class="container">
+    <h1 class="text-center fw-bold">Najnowsze oferty</h1>
+    <h5 class="text-center fw-normal mb-5">Przeglądaj najnowsze oferty pracy i znajdź idealne zatrudnienie. Aplikuj już dziś!</h5>
     <div class="row">
       <?php
       while ($row = mysqli_fetch_assoc($offersResult)) {
       ?>
-        <div class="col-12 col-lg-6 col-xl-4 d-flex justify-content-center">
-          <a class="offerBox mb-5" href="offers/offer.php?id=<?php echo $row['offer_id'] ?>">
-            <div class="row xdd">
-              <div class="col-12 testcol d-flex align-items-center">
-                <h5 class="boxTitle"><?php echo $row["position_name"]; ?></h5>
+        <div class="col-12 col-lg-6 col-xl-4 d-flex justify-content-center mb-4">
+          <a class="offerBox" href="offers/offer.php?id=<?php echo $row['offer_id'] ?>">
+            <div style="height: 60px;">
+              <h5 class="fw-bolder"><?php DisplayShortText($row["position_name"],45); ?></h5>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+              <div class="square-container">
+                <img src="<?php echo $row["logo_src"]; ?>" class="square-image">
+              </div>
+              <div>
+                <h6 class="m-0 fw-semibold"><?php DisplayShortText($row["company_name"],40); ?></h6>
+                <p class="m-0"><?php DisplayShortText($row["category_name"],16); ?></p>
               </div>
             </div>
-            <div class="row">
-              <div class="col-lg-6 col-6 testcol2 d-flex align-items-center">
-                <h5 class="testt"><?php echo $row["company_name"]; ?></h5>
-              </div>
-              <div class="col-lg-3 col-3 testcol3 boxImageplace">
-                <img class="boxImage" src="<?php echo $row["logo_src"]; ?>">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-6 col-3 testcol4 d-flex justify-content-center">
-                <span class="bi bi-geo-alt-fill boxIcon">
-                  <div class="geoName"><?php $adress = explode(":", $row['adress'], 2);
-                                        echo trim($adress[1]); ?></div>
-                </span>
-              </div>
-              <div class="col-lg-6 col-3 testcol42 d-flex justify-content-center">
-                <span class="bi bi-currency-exchange boxIcon">
-                  <div class="geoName"><?php echo $row["salary"]; ?> zł</div>
-                </span>
-              </div>
+            <div class="d-flex gap-3 fw-semibold">
+              <span class="bi bi-currency-exchange">
+                <?php echo $row["salary"]; ?> zł
+              </span>
+              <span class="bi bi-geo-alt-fill">
+                <?php $adress = explode(":", $row['adress'], 2); echo trim($adress[1]); ?>
+              </span>
             </div>
           </a>
         </div>
@@ -205,170 +278,17 @@ function DisplayShortText($text, $maxSymbols)
     </div>
   </div>
 
-  <div class="modal fade custom-modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Filtry Zaawansowane</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="kategoriaGroup">
-            <h5>Poziom stanowiska</h5>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="option1">
-              <label class="form-check-label" for="option1">
-                Praktykant / stażysta
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="option2">
-              <label class="form-check-label" for="option2">
-                Asystent
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="option3">
-              <label class="form-check-label" for="option3">
-                Młodszy specjalista (junior)
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="option4">
-              <label class="form-check-label" for="option4">
-                Specjalista (mid)
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="option5">
-              <label class="form-check-label" for="option5">
-                Starszy specjalista (senior)
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="option6">
-              <label class="form-check-label" for="option6">
-                Ekspert
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="option7">
-              <label class="form-check-label" for="option7">
-                Kierownik / koordynator
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="option8">
-              <label class="form-check-label" for="option8">
-                Menedżer
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="option9">
-              <label class="form-check-label" for="option9">
-                Dyrektor
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="option10">
-              <label class="form-check-label" for="option10">
-                Prezes
-              </label>
-            </div>
-          </div>
-          <div class="kategoriaGroup">
-            <h5>Rodzaj umowy</h5>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="2option1">
-              <label class="form-check-label" for="2option1">
-                Umowa o pracę
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="2option2">
-              <label class="form-check-label" for="2option2">
-                Umowa o dzieło
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="2option3">
-              <label class="form-check-label" for="2option3">
-                Umowa zlecenie
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="2option4">
-              <label class="form-check-label" for="2option4">
-                Umowa B2B
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="2option5">
-              <label class="form-check-label" for="2option5">
-                Umowa na zastępstwo
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="2option6">
-              <label class="form-check-label" for="2option6">
-                Umowa o staż / praktyki
-              </label>
-            </div>
-          </div>
-          <div class="kategoriaGroup">
-            <h5>Wymiar etatu</h5>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="3option1">
-              <label class="form-check-label" for="3option1">
-                Część etatu
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="3option2">
-              <label class="form-check-label" for="3option2">
-                Cały etat
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="3option3">
-              <label class="form-check-label" for="3option3">
-                Dodatkowa / tymczasowa
-              </label>
-            </div>
-          </div>
-          <div class="kategoriaGroup">
-            <h5>Tryb pracy</h5>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="4option1">
-              <label class="form-check-label" for="4option1">
-                Stacjonarnie
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="4option2">
-              <label class="form-check-label" for="4option2">
-                Hybrydowo
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="4option3">
-              <label class="form-check-label" for="4option3">
-                Zdalnie
-              </label>
-            </div>
-          </div>
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn modalExit" data-bs-dismiss="modal">Zamknij</button>
-          <button type="button" class="btn modalSave">Zapisz</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <script src="script.js"></script>
+  <script>
+    function ClearModalCheckbox() {
+      var myModal = document.getElementById('exampleModal');
+      var checkboxes = myModal.querySelectorAll('input[type="checkbox"]');
+      checkboxes.forEach(function(checkbox) {
+        checkbox.checked = false;
+      });
+    }
+  </script>
 </body>
 
 </html>

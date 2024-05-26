@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 15 Sty 2024, 23:01
+-- Czas generowania: 26 Maj 2024, 23:05
 -- Wersja serwera: 10.4.25-MariaDB
 -- Wersja PHP: 7.4.30
 
@@ -40,11 +40,9 @@ CREATE TABLE `category` (
 
 CREATE TABLE `company` (
   `company_id` int(11) NOT NULL,
-  `company_name` varchar(50) COLLATE utf8mb4_polish_ci NOT NULL,
-  `adress` varchar(80) COLLATE utf8mb4_polish_ci NOT NULL,
-  `gmaps_url` text COLLATE utf8mb4_polish_ci NOT NULL,
+  `company_name` varchar(80) COLLATE utf8mb4_polish_ci NOT NULL,
   `logo_src` text COLLATE utf8mb4_polish_ci NOT NULL,
-  `information` varchar(100) COLLATE utf8mb4_polish_ci NOT NULL
+  `information` text COLLATE utf8mb4_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 -- --------------------------------------------------------
@@ -65,6 +63,8 @@ CREATE TABLE `offer` (
   `working_hours` varchar(40) COLLATE utf8mb4_polish_ci NOT NULL,
   `working_days` varchar(40) COLLATE utf8mb4_polish_ci NOT NULL,
   `expiration_date` date NOT NULL,
+  `gmaps_url` text COLLATE utf8mb4_polish_ci NOT NULL,
+  `adress` varchar(80) COLLATE utf8mb4_polish_ci NOT NULL,
   `category_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
@@ -76,7 +76,7 @@ CREATE TABLE `offer` (
 
 CREATE TABLE `offer_benefits` (
   `benetif_id` int(11) NOT NULL,
-  `benefit` varchar(60) COLLATE utf8mb4_polish_ci NOT NULL,
+  `benefit` varchar(100) COLLATE utf8mb4_polish_ci NOT NULL,
   `offer_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
@@ -88,9 +88,30 @@ CREATE TABLE `offer_benefits` (
 
 CREATE TABLE `offer_duties` (
   `duty_id` int(11) NOT NULL,
-  `duty` varchar(60) COLLATE utf8mb4_polish_ci NOT NULL,
+  `duty` varchar(100) COLLATE utf8mb4_polish_ci NOT NULL,
   `offer_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `offer_filters`
+--
+
+CREATE TABLE `offer_filters` (
+  `filters_id` varchar(20) COLLATE utf8mb4_polish_ci NOT NULL,
+  `items` text COLLATE utf8mb4_polish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+--
+-- Zrzut danych tabeli `offer_filters`
+--
+
+INSERT INTO `offer_filters` (`filters_id`, `items`) VALUES
+('contract_type', 'Umowa o pracę;Umowa o dzieło;Umowa zlecenie;Umowa B2B;Umowa na zastępstwo;Umowa o staż / praktyki'),
+('job_type', 'Praca stacjonarna;Praca hybrydowa;Praca Zdalna'),
+('position_level', 'Praktykant / stażysta;Asystent;Młodszy specjalista (junior);Specjalista (mid);Starszy specjalista (senior);Ekspert;Kierownik / koordynator;Menedżer;Dyrektor;Prezes'),
+('working_time', 'Część etatu;Cały etat;Dodatkowa / tymczasowa');
 
 -- --------------------------------------------------------
 
@@ -100,7 +121,7 @@ CREATE TABLE `offer_duties` (
 
 CREATE TABLE `offer_requirements` (
   `requirement_id` int(11) NOT NULL,
-  `requirement` varchar(60) COLLATE utf8mb4_polish_ci NOT NULL,
+  `requirement` varchar(100) COLLATE utf8mb4_polish_ci NOT NULL,
   `offer_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
@@ -116,13 +137,20 @@ CREATE TABLE `profile` (
   `surname` varchar(60) COLLATE utf8mb4_polish_ci NOT NULL,
   `birth_date` date NOT NULL,
   `phone_number` varchar(20) COLLATE utf8mb4_polish_ci NOT NULL,
-  `picture_src` varchar(100) COLLATE utf8mb4_polish_ci NOT NULL,
-  `residence` varchar(60) COLLATE utf8mb4_polish_ci NOT NULL,
+  `avatar_src` varchar(100) COLLATE utf8mb4_polish_ci NOT NULL,
+  `user_adress` varchar(60) COLLATE utf8mb4_polish_ci NOT NULL,
   `job_position` varchar(20) COLLATE utf8mb4_polish_ci NOT NULL,
-  `job_position_description` varchar(15) COLLATE utf8mb4_polish_ci NOT NULL,
-  `career_summary` varchar(50) COLLATE utf8mb4_polish_ci NOT NULL,
+  `job_position_description` text COLLATE utf8mb4_polish_ci NOT NULL,
+  `career_summary` text COLLATE utf8mb4_polish_ci NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+--
+-- Zrzut danych tabeli `profile`
+--
+
+INSERT INTO `profile` (`profile_id`, `name`, `surname`, `birth_date`, `phone_number`, `avatar_src`, `user_adress`, `job_position`, `job_position_description`, `career_summary`, `user_id`) VALUES
+(2, 'administrator', '', '2005-05-04', '123', '../imgs/userImg/admin.png', 'Brak', 'Administrator', 'Administrator serwisu JobPortal', 'test', 1);
 
 -- --------------------------------------------------------
 
@@ -158,10 +186,10 @@ CREATE TABLE `profile_education` (
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `profile_experiences`
+-- Struktura tabeli dla tabeli `profile_experience`
 --
 
-CREATE TABLE `profile_experiences` (
+CREATE TABLE `profile_experience` (
   `experience_id` int(11) NOT NULL,
   `position` varchar(100) COLLATE utf8mb4_polish_ci NOT NULL,
   `company_name` varchar(150) COLLATE utf8mb4_polish_ci NOT NULL,
@@ -184,6 +212,14 @@ CREATE TABLE `profile_languages` (
   `level` varchar(2) COLLATE utf8mb4_polish_ci NOT NULL,
   `profile_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+--
+-- Zrzut danych tabeli `profile_languages`
+--
+
+INSERT INTO `profile_languages` (`language_id`, `language`, `level`, `profile_id`) VALUES
+(1, 'Angielski', 'B2', 2),
+(2, 'Francuski', 'A2', 2);
 
 -- --------------------------------------------------------
 
@@ -222,6 +258,13 @@ CREATE TABLE `users` (
   `isadmin` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
+--
+-- Zrzut danych tabeli `users`
+--
+
+INSERT INTO `users` (`user_id`, `email`, `password`, `isadmin`) VALUES
+(1, 'admin', '$2y$10$iwkJEmPK943HUKnH4DDrsOp/KgrUH9vfcrcZYTnsS70wjzI5VLnaG', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -231,6 +274,7 @@ CREATE TABLE `users` (
 CREATE TABLE `user_applications` (
   `application_id` int(11) NOT NULL,
   `offer_id` int(11) NOT NULL,
+  `profile_id` int(11) NOT NULL,
   `status` varchar(20) COLLATE utf8mb4_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
@@ -285,6 +329,12 @@ ALTER TABLE `offer_duties`
   ADD KEY `offer_id` (`offer_id`);
 
 --
+-- Indeksy dla tabeli `offer_filters`
+--
+ALTER TABLE `offer_filters`
+  ADD PRIMARY KEY (`filters_id`);
+
+--
 -- Indeksy dla tabeli `offer_requirements`
 --
 ALTER TABLE `offer_requirements`
@@ -313,9 +363,9 @@ ALTER TABLE `profile_education`
   ADD KEY `profile_id` (`profile_id`);
 
 --
--- Indeksy dla tabeli `profile_experiences`
+-- Indeksy dla tabeli `profile_experience`
 --
-ALTER TABLE `profile_experiences`
+ALTER TABLE `profile_experience`
   ADD PRIMARY KEY (`experience_id`),
   ADD KEY `profile_id` (`profile_id`);
 
@@ -350,7 +400,8 @@ ALTER TABLE `users`
 --
 ALTER TABLE `user_applications`
   ADD PRIMARY KEY (`application_id`),
-  ADD KEY `offer_id` (`offer_id`);
+  ADD KEY `offer_id` (`offer_id`),
+  ADD KEY `profile_id` (`profile_id`);
 
 --
 -- Indeksy dla tabeli `user_favourites`
@@ -404,7 +455,7 @@ ALTER TABLE `offer_requirements`
 -- AUTO_INCREMENT dla tabeli `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `profile_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `profile_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT dla tabeli `profile_certificates`
@@ -419,16 +470,16 @@ ALTER TABLE `profile_education`
   MODIFY `education_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT dla tabeli `profile_experiences`
+-- AUTO_INCREMENT dla tabeli `profile_experience`
 --
-ALTER TABLE `profile_experiences`
+ALTER TABLE `profile_experience`
   MODIFY `experience_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT dla tabeli `profile_languages`
 --
 ALTER TABLE `profile_languages`
-  MODIFY `language_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `language_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT dla tabeli `profile_skills`
@@ -440,13 +491,13 @@ ALTER TABLE `profile_skills`
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT dla tabeli `user_applications`
 --
 ALTER TABLE `user_applications`
-  MODIFY `application_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `application_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT dla tabeli `user_favourites`
@@ -502,10 +553,10 @@ ALTER TABLE `profile_education`
   ADD CONSTRAINT `profile_education_ibfk_1` FOREIGN KEY (`profile_id`) REFERENCES `profile` (`profile_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ograniczenia dla tabeli `profile_experiences`
+-- Ograniczenia dla tabeli `profile_experience`
 --
-ALTER TABLE `profile_experiences`
-  ADD CONSTRAINT `profile_experiences_ibfk_1` FOREIGN KEY (`profile_id`) REFERENCES `profile` (`profile_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `profile_experience`
+  ADD CONSTRAINT `profile_experience_ibfk_1` FOREIGN KEY (`profile_id`) REFERENCES `profile` (`profile_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ograniczenia dla tabeli `profile_languages`
@@ -529,7 +580,8 @@ ALTER TABLE `profile_urls`
 -- Ograniczenia dla tabeli `user_applications`
 --
 ALTER TABLE `user_applications`
-  ADD CONSTRAINT `user_applications_ibfk_1` FOREIGN KEY (`offer_id`) REFERENCES `offer` (`offer_id`) ON DELETE NO ACTION ON UPDATE CASCADE;
+  ADD CONSTRAINT `user_applications_ibfk_1` FOREIGN KEY (`offer_id`) REFERENCES `offer` (`offer_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_applications_ibfk_2` FOREIGN KEY (`profile_id`) REFERENCES `profile` (`profile_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ograniczenia dla tabeli `user_favourites`

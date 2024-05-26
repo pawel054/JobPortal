@@ -13,48 +13,55 @@ if (!isset($_GET['page']) || !is_numeric($_GET['page']) || $_GET['page'] < 1) {
 $offset = ($page - 1) * $results_per_page;
 
 $job_position = isset($_GET['job_position']) ? $_GET['job_position'] : '';
-$selected_categories = isset($_GET['category']) ? $_GET['category'] : array();
-$selected_companies = isset($_GET['company']) ? $_GET['company'] : array();
 $location = isset($_GET['location']) ? $_GET['location'] : '';
+$selected_categories = isset($_GET['category']) ? $_GET['category'] : array();
+//$selected_companies = isset($_GET['company']) ? $_GET['company'] : array();
+$filters_position = isset($_GET['position']) ? $_GET['position'] : array();
+$filters_contract = isset($_GET['contract']) ? $_GET['contract'] : array();
+$filters_jobtype = isset($_GET['jobtype']) ? $_GET['jobtype'] : array();
+$filters_worktime = isset($_GET['worktime']) ? $_GET['worktime'] : array();
 
 $searchSql = "SELECT COUNT(*) as total FROM `offer` INNER JOIN company USING(company_id) INNER JOIN category USING(category_id) WHERE 1=1";
 
 if (!empty($job_position)) {
-  $searchSql .= " AND position_name LIKE '%" . $conn->real_escape_string($job_position) . "%'";
+  $keywords = preg_split('/\W+/', $job_position, -1, PREG_SPLIT_NO_EMPTY);
+  $searchConditions = [];
+  foreach ($keywords as $keyword) {
+    $escapedKeyword = $conn->real_escape_string($keyword);
+    $searchConditions[] = "(position_name LIKE '%" . $escapedKeyword . "%' OR company_name LIKE '%" . $escapedKeyword . "%')";
+  }
+  $searchSql .= " AND " . implode(' AND ', $searchConditions);
 }
 if (!empty($selected_categories)) {
   $searchSql .= " AND category_name IN ('" . implode("','", $selected_categories) . "')";
 }
-if (!empty($selected_companies)) {
-  $searchSql .= " AND company_name IN ('" . implode("','", $selected_companies) . "')";
-}
+// if (!empty($selected_companies)) {
+//   $searchSql .= " AND company_name IN ('" . implode("','", $selected_companies) . "')";
+// }
 if (!empty($location)) {
   $searchSql .= " AND adress LIKE '%" . $conn->real_escape_string($location) . "%'";
+}
+if (!empty($filters_position)) {
+  $searchSql .= " AND position_level IN ('" . implode("','", $filters_position) . "')";
+}
+if (!empty($filters_contract)) {
+  $searchSql .= " AND contract_type IN ('" . implode("','", $filters_contract) . "')";
+}
+if (!empty($filters_jobtype)) {
+  $searchSql .= " AND job_type IN ('" . implode("','", $filters_jobtype) . "')";
+}
+if (!empty($filters_worktime)) {
+  $searchSql .= " AND working_time IN ('" . implode("','", $filters_worktime) . "')";
 }
 
 $total_result = $conn->query($searchSql)->fetch_assoc()['total'];
 $total_pages = ceil($total_result / $results_per_page);
-
-$searchSql = "SELECT * FROM `offer` INNER JOIN company USING(company_id) INNER JOIN category USING(category_id) WHERE 1=1";
-
-if (!empty($job_position)) {
-  $searchSql .= " AND position_name LIKE '%" . $conn->real_escape_string($job_position) . "%'";
-}
-if (!empty($selected_categories)) {
-  $searchSql .= " AND category_name IN ('" . implode("','", $selected_categories) . "')";
-}
-if (!empty($selected_companies)) {
-  $searchSql .= " AND company_name IN ('" . implode("','", $selected_companies) . "')";
-}
-if (!empty($location)) {
-  $searchSql .= " AND adress LIKE '%" . $conn->real_escape_string($location) . "%'";
-}
-$searchSql .= " LIMIT $offset, $results_per_page";
-
+$searchSql = str_replace('COUNT(*) as total', '*', $searchSql) . " LIMIT $offset, $results_per_page";
 $searchResult = $conn->query($searchSql);
 
 
 $categoriesResult = $conn->query("SELECT * FROM `category`;");
+$companiesResult = $conn->query("SELECT * FROM `company`;");
 $filtersResult = $conn->query("SELECT * FROM `offer_filters`;");
 if ($filtersResult->num_rows > 0) {
   while ($row = $filtersResult->fetch_assoc()) {
@@ -170,46 +177,55 @@ function DisplayShortText($text, $maxSymbols)
   <div class="container">
     <div class="row">
       <div class="col-12 mb-4">
-        <div class="searchBox d-flex justify-content-center align-items-center gap-2">
-          <div class="form-floating">
-            <input type="text" class="form-control rounded-3" name="position_name" placeholder="" maxlength="60">
-            <label>Stanowisko</label>
-          </div>
-          <div class="form-floating">
-            <input type="text" class="form-control rounded-3" name="company_name" placeholder="" maxlength="60">
-            <label>Firma</label>
-          </div>
-          <div class="form-floating position-relative" style="width: 250px;">
-            <span class="form-control rounded-3" id="categorySpan" placeholder="" onclick="ShowHiddenDiv('hiddenDiv','categorySpan')">21</span>
-            <div class="hidden-div" id="hiddenDiv">
-              <ul class="list-group">
-                <?php
-                while ($row = mysqli_fetch_assoc($categoriesResult)) {
-                ?>
-                  <li class="list-group-item">
-                    <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox">
-                    <label class="form-check-label" for="firstCheckbox"><?php echo $row["category_name"]; ?></label>
-                  </li>
-                <?php } ?>
-              </ul>
+        <form method="get">
+          <div class="searchBox d-flex justify-content-center align-items-center gap-2 mt-5">
+            <div class="row inputsRow d-flex justify-content-center w-100">
+              <div class="col-12 col-lg-4">
+                <div class="form-floating">
+                  <input type="text" class="form-control rounded-3" name="job_position" placeholder="" maxlength="60" value="<?php echo $job_position; ?>">
+                  <label>Stanowisko, firma</label>
+                </div>
+              </div>
+              <div class="col-12 col-lg-3">
+                <div class="form-floating position-relative">
+                  <span class="form-control truncate rounded-3" id="categorySpan" placeholder="" onclick="ShowHiddenDiv('categorySelectDiv','categorySpan')">Wybierz</span>
+                  <div class="hidden-div" id="categorySelectDiv">
+                    <ul class="list-group">
+                      <?php
+                      foreach ($categoriesResult as $row) {
+                        $isChecked = in_array($row["category_name"], $selected_categories) ? 'checked' : '';
+                      ?>
+                        <li class="list-group-item">
+                          <input class="form-check-input me-1 checkCategory" type="checkbox" value="<?php echo $row["category_name"]; ?>" id="<?php echo $row["category_name"]; ?>" name="category[]" onchange="UpdateSpanValue('categorySpan','.checkCategory')" <?php echo $isChecked; ?>>
+                          <label class="form-check-label" for="<?php echo $row["category_name"]; ?>"><?php echo $row["category_name"]; ?></label>
+                        </li>
+                      <?php } ?>
+                    </ul>
+                  </div>
+                  <label>Kategoria</label>
+                </div>
+              </div>
+              <div class="col-12 col-lg-3">
+                <div class="form-floating">
+                  <input type="text" class="form-control rounded-3" name="adress" placeholder="" maxlength="60" value="<?php echo $location; ?>">
+                  <label>Lokalizacja</label>
+                </div>
+              </div>
+              <div class="col-12 col-lg-2 d-flex align-items-center justify-content-center">
+                <input type="submit" class="btn violetButtons">
+              </div>
             </div>
-            <label>Kategoria</label>
           </div>
-          <div class="form-floating">
-            <input type="text" class="form-control rounded-3" name="adress" placeholder="" maxlength="60">
-            <label>Lokalizacja</label>
-          </div>
-          <button class="btn violetButtons">Szukaj</button>
-        </div>
       </div>
-      <div class="col-4">
-        <div class="filtersBox">
+      <div class="col-4 filtersCol">
+        <div class="filtersBox mb-3">
           <h5 class="fw-bold mb-2">Poziom stanowiska</h5>
           <?php
           foreach ($positionTypes as $item) {
+            $isChecked = in_array($item, $filters_position) ? 'checked' : '';
           ?>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="<?php echo $item; ?>">
+              <input class="form-check-input" type="checkbox" value="<?php echo $item; ?>" id="<?php echo $item; ?>" <?php echo $isChecked; ?> name="position[]">
               <label class="form-check-label" for="<?php echo $item; ?>">
                 <?php echo $item; ?>
               </label>
@@ -218,9 +234,10 @@ function DisplayShortText($text, $maxSymbols)
           <h5 class="fw-bold mb-2 mt-5">Rodzaj umowy</h5>
           <?php
           foreach ($contractTypes as $item) {
+            $isChecked = in_array($item, $filters_contract) ? 'checked' : '';
           ?>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="<?php echo $item; ?>">
+              <input class="form-check-input" type="checkbox" value="<?php echo $item; ?>" id="<?php echo $item; ?>" <?php echo $isChecked; ?> name="contact[]">
               <label class="form-check-label" for="<?php echo $item; ?>">
                 <?php echo $item; ?>
               </label>
@@ -229,9 +246,10 @@ function DisplayShortText($text, $maxSymbols)
           <h5 class="fw-bold mb-2 mt-5">Tryb pracy</h5>
           <?php
           foreach ($jobTypes as $item) {
+            $isChecked = in_array($item, $filters_jobtype) ? 'checked' : '';
           ?>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="<?php echo $item; ?>">
+              <input class="form-check-input" type="checkbox" value="<?php echo $item; ?>" id="<?php echo $item; ?>" <?php echo $isChecked; ?> name="jobtype[]">
               <label class="form-check-label" for="<?php echo $item; ?>">
                 <?php echo $item; ?>
               </label>
@@ -240,17 +258,19 @@ function DisplayShortText($text, $maxSymbols)
           <h5 class="fw-bold mb-2 mt-5">Wymiar pracy</h5>
           <?php
           foreach ($workingTypes as $item) {
+            $isChecked = in_array($item, $filters_worktime) ? 'checked' : '';
           ?>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="<?php echo $item; ?>">
+              <input class="form-check-input" type="checkbox" value="<?php echo $item; ?>" id="<?php echo $item; ?>" <?php echo $isChecked; ?> name="worktime[]">
               <label class="form-check-label" for="<?php echo $item; ?>">
                 <?php echo $item; ?>
               </label>
             </div>
           <?php } ?>
         </div>
+        </form>
       </div>
-      <div class="col-8">
+      <div class="col-lg-8 d-flex flex-column align-items-center">
         <?php
         while ($row = mysqli_fetch_assoc($searchResult)) {
         ?>
@@ -290,7 +310,7 @@ function DisplayShortText($text, $maxSymbols)
             </div>
           </a>
         <?php } ?>
-        <nav aria-label="Page navigation example">
+        <nav class="mt-5">
           <ul class="pagination">
             <li class="page-item <?php echo ($page <= 1) ? 'disabled' : ''; ?>">
               <a class="page-link" href="?<?php echo http_build_query(array_merge($_GET, array("page" => ($page <= 1) ? 1 : ($page - 1)))); ?>">Previous</a>
@@ -312,21 +332,9 @@ function DisplayShortText($text, $maxSymbols)
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <script>
-    var div = document.getElementById("hiddenDiv");
-    var button = document.getElementById("categorySpan");
-
-    function toggleDiv() {
-      if (div.style.display === "block") {
-        div.style.display = "none";
-      } else {
-        div.style.display = "block";
-      }
-    }
-    document.addEventListener("click", function(event) {
-      var isClickInside = button.contains(event.target) || div.contains(event.target);
-      if (!isClickInside) {
-        div.style.display = "none";
-      }
+    document.addEventListener("DOMContentLoaded", function() {
+      UpdateSpanValue('categorySpan', '.checkCategory');
+      UpdateSpanValue('companySpan', '.checkCompany');
     });
   </script>
   <script src="script.js"></script>

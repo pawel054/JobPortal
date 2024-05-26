@@ -22,32 +22,38 @@
                 $salary = $_POST["wynagrodzenie"];
                 $gmaps = $_POST["gmaps"];
 
-                if($conn->query("INSERT INTO offer VALUES (NULL, '$company_id', '$position_name', '$position_level', '$contract_type', '$job_type','$salary','$working_time', '$working_hours', '$working_days', '$expiration_date', '$gmaps', '$adress', '$category_id')")){
+            if ($_POST["isEdit"] == "false"){
+                if ($conn->query("INSERT INTO offer VALUES (NULL, '$company_id', '$position_name', '$position_level', '$contract_type', '$job_type','$salary','$working_time', '$working_hours', '$working_days', '$expiration_date', '$gmaps', '$adress', '$category_id')")) {
                     $newOffer_id = mysqli_insert_id($conn);
 
-                    if(isset($_POST["duties"])){
+                    if (isset($_POST["duties"])) {
                         $duties = $_POST["duties"];
-                        foreach($duties as $duty){
+                        foreach ($duties as $duty) {
                             $conn->query("INSERT INTO offer_duties VALUES (NULL, '$duty', '$newOffer_id')");
                         }
                     }
 
-                    if(isset($_POST["requirements"])){
+                    if (isset($_POST["requirements"])) {
                         $requirements = $_POST["requirements"];
-                        foreach($requirements as $requirement){
+                        foreach ($requirements as $requirement) {
                             $conn->query("INSERT INTO offer_requirements VALUES (NULL, '$requirement', '$newOffer_id')");
                         }
                     }
 
-                    if(isset($_POST["benefits"])){
+                    if (isset($_POST["benefits"])) {
                         $benefits = $_POST["benefits"];
-                        foreach($benefits as $benefit){
+                        foreach ($benefits as $benefit) {
                             $conn->query("INSERT INTO offer_benefits VALUES (NULL, '$benefit', '$newOffer_id')");
                         }
                     }
 
-                    header('Location: ../admin/offers.php');
                 }
+            }
+            else{
+                $offer_id_edit = $_POST["offerForm"];
+                $conn->query("UPDATE offer SET position_name = '$position_name', position_level = '$position_level', contract_type = '$contract_type', job_type='$job_type', salary = '$salary', working_time = '$working_time', working_hours = '$working_hours', working_days = '$working_days', expiration_date = '$expiration_date', gmaps_url = '$gmaps', adress = '$adress', company_id = '$company_id', category_id = '$category_id' WHERE offer_id = '$offer_id_edit';");
+            }
+            header('Location: ../admin/offers.php');
         
             }
 

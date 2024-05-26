@@ -15,3 +15,21 @@ function ShowHiddenDiv(divId, triggerId) {
         }
     });
 }
+
+function UpdateSpanValue(spanId, className){
+    var span = document.getElementById(spanId);
+    var checkboxes = document.querySelectorAll(className);
+    var selectedValues = [];
+
+    checkboxes.forEach(function (cb) {
+        if (cb.checked) {
+            selectedValues.push(cb.value);
+        }
+    });
+
+    if (selectedValues.length > 0) {
+        span.textContent = selectedValues.join(', ');
+    } else {
+        span.textContent = 'Wybierz';
+    }
+}
