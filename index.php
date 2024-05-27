@@ -64,8 +64,8 @@ function DisplayShortText($text, $maxSymbols)
           </li>
         </ul>
         <div class="dropdown ms-auto">
-          <button type="button" class="btn violetButtonsDropdown dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
-            Konto
+          <button type="button" class="btn violetButtonsDropdown rounded-4" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+            <i class="bi bi-person text-white me-2"></i>Konto
           </button>
           <div class="dropdown-menu p-4 dropdownLogowanie">
             <?php if (isset($_SESSION['logged_in'])) { ?>
@@ -99,8 +99,8 @@ function DisplayShortText($text, $maxSymbols)
               </div>
             <?php } else { ?>
               <div class="mb-4">
-                <h4 class="kontoTitle">Witaj w JobPortal!</h4>
-                <p class="kontoDescription">Logując się na konto zyskujesz dostęp do profilu, zapisywania ofert i wielu innych funkcji!</p>
+                <h5 class="mb-2 fw-semibold mt-3">Witaj w JobPortal!</h5>
+                <p class="fw-normal fs-6">Logując się na konto zyskujesz dostęp do profilu, zapisywania ofert i wielu innych funkcji!</p>
               </div>
               <div class="mb-5 d-flex justify-content-center align-items-center">
                 <a href="user/login.php"><button class="btn violetButtons">Zaloguj się</button></a>
@@ -253,15 +253,15 @@ function DisplayShortText($text, $maxSymbols)
         <div class="col-12 col-lg-6 col-xl-4 d-flex justify-content-center mb-4">
           <a class="offerBox" href="offers/offer.php?id=<?php echo $row['offer_id'] ?>">
             <div style="height: 60px;">
-              <h5 class="fw-bolder"><?php DisplayShortText($row["position_name"],45); ?></h5>
+              <h5 class="fw-bolder"><?php DisplayShortText($row["position_name"], 45); ?></h5>
             </div>
             <div class="d-flex align-items-center gap-3">
               <div class="square-container">
                 <img src="<?php echo $row["logo_src"]; ?>" class="square-image">
               </div>
               <div>
-                <h6 class="m-0 fw-semibold"><?php DisplayShortText($row["company_name"],40); ?></h6>
-                <p class="m-0"><?php DisplayShortText($row["category_name"],16); ?></p>
+                <h6 class="m-0 fw-semibold"><?php DisplayShortText($row["company_name"], 40); ?></h6>
+                <p class="m-0"><?php DisplayShortText($row["category_name"], 16); ?></p>
               </div>
             </div>
             <div class="d-flex gap-3 fw-semibold">
@@ -269,7 +269,8 @@ function DisplayShortText($text, $maxSymbols)
                 <?php echo $row["salary"]; ?> zł
               </span>
               <span class="bi bi-geo-alt-fill">
-                <?php $adress = explode(":", $row['adress'], 2); echo trim($adress[1]); ?>
+                <?php $adress = explode(":", $row['adress'], 2);
+                echo trim($adress[1]); ?>
               </span>
             </div>
           </a>

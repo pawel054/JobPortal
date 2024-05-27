@@ -1,15 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css");
-*{
-    font-family: 'Rubik', sans-serif;
+
+* {
+    font-family: 'Inter', sans-serif;
+    color: #29375a;
 }
+
 body{
     background: url(../imgs/UI/login_background.jpg)
 }
 
 .boxLogin{
-    background-color: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(50px);
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(30px);
     width: 550px;
     border-radius: 30px;
     box-shadow: 0px 5px 16px -6px rgba(66, 68, 90, 1);
@@ -35,11 +38,13 @@ body{
 }
 
 input{
-    border-radius: 30px !important;
-    width: 400px !important;
-    font-size: 20px !important;
-    padding-left: 30px !important;
-    box-shadow: 0px 5px 16px -6px rgba(66, 68, 90, 1);
+    background-color: #dfdfdf !important;
+    border: 1px solid rgb(209, 209, 209) !important;
+    box-shadow: 0px 0px 23px -18px rgba(125, 125, 125, 1) !important;
+}
+
+.form-floating>input+label:after {
+    background: transparent !important;
 }
 
 .floatingLabelForm{
@@ -60,10 +65,8 @@ input{
 .violetButton{
     background-color: #400DD0 !important;
     color: white !important;
-    border-radius: 30px !important;
     width: 220px;
     height: 50px;
-    font-size: 22px !important;
 }
 
 .violetMark{

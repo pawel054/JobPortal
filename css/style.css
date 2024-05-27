@@ -65,9 +65,8 @@
 .violetButtonsDropdown{
     background-color: #400DD0 !important;
     color: white !important;
-    border-radius: 20px !important;
-    width: 110px;
-    height: 45px;
+    width: 120px;
+
 }
 
 .violetButtonsFrame{
@@ -218,17 +217,6 @@
 .dropdownZaloguj{
     float: left !important;
 }
-
-.kontoTitle{
-    font-weight: 550;
-    margin-top: 10px;
-    margin-bottom: 20px;
-}
-
-.kontoDescription{
-    font-size: 18px;
-}
-
 
 .dropdownLogowanie{
     width: 300px !important;
