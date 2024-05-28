@@ -48,7 +48,7 @@
             }
         }
         else{
-            header('Location: ../user/register.php');
+            header('Location: ../user/login.php');
         }
             $conn->close();
     }

@@ -15,61 +15,6 @@ if ((isset($_SESSION['logged_in'])) && ($_SESSION['logged_in'] == true)) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" href="../css/style_login.css">
-  <style>
-    .test {
-      background-color: #f0f0f0;
-      padding: 30px;
-      border-radius: 25px;
-      width: 500px;
-      overflow: hidden;
-      position: relative;
-      transition: height 0.5s ease;
-    }
-
-    .forms {
-      display: flex;
-      transition: transform 0.5s ease;
-      width: 200%;
-      transform: translateX(0);
-    }
-
-    .login {
-      transform: translateX(0);
-    }
-
-    .signup {
-      transform: translateX(100%);
-    }
-
-
-    .tabs {
-      display: flex;
-      position: relative;
-    }
-
-    .tab {
-      flex: 1;
-      padding: 15px 0;
-      text-align: center;
-      cursor: pointer;
-      border: none;
-      outline: none;
-    }
-
-    .tab.active {
-      font-weight: 800 !important;
-      color: #400DD0;
-    }
-
-    .highlight {
-      position: absolute;
-      bottom: 0;
-      width: 50%;
-      height: 4px;
-      background: #400DD0;
-      transition: transform 0.3s ease;
-    }
-  </style>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
@@ -110,18 +55,17 @@ if ((isset($_SESSION['logged_in'])) && ($_SESSION['logged_in'] == true)) {
     <div class="d-flex justify-content-center align-self-center z-3" style="width: 130px; margin-bottom:-65px">
       <img class="img-fluid" src="../imgs/UI/login_user.png" id="userImage" style="border-radius: 50%; transition: opacity 0.5s ease-in-out; border:3px solid gray;">
     </div>
-    <div class="test">
+    <div class="loginDiv">
       <div class="tabs mt-5">
         <button id="loginTab" class="tab active toggle fw-semibold">Zaloguj się</button>
         <button id="signUpTab" class="tab toggle2 fw-semibold">Zarejestruj się</button>
-        <div class="highlight"></div>
+        <div class="loginSelectBar"></div>
       </div>
       <div class="forms">
-        <div class="w-50 p-2 login">
+        <div class="w-50 p-2 loginView">
           <form method="post" action="../actions/actionLogin.php">
             <div class="form-floating mt-4">
-              <input type="text" class="form-control rounded-4" id="floatingEmail" name="email" placeholder="" value="<?php if (isset($_SESSION['valueEmail'])) echo $_SESSION['valueEmail'];
-                                                                                                                      unset($_SESSION['valueEmail']); ?>">
+              <input type="text" class="form-control rounded-4" id="floatingEmail" name="email" placeholder="" value="<?php if (isset($_SESSION['valueEmail'])) echo $_SESSION['valueEmail']; unset($_SESSION['valueEmail']); ?>">
               <label for="floatingEmail">Adres e-mail</label>
             </div>
             <div class="form-floating">
@@ -134,13 +78,44 @@ if ((isset($_SESSION['logged_in'])) && ($_SESSION['logged_in'] == true)) {
               </div>
             <?php }
             unset($_SESSION['error']); ?>
-            <div class="sendButton d-flex justify-content-center">
+            <div class="sendButton d-flex justify-content-center mt-4">
               <button type="submit" class="btn violetButton rounded-4 fs-5">Zaloguj</button>
             </div>
           </form>
         </div>
-        <div class="w-50 p-2 signup">
-
+        <div class="w-50 p-2 signupView">
+          <form method="post" action="../actions/actionRegister.php">
+              <div class="form-floating mt-4">
+                <input type="text" class="form-control rounded-4 <?php if(isset($_SESSION['error_email'])){?>is-invalid <?php } ?>" id="floatingEmail" name="email" placeholder="" value="<?php if(isset($_SESSION['p_email'])) echo $_SESSION['p_email']; unset($_SESSION['p_email']); ?>">
+                <label for="floatingEmail">Adres e-mail</label>
+                <div class="invalid-feedback mx-4 mt-2 shake-text" style="color: #c02f2f;">
+                  <?php if(isset($_SESSION['error_email'])){echo $_SESSION['error_email']; unset($_SESSION['error_email']);} ?>
+                </div>
+              </div>
+              <div class="form-floating">
+                <input type="password" class="form-control mt-3 rounded-4 <?php if(isset($_SESSION['error_password'])){?>is-invalid <?php } ?>" id="floatingPass" name="password" placeholder="">
+                <label for="floatingPass">Hasło</label>
+                <div class="invalid-feedback mx-4 mt-2 shake-text" style="color: #c02f2f;">
+                  <?php if(isset($_SESSION['error_password'])){echo $_SESSION['error_password']; unset($_SESSION['error_password']);} ?>
+                </div>
+              </div>
+              <div class="form-floating">
+                <input type="password" class="form-control mt-3 rounded-4 <?php if(isset($_SESSION['error_password_check'])){?>is-invalid <?php } ?>" id="floatingPass" name="password-check" placeholder="">
+                <label for="floatingPass">Powtórz hasło</label>
+                <div class="invalid-feedback mx-4 mt-2 shake-text" style="color: #c02f2f;">
+                  <?php if(isset($_SESSION['error_password_check'])){echo $_SESSION['error_password_check']; unset($_SESSION['error_password_check']);} ?>
+                </div>
+              </div>
+              <?php if (isset($_SESSION['error'])) { ?>
+                <div class="d-flex justify-content-center wrongData">
+                  <h6 class="mt-1 mx-2 shake-text">Nieprawidłowy e-mail lub hasło!</h6>
+                </div>
+              <?php }
+              unset($_SESSION['error']); ?>
+              <div class="sendButton d-flex justify-content-center mt-4">
+                <button type="submit" class="btn violetButton rounded-4 fs-5">Zaloguj</button>
+              </div>
+            </form>
         </div>
       </div>
     </div>
@@ -177,22 +152,23 @@ if ((isset($_SESSION['logged_in'])) && ($_SESSION['logged_in'] == true)) {
     }
 
     const forms = document.querySelector('.forms');
-    const container = document.querySelector('.test');
-    const highlight = document.querySelector('.highlight');
+    const container = document.querySelector('.loginDiv');
+    const loginSelectBar = document.querySelector('.loginSelectBar');
     const loginTab = document.querySelector('#loginTab');
     const signUpTab = document.querySelector('#signUpTab');
 
     document.querySelector('.toggle').addEventListener('click', event => {
       forms.style.transform = 'translateX(0)';
-      highlight.style.transform = 'translateX(0)';
-      container.style.height = '414px';
+      loginSelectBar.style.transform = 'translateX(0)';
+      container.style.height = '408px';
       loginTab.classList.add('active');
       signUpTab.classList.remove('active');
     });
+    
     document.querySelector('.toggle2').addEventListener('click', event => {
       forms.style.transform = 'translateX(-100%)';
-      highlight.style.transform = 'translateX(100%)';
-      container.style.height = '150px';
+      loginSelectBar.style.transform = 'translateX(100%)';
+      container.style.height = '500px';
       loginTab.classList.remove('active');
       signUpTab.classList.add('active');
     });

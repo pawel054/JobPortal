@@ -10,32 +10,12 @@ body{
     background: url(../imgs/UI/login_background.jpg)
 }
 
-.boxLogin{
-    background-color: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(30px);
-    width: 550px;
-    border-radius: 30px;
-    box-shadow: 0px 5px 16px -6px rgba(66, 68, 90, 1);
-}
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
   }
-
-.boxTitle{
-    text-align: center;
-    color: #400DD0;
-    font-weight: 700;
-    margin-top: 50px;
-}
-
-.boxAvatar{
-    width: 200px;
-    height: 200px;
-    margin-top: 20px
-}
 
 input{
     background-color: #dfdfdf !important;
@@ -56,12 +36,6 @@ input{
     margin-top: 30px;
 }
 
-.forgotPassword{
-    color: #400DD0 !important;
-    margin-right: 20px;
-    margin-top: 10px;
-}
-
 .violetButton{
     background-color: #400DD0 !important;
     color: white !important;
@@ -75,10 +49,6 @@ input{
     text-decoration: none;
 }
 
-.sendButton{
-    margin-top: 30px;
-}
-
 .wrongData{
     margin-top: 30px;
     margin-bottom: -10px;
@@ -90,9 +60,59 @@ input{
     color: #c02f2f;
 }
 
-.linkRegistration{
-    margin-top: 30px;
-}
+.loginDiv {
+    background-color: #f0f0f0;
+    padding: 30px;
+    border-radius: 25px;
+    width: 500px;
+    overflow: hidden;
+    position: relative;
+    transition: height 0.5s ease;
+  }
+
+  .forms {
+    display: flex;
+    transition: transform 0.5s ease;
+    width: 200%;
+    transform: translateX(0);
+  }
+
+  .loginView {
+    transform: translateX(0);
+  }
+
+  .signupView {
+    transform: translateX(100%);
+  }
+
+
+  .tabs {
+    display: flex;
+    position: relative;
+  }
+
+  .tab {
+    flex: 1;
+    padding: 15px 0;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    outline: none;
+  }
+
+  .tab.active {
+    font-weight: 800 !important;
+    color: #400DD0;
+  }
+
+  .loginSelectBar {
+    position: absolute;
+    bottom: 0;
+    width: 50%;
+    height: 4px;
+    background: #400DD0;
+    transition: transform 0.3s ease;
+  }
 
 @keyframes shake {
     0%, 100% {
