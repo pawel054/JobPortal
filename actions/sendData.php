@@ -146,6 +146,21 @@
                 }
                 header('Location: ../admin/categories.php');
             }
+
+            if(isset($_POST["applicationForm"])){
+                if($_POST["isEdit"] == "false"){
+                    $offer_id = $_POST["offer_id"];
+                    $profile_id = $_POST["profile_id"];
+                    $conn->query("INSERT INTO user_applications VALUES (NULL, '$offer_id', '$profile_id', 'Oczekuje')");
+                    header('Location: ../user/offer.php?offer_id='$offer_id'');
+                }
+                else{
+                    $application_id = $_POST["application_id"];
+                    $status = $_POST["status"];
+                    $conn->query("UPDATE user_applications SET status = '$status' WHERE application_id = '$application_id';");
+                    header('Location: ../admin/applications.php');
+                }
+            }
         }
 
         

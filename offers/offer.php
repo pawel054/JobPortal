@@ -3,6 +3,7 @@
     require_once '../actions/connection.php';
     $offerID = $_GET['id'];
     $userID = $_SESSION['user_id'];
+    $profile_id = $_SESSION['profile_id'];
 
     $benefitsResult = $conn->query("SELECT * FROM `offer_benefits` WHERE offer_id='$offerID';");
     $requirementsResult = $conn->query("SELECT * FROM `offer_requirements` WHERE offer_id='$offerID';");
@@ -75,7 +76,7 @@
                 <a href="../user/offers.html"><button class="btn violetButtonsFrame">Zapisane oferty</button></a>
               </div>
               <div class="mb-1 d-flex justify-content-center align-items-center">
-                <a href="actions/actionLogout.php"><button class="btn violetButtons">Wyloguj</button></a>
+                <a href="../actions/actionLogout.php"><button class="btn violetButtons">Wyloguj</button></a>
               </div>
                 <?php }else{?>
               <div class="mb-4">
@@ -235,6 +236,12 @@
                           <span>&nbsp;</span>
                           <h5 class="text-center mb-4 applyText">Podoba Ci się ta oferta?</h5>
                           <?php if(isset($_SESSION['logged_in'])){ ?>
+                            <form>
+                              <input type="hidden" name="applicationForm" value="true">
+                              <input type="hidden" name="isEdit" value="false" id="isEdit">
+                              <input type="hidden" value="<?php echo $offerID; ?>" name="offer_id">
+                              <input type="hidden" value="<?php echo $profile_id; ?>" name="profile_id">
+                            </form>
                           <a href="#" class="d-flex justify-content-center"><p class="applyButton d-flex justify-content-center align-items-center">Aplikuj</p></a>
                           <?php } else{ ?>
                             <a class="d-flex justify-content-center opacity-50" id="liveToastBtn2"><p class="applyButton d-flex justify-content-center align-items-center">Aplikuj</p></a>

@@ -27,6 +27,7 @@
                     $_SESSION['email'] = $row['email'];
                     $_SESSION['password'] = $row['password'];
                     $_SESSION['isadmin'] = $row['isadmin'];
+                    $user_id = $row['user_id'];
 
                     unset($_SESSION['error']);
                     $result->free_result();
@@ -41,6 +42,16 @@
                         $_SESSION['error'] = 0;
                         $_SESSION['error2'] = 0;
                         header('Location: ../user/login.php');
+                    }
+
+                    if($profileResult = $conn->query("SELECT profile_id FROM profile WHERE user_id = '$user_id'")){
+                        $row2 = $profileResult->fetch_assoc();
+                        if ($profileResult->num_rows > 0){
+                            $_SESSION['profile_id'] = $row2['profile_id'];
+                        }
+                        else{
+                            $_SESSION['profile_id'] = -1;
+                        }
                     }
                 }
 
