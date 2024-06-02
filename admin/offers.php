@@ -72,7 +72,7 @@ function DisplayShortText($text, $maxSymbols)
                 <a href="categories.php" class="d-flex align-items-center text-decoration-none p-1 rounded-3 adminMenuLinks"><i class="bi bi-grid-fill fs-4 mx-2"></i>
                     <p class="m-0 mx-1 fw-medium">Kategorie</p>
                 </a>
-                <a href="#" class="d-flex align-items-center text-decoration-none p-1 rounded-3 adminMenuLinks"><i class="bi bi-people-fill fs-4 mx-2"></i>
+                <a href="applications.php" class="d-flex align-items-center text-decoration-none p-1 rounded-3 adminMenuLinks"><i class="bi bi-people-fill fs-4 mx-2"></i>
                     <p class="m-0 mx-1 fw-medium">Aplikacje</p>
                 </a>
             </div>
@@ -146,24 +146,24 @@ function DisplayShortText($text, $maxSymbols)
                             </a>
                         </div>
                         <div class="table-responsive">
-                            <?php if (mysqli_num_rows($offersResult) > 0){
+                            <?php if (mysqli_num_rows($offersResult) > 0) {
                             ?>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" class="px-3">ID</th>
-                                        <th scope="col">Firma</th>
-                                        <th scope="col">Stanowisko</th>
-                                        <th scope="col">Kategoria</th>
-                                        <th scope="col">Lokalizacja</th>
-                                        <th scope="col"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="px-3">ID</th>
+                                            <th scope="col">Firma</th>
+                                            <th scope="col">Stanowisko</th>
+                                            <th scope="col">Kategoria</th>
+                                            <th scope="col">Lokalizacja</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
                                         while ($row = mysqli_fetch_assoc($offersResult)) {
                                             $offerID = $row["offer_id"];
-                                    ?>
+                                        ?>
                                             <tr>
                                                 <th scope="row" class="px-3">#<?php echo $row["offer_id"]; ?></th>
                                                 <td><?php GetCompanyName($row["company_id"], $conn); ?></td>
@@ -180,13 +180,13 @@ function DisplayShortText($text, $maxSymbols)
                                                     </ul>
                                                 </td>
                                             </tr>
-                                    <?php
+                                        <?php
                                         }
-                                    ?>
-                                </tbody>
-                            </table>
+                                        ?>
+                                    </tbody>
+                                </table>
                             <?php
-                            } else{
+                            } else {
                                 echo "<h4>Nie znaleziono danych</h4>";
                             }
                             ?>

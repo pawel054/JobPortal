@@ -2,7 +2,7 @@
 session_start();
 require_once 'actions/connection.php';
 
-$results_per_page = 1;
+$results_per_page = 5;
 
 if (!isset($_GET['page']) || !is_numeric($_GET['page']) || $_GET['page'] < 1) {
   $page = 1;
@@ -270,11 +270,11 @@ function DisplayShortText($text, $maxSymbols)
         </div>
         </form>
       </div>
-      <div class="col-lg-8 d-flex flex-column align-items-center">
+      <div class="col-lg-8 d-flex flex-column align-items-center gap-4">
         <?php
         while ($row = mysqli_fetch_assoc($searchResult)) {
         ?>
-          <a href="offers/offer.php?id=<?php echo $row["offer_id"]; ?>" class="text-decoration-none text-dark">
+          <a href="offers/offer.php?id=<?php echo $row["offer_id"]; ?>" class="text-decoration-none text-dark w-100">
             <div class="searchOfferBox">
               <div class="row">
                 <div class="col-lg-2 square-container">
@@ -283,7 +283,7 @@ function DisplayShortText($text, $maxSymbols)
                 <div class="col-lg-10">
                   <div class="row">
                     <div class="col-11">
-                      <h4 class="fw-semibold mb-0"><?php echo $row["position_name"]; ?></h4>
+                      <h5 class="fw-semibold mb-0"><?php echo $row["position_name"]; ?></h5>
                       <p class="fw-sedmibold"><?php echo $row["company_name"]; ?></p>
                     </div>
                     <div class="col-1 d-flex justify-content-center">

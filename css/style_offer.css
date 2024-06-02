@@ -178,9 +178,9 @@
 }
 
 .applyButton{
-    background-color: #400DD0;
-    border-radius: 20px;
-    color: white;
+    background-color: #400DD0 !important;
+    border-radius: 20px !important;
+    color: white !important;
     width: 60%;
     height: 45px;
     font-size: 20px;

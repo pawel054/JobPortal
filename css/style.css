@@ -79,7 +79,15 @@
 }
 
 .violetColor{
+    color: #400DD0 !important;
+}
+
+.violetHr{
+    border: none;
+    height: 3px;
     color: #400DD0;
+    background-color: #400DD0;
+    opacity: 1;
 }
 
 .favoriteH5{
@@ -113,7 +121,7 @@
 }
 
 .modal-backdrop {
-    background-color: rgba(0,0,0,.0001) !important;
+    
 }
 
 .kategoriaGroup{

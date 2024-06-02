@@ -39,7 +39,7 @@
                 <a href="offers.php" class="d-flex align-items-center text-decoration-none p-1 rounded-3 adminMenuLinks"><i class="bi bi-file-earmark-text-fill fs-4 mx-2"></i><p class="m-0 mx-1 fw-medium">Ogłoszenia</p></a>
                 <a href="companies.php" class="d-flex align-items-center text-decoration-none p-1 rounded-3 adminMenuLinks"><i class="bi bi-buildings-fill fs-4 mx-2"></i><p class="m-0 mx-1 fw-medium">Firmy</p></a>
                 <a href="#" class="d-flex align-items-center text-decoration-none p-1 rounded-3 adminMenuLinks adminMenuLinkSelected"><i class="bi bi-grid-fill fs-4 mx-2"></i><p class="m-0 mx-1 fw-medium">Kategorie</p></a>
-                <a href="#" class="d-flex align-items-center text-decoration-none p-1 rounded-3 adminMenuLinks"><i class="bi bi-people-fill fs-4 mx-2"></i><p class="m-0 mx-1 fw-medium">Aplikacje</p></a>
+                <a href="applications.php" class="d-flex align-items-center text-decoration-none p-1 rounded-3 adminMenuLinks"><i class="bi bi-people-fill fs-4 mx-2"></i><p class="m-0 mx-1 fw-medium">Aplikacje</p></a>
             </div>
             <div class="bottom-menu">
                 <a href="#"><i class="bi bi-speedometer2 menuIconClicked"></i></a>

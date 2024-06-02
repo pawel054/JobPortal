@@ -152,12 +152,12 @@
                     $offer_id = $_POST["offer_id"];
                     $profile_id = $_POST["profile_id"];
                     $conn->query("INSERT INTO user_applications VALUES (NULL, '$offer_id', '$profile_id', 'Oczekuje')");
-                    header('Location: ../user/offer.php?offer_id='$offer_id'');
+                    header('Location: ../offers/offer.php?id=' . $offer_id);
                 }
                 else{
                     $application_id = $_POST["application_id"];
                     $status = $_POST["status"];
-                    $conn->query("UPDATE user_applications SET status = '$status' WHERE application_id = '$application_id';");
+                    $conn->query("UPDATE user_applications SET user_applications.status = '$status' WHERE application_id = '$application_id';");
                     header('Location: ../admin/applications.php');
                 }
             }

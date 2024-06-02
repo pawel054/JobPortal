@@ -65,7 +65,8 @@ if ((isset($_SESSION['logged_in'])) && ($_SESSION['logged_in'] == true)) {
         <div class="w-50 p-2 loginView">
           <form method="post" action="../actions/actionLogin.php">
             <div class="form-floating mt-4">
-              <input type="text" class="form-control rounded-4" id="floatingEmail" name="email" placeholder="" value="<?php if (isset($_SESSION['valueEmail'])) echo $_SESSION['valueEmail']; unset($_SESSION['valueEmail']); ?>">
+              <input type="text" class="form-control rounded-4" id="floatingEmail" name="email" placeholder="" value="<?php if (isset($_SESSION['valueEmail'])) echo $_SESSION['valueEmail'];
+                                                                                                                      unset($_SESSION['valueEmail']); ?>">
               <label for="floatingEmail">Adres e-mail</label>
             </div>
             <div class="form-floating">
@@ -83,39 +84,49 @@ if ((isset($_SESSION['logged_in'])) && ($_SESSION['logged_in'] == true)) {
             </div>
           </form>
         </div>
-        <div class="w-50 p-2 signupView">
+        <div class="w-50 p-2 signupView" id="signupView">
           <form method="post" action="../actions/actionRegister.php">
-              <div class="form-floating mt-4">
-                <input type="text" class="form-control rounded-4 <?php if(isset($_SESSION['error_email'])){?>is-invalid <?php } ?>" id="floatingEmail" name="email" placeholder="" value="<?php if(isset($_SESSION['p_email'])) echo $_SESSION['p_email']; unset($_SESSION['p_email']); ?>">
-                <label for="floatingEmail">Adres e-mail</label>
-                <div class="invalid-feedback mx-4 mt-2 shake-text" style="color: #c02f2f;">
-                  <?php if(isset($_SESSION['error_email'])){echo $_SESSION['error_email']; unset($_SESSION['error_email']);} ?>
-                </div>
+            <div class="form-floating mt-4">
+              <input type="text" class="form-control rounded-4 <?php if (isset($_SESSION['error_email'])) { ?>is-invalid <?php } ?>" id="floatingEmail" name="email" placeholder="" value="<?php if (isset($_SESSION['p_email'])) echo $_SESSION['p_email'];
+                                                                                                                                                                                            unset($_SESSION['p_email']); ?>">
+              <label for="floatingEmail">Adres e-mail</label>
+              <div class="invalid-feedback mx-4 mt-2 shake-text" style="color: #c02f2f;">
+                <?php if (isset($_SESSION['error_email'])) {
+                  echo $_SESSION['error_email'];
+                  unset($_SESSION['error_email']);
+                } ?>
               </div>
-              <div class="form-floating">
-                <input type="password" class="form-control mt-3 rounded-4 <?php if(isset($_SESSION['error_password'])){?>is-invalid <?php } ?>" id="floatingPass" name="password" placeholder="">
-                <label for="floatingPass">Hasło</label>
-                <div class="invalid-feedback mx-4 mt-2 shake-text" style="color: #c02f2f;">
-                  <?php if(isset($_SESSION['error_password'])){echo $_SESSION['error_password']; unset($_SESSION['error_password']);} ?>
-                </div>
+            </div>
+            <div class="form-floating">
+              <input type="password" class="form-control mt-3 rounded-4 <?php if (isset($_SESSION['error_password'])) { ?>is-invalid <?php } ?>" id="floatingPass" name="password" placeholder="">
+              <label for="floatingPass">Hasło</label>
+              <div class="invalid-feedback mx-4 mt-2 shake-text" style="color: #c02f2f;">
+                <?php if (isset($_SESSION['error_password'])) {
+                  echo $_SESSION['error_password'];
+                  unset($_SESSION['error_password']);
+                } ?>
               </div>
-              <div class="form-floating">
-                <input type="password" class="form-control mt-3 rounded-4 <?php if(isset($_SESSION['error_password_check'])){?>is-invalid <?php } ?>" id="floatingPass" name="password-check" placeholder="">
-                <label for="floatingPass">Powtórz hasło</label>
-                <div class="invalid-feedback mx-4 mt-2 shake-text" style="color: #c02f2f;">
-                  <?php if(isset($_SESSION['error_password_check'])){echo $_SESSION['error_password_check']; unset($_SESSION['error_password_check']);} ?>
-                </div>
+            </div>
+            <div class="form-floating">
+              <input type="password" class="form-control mt-3 rounded-4 <?php if (isset($_SESSION['error_password_check'])) { ?>is-invalid <?php } ?>" id="floatingPass" name="password-check" placeholder="">
+              <label for="floatingPass">Powtórz hasło</label>
+              <div class="invalid-feedback mx-4 mt-2 shake-text" style="color: #c02f2f;">
+                <?php if (isset($_SESSION['error_password_check'])) {
+                  echo $_SESSION['error_password_check'];
+                  unset($_SESSION['error_password_check']);
+                } ?>
               </div>
-              <?php if (isset($_SESSION['error'])) { ?>
-                <div class="d-flex justify-content-center wrongData">
-                  <h6 class="mt-1 mx-2 shake-text">Nieprawidłowy e-mail lub hasło!</h6>
-                </div>
-              <?php }
-              unset($_SESSION['error']); ?>
-              <div class="sendButton d-flex justify-content-center mt-4">
-                <button type="submit" class="btn violetButton rounded-4 fs-5">Zaloguj</button>
+            </div>
+            <?php if (isset($_SESSION['error'])) { ?>
+              <div class="d-flex justify-content-center wrongData">
+                <h6 class="mt-1 mx-2 shake-text">Nieprawidłowy e-mail lub hasło!</h6>
               </div>
-            </form>
+            <?php }
+            unset($_SESSION['error']); ?>
+            <div class="sendButton d-flex justify-content-center mt-4">
+              <button type="submit" class="btn violetButton rounded-4 fs-5">Zaloguj</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -156,21 +167,27 @@ if ((isset($_SESSION['logged_in'])) && ($_SESSION['logged_in'] == true)) {
     const loginSelectBar = document.querySelector('.loginSelectBar');
     const loginTab = document.querySelector('#loginTab');
     const signUpTab = document.querySelector('#signUpTab');
+    const signUpView = document.querySelector('#signupView');
+
+    signUpView.style.display = "none";
+
+    var containerHeight = String(container.offsetHeight + "px");
 
     document.querySelector('.toggle').addEventListener('click', event => {
       forms.style.transform = 'translateX(0)';
       loginSelectBar.style.transform = 'translateX(0)';
-      container.style.height = '408px';
+      container.style.height = containerHeight;
       loginTab.classList.add('active');
       signUpTab.classList.remove('active');
     });
-    
+
     document.querySelector('.toggle2').addEventListener('click', event => {
       forms.style.transform = 'translateX(-100%)';
       loginSelectBar.style.transform = 'translateX(100%)';
       container.style.height = '500px';
       loginTab.classList.remove('active');
       signUpTab.classList.add('active');
+      signUpView.style.display = "block";
     });
   </script>
 </body>
