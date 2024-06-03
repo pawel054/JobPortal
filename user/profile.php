@@ -6,6 +6,14 @@ $userID = $_SESSION['user_id'];
 $email = $_SESSION['email'];
 $contentType = null;
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (isset($_POST["delete_experience"])) {
+    $experience_id = $_POST["delete_experience"];
+    $conn->query("DELETE FROM profile_experience WHERE experience_id='$experience_id'");
+    header("Location: " . $_SERVER['PHP_SELF']);
+  }
+}
+
 $profileInfoResult = $conn->query("SELECT * FROM `profile` WHERE user_id='$userID'");
 if ($profileInfoResult->num_rows > 0) {
   $row = mysqli_fetch_assoc($profileInfoResult);
@@ -48,6 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/animations.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <title>Document</title>
 </head>
@@ -179,14 +188,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="mt-5">
           <div class="d-flex mb-3 align-items-center">
             <h4 class="align-items-center d-flex fw-regular m-0">Języki</h4>
-            <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
-            <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex"><span class="bi bi-pencil-fill fs-6 me-2"></span>Edytuj</a>
+            <a href="#" class="ms-auto me-0 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
           </div>
           <div class="profileBox2">
             <?php while ($row = mysqli_fetch_assoc($languageResult)) { ?>
-              <div class="d-flex align-items-center mx-4 mt-2">
-                <i class="bi bi-globe-americas fs-2 violetColor"></i>
-                <p class="m-0 mx-3 fs-5"><?php echo $row['language']; ?> <span class="linkMark"><?php echo $row['level']; ?></span></p>
+              <div class="d-flex">
+                <div class="d-flex align-items-center mx-2 mt-2">
+                  <i class="bi bi-globe-americas fs-2 violetColor"></i>
+                  <p class="m-0 mx-3 fs-5"><?php echo $row['language']; ?> <span class="linkMark"><?php echo $row['level']; ?></span></p>
+                </div>
+                <a href="#" class="fw-bold ms-auto mx-2 text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#decisionModal" onclick="SetOfferId('<?php echo $experience_id; ?>')"><span class="bi bi-trash3-fill fs-6 me-2 violetColor"></span>Usuń</a>
               </div>
             <?php } ?>
           </div>
@@ -206,18 +217,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="mt-5">
           <div class="d-flex mb-3 align-items-center">
             <h4 class="align-items-center d-flex fw-regular m-0">Doświadczenie zawodowe</h4>
-            <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold" data-bs-toggle="modal" data-bs-target="#exampleModal"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
+            <a href="#" class="ms-auto me-0 fs-6 profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex fw-semibold mx-auto" data-bs-toggle="modal" data-bs-target="#experienceModal"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
           </div>
           <div class="profileBox2">
             <?php
             while ($row = mysqli_fetch_assoc($experienceResult)) {
+              $experience_id = $row["experience_id"];
+              $position = $row["position"];
+              $company_name = $row["company_name"];
+              $location = $row["location"];
+              $peroid_from = $row["peroid_from"];
+              $peroid_to = $row["peroid_to"];
             ?>
-              <div class="pb-3">
+              <div class="p-3">
                 <div class="d-flex">
                   <h4 class="fw-semibold"><?php echo $row["position"]; ?></h4>
                   <div class="d-flex ms-auto gap-4">
-                    <a href="#" class="fw-bold text-decoration-none align-items-center violetColor d-flex"><span class="bi bi-pencil-fill fs-6 me-2 violetColor"></span>Edytuj</a>
-                    <a href="#" class="fw-bold text-decoration-none align-items-center violetColor d-flex"><span class="bi bi-trash3-fill fs-6 me-2 violetColor"></span>Usuń</a>
+                    <a href="#" class="fw-bold text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#experienceModal" onclick="EditExperience('<?php echo $experience_id; ?>', '<?php echo $position; ?>', '<?php echo $company_name; ?>' , '<?php echo $location; ?>', '<?php echo $peroid_from ?>', '<?php echo $peroid_to ?>')"><span class="bi bi-pencil-fill fs-6 me-2 violetColor"></span>Edytuj</a>
+                    <a href="#" class="fw-bold text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#decisionModal" onclick="SetOfferId('<?php echo $experience_id; ?>')"><span class="bi bi-trash3-fill fs-6 me-2 violetColor"></span>Usuń</a>
                   </div>
                 </div>
                 <div class="d-flex align-items-center mb-2">
@@ -299,12 +316,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
       </div>
     </div>
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="experienceModal" tabindex="-1" aria-labelledby="experienceModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
         <div class="modal-content rounded-4">
           <div class="modal-header">
-            <h4 class="modal-title" id="exampleModalLabel">Doświadczenie zawodowe</h4>
-            <button type="button" onclick="AddExtraInput2('testDiv2')" class="btn violetButtonsDropdown rounded-4 mx-3 align-self-center">
+            <h4 class="modal-title" id="experienceModalLabel">Doświadczenie zawodowe</h4>
+            <button type="button" onclick="AddExtraInput2('testDiv2')" class="btn violetButtonsDropdown rounded-4 mx-3 align-self-center" id="addExperienceBtn">
               <i class="bi bi-plus-lg text-white me-2"></i>Dodaj
             </button>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -312,19 +329,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <div class="modal-body p-2">
             <form method="post" action="../actions/profileData.php">
               <input type="hidden" name="experienceForm" value="true" id="experienceForm">
-              <input type="hidden" name="isEdit" value="false" id="isEdit">
+              <input type="hidden" name="isEdit" value="false" id="isEditExperience">
               <div class="container">
                 <div id="testDiv2">
                   <div class="d-flex flex-column justify-content-center mt-3" id="divvvv2">
                     <div class="m-0 d-flex justify-content-between">
                       <p class="m-0 violetColor fw-semibold">Nowe doświadczenie</p>
-                      <p class="m-0 violetColor fw-semibold"><i class="bi bi-trash3-fill me-1"></i>Usuń</p>
+                      <p class="m-0 violetColor fw-semibold deleteElement invisible"><i class="bi bi-trash3-fill me-1"></i>Usuń</p>
                     </div>
                     <hr class="violetHr m-0">
                     <div class="row mt-4">
                       <div class="col-12">
                         <div class="form-floating mb-3">
-                          <input type="text" class="form-control adminInput" id="stanowisko" name="experience[]" placeholder="" maxlength="60" required>
+                          <input type="text" class="form-control adminInput" id="position" name="experience[]" placeholder="" maxlength="60" required>
                           <label>Stanowisko</label>
                         </div>
                       </div>
@@ -342,13 +359,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                       </div>
                       <div class="col-6">
                         <div class="form-floating mb-3">
-                          <input type="date" class="form-control adminInput" id="working_time" name="experience[]" placeholder="" maxlength="60" required>
+                          <input type="date" class="form-control adminInput" id="working_from" name="experience[]" placeholder="" maxlength="60" required>
                           <label>Okres zatrudnienia (od)</label>
                         </div>
                       </div>
                       <div class="col-6">
                         <div class="form-floating mb-3">
-                          <input type="date" class="form-control adminInput" id="working_time" name="experience[]" placeholder="" maxlength="60" required>
+                          <input type="date" class="form-control adminInput" id="working_to" name="experience[]" placeholder="" maxlength="60" required>
                           <label>Okres zatrudnienia (do)</label>
                         </div>
                       </div>
@@ -365,9 +382,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
       </div>
     </div>
+
+
+
+    <div class="modal bounce-in" id="decisionModal" tabindex="-1" aria-labelledby="decisionModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="decisionModalLabel">Uwaga!</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Czy na pewno chcesz usunąć element?
+            Tej operacji nie można cofnąć.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Anuluj</button>
+            <button type="button" class="btn btn-danger" onclick="SendDeleteForm('experienceDeleteForm', 'experience')">Tak</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form id="experienceDeleteForm" method="post"></form>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <script>
+    var currentOfferId;
+
     function replaceParagraphsWithInputs() {
       var profileInfoData = document.querySelector('.profileInfoData');
       var paragraphs = profileInfoData.querySelectorAll('p');
@@ -387,19 +428,67 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
       var newExperience = template.cloneNode(true);
       newExperience.style.display = "block";
+      newExperience.classList.add("extraDiv");
 
       var inputs = newExperience.querySelectorAll('input');
       inputs.forEach(function(input) {
         input.value = '';
       });
 
-      var deleteButton = newExperience.querySelector("p.violetColor.fw-semibold:last-child");
+      var deleteButton = newExperience.querySelector(".deleteElement");
+      deleteButton.classList.remove("invisible");
       deleteButton.style.cursor = "pointer";
       deleteButton.onclick = function() {
         newExperience.remove();
       };
 
       urlsDiv.appendChild(newExperience);
+    }
+
+    function EditExperience(id, position, company_name, company_adress, workingTime1, workingTime2) {
+      document.getElementById('position').value = position;
+      document.getElementById('company_name').value = company_name;
+      document.getElementById('company_adress').value = company_adress;
+      document.getElementById('working_from').value = workingTime1;
+      document.getElementById('working_to').value = workingTime2;
+      document.getElementById('isEditExperience').value = true;
+      document.getElementById('addExperienceBtn').classList.add("invisible");
+      document.getElementById('experienceForm').value = id;
+    }
+
+    var myModal = document.querySelector('.modal');
+
+    myModal.addEventListener('hidden.bs.modal', function() {
+      var form = this.querySelector('form');
+      if (form) {
+        form.reset();
+        var formInput = form.querySelector('#isEdit');
+        if (formInput) {
+          formInput.value = 'false';
+        }
+        document.getElementById('addExperienceBtn').classList.remove("invisible");
+        var extraDivs = form.querySelectorAll('.extraDiv');
+        extraDivs.forEach(function(extraDiv) {
+          extraDiv.remove();
+        });
+      }
+    });
+
+    function SendDeleteForm(formId, dataType) {
+      var form = document.getElementById(formId);
+
+      var hiddenInput = document.createElement("input");
+      hiddenInput.setAttribute("type", "hidden");
+      hiddenInput.setAttribute("name", "delete_" + dataType);
+      hiddenInput.setAttribute("value", currentOfferId);
+
+      form.appendChild(hiddenInput);
+      form.submit();
+      currentOfferId = 0;
+    }
+
+    function SetOfferId(offerId) {
+      currentOfferId = offerId;
     }
   </script>
 </body>

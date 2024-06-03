@@ -49,8 +49,12 @@ if ($conn->connect_errno != 0) {
                 }
 
             } else {
-                $offer_id_edit = $_POST["offerForm"];
-                $conn->query("UPDATE offer SET position_name = '$position_name', position_level = '$position_level', contract_type = '$contract_type', job_type='$job_type', salary = '$salary', working_time = '$working_time', working_hours = '$working_hours', working_days = '$working_days', expiration_date = '$expiration_date', gmaps_url = '$gmaps', adress = '$adress', company_id = '$company_id', category_id = '$category_id' WHERE offer_id = '$offer_id_edit';");
+                if (isset($_POST["experience"])) {
+                    $experience = $_POST["experience"];
+                    $experience_id = $_POST["experienceForm"];
+                    echo $experience[0];
+                    $conn->query("UPDATE profile_experience SET position = '$experience[0]', company_name = '$experience[1]', profile_experience.location = '$experience[2]', peroid_from='$experience[3]', peroid_to = '$experience[4]' WHERE experience_id = '$experience_id';");
+                }
             }
             header('Location: ../user/profile.php');
         }
