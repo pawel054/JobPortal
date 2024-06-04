@@ -4,14 +4,33 @@ require_once '../actions/connection.php';
 
 $userID = $_SESSION['user_id'];
 $email = $_SESSION['email'];
-$contentType = null;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (isset($_POST["delete_experience"])) {
     $experience_id = $_POST["delete_experience"];
     $conn->query("DELETE FROM profile_experience WHERE experience_id='$experience_id'");
-    header("Location: " . $_SERVER['PHP_SELF']);
   }
+
+  if(isset($_POST["delete_language"])){
+    $lang_id = $_POST["delete_language"];
+    $conn->query("DELETE FROM profile_languages WHERE language_id='$lang_id'");
+  }
+
+  if(isset($_POST["delete_skill"])){
+    $skill_id = $_POST["delete_skill"];
+    $conn->query("DELETE FROM profile_skills WHERE skill_id='$skill_id'");
+  }
+
+  if(isset($_POST["delete_certificate"])){
+    $certificate_id = $_POST["delete_certificate"];
+    $conn->query("DELETE FROM profile_certificates WHERE certificate_id='$certificate_id'");
+  }
+  if(isset($_POST["delete_education"])){
+    $edu_id = $_POST["delete_education"];
+    $conn->query("DELETE FROM profile_education WHERE education_id='$edu_id'");
+  }
+
+  header("Location: " . $_SERVER['PHP_SELF']);
 }
 
 $profileInfoResult = $conn->query("SELECT * FROM `profile` WHERE user_id='$userID'");
@@ -42,10 +61,6 @@ function DisplayShortText($text, $maxSymbols)
     echo substr($text, 0, $maxSymbols) . '...';
   else
     echo $text;
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  echo $contentType;
 }
 ?>
 
@@ -191,15 +206,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <a href="#" class="ms-auto me-0 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
           </div>
           <div class="profileBox2">
-            <?php while ($row = mysqli_fetch_assoc($languageResult)) { ?>
+            <?php
+            if($languageResult->num_rows > 0){
+              while ($row = mysqli_fetch_assoc($languageResult)) {
+                $lang_id = $row["language_id"];
+            ?>
               <div class="d-flex">
                 <div class="d-flex align-items-center mx-2 mt-2">
                   <i class="bi bi-globe-americas fs-2 violetColor"></i>
                   <p class="m-0 mx-3 fs-5"><?php echo $row['language']; ?> <span class="linkMark"><?php echo $row['level']; ?></span></p>
                 </div>
-                <a href="#" class="fw-bold ms-auto mx-2 text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#decisionModal" onclick="SetOfferId('<?php echo $experience_id; ?>')"><span class="bi bi-trash3-fill fs-6 me-2 violetColor"></span>Usuń</a>
+                <a href="#" class="fw-bold ms-auto mx-2 text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#decisionModal" onclick="SetDeleteData('<?php echo $lang_id; ?>', 'langDeleteForm', 'language')"><span class="bi bi-trash3-fill fs-6 me-2 violetColor"></span>Usuń</a>
               </div>
-            <?php } ?>
+            <?php
+              }
+            } else{
+              echo "<h5 class='fw-bold m-0'>Brak danych</h5><p class='m-0'>W tym miejscu wyświetlą się języki.</p>";
+            }
+            ?>
           </div>
         </div>
       </div>
@@ -211,7 +235,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex"><span class="bi bi-pencil-fill fs-6 me-2"></span>Edytuj</a>
           </div>
           <div class="profileBox2">
+            <?php
+            if ($careerSummary != null) {
+            ?>
             <p class="mx-4 mb-1"><?php echo $careerSummary; ?></p>
+            <?php
+            } else{
+              echo "<h5 class='fw-bold m-0'>Brak danych</h5><p class='m-0'>W tym miejscu wyświetli się podsumowanie zawodowe</p>";
+            }
+            ?>
           </div>
         </div>
         <div class="mt-5">
@@ -221,20 +253,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </div>
           <div class="profileBox2">
             <?php
-            while ($row = mysqli_fetch_assoc($experienceResult)) {
-              $experience_id = $row["experience_id"];
-              $position = $row["position"];
-              $company_name = $row["company_name"];
-              $location = $row["location"];
-              $peroid_from = $row["peroid_from"];
-              $peroid_to = $row["peroid_to"];
+            if ($experienceResult->num_rows > 0) {
+              while ($row = mysqli_fetch_assoc($experienceResult)) {
+                $experience_id = $row["experience_id"];
+                $position = $row["position"];
+                $company_name = $row["company_name"];
+                $location = $row["location"];
+                $peroid_from = $row["peroid_from"];
+                $peroid_to = $row["peroid_to"];
             ?>
               <div class="p-3">
                 <div class="d-flex">
                   <h4 class="fw-semibold"><?php echo $row["position"]; ?></h4>
                   <div class="d-flex ms-auto gap-4">
                     <a href="#" class="fw-bold text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#experienceModal" onclick="EditExperience('<?php echo $experience_id; ?>', '<?php echo $position; ?>', '<?php echo $company_name; ?>' , '<?php echo $location; ?>', '<?php echo $peroid_from ?>', '<?php echo $peroid_to ?>')"><span class="bi bi-pencil-fill fs-6 me-2 violetColor"></span>Edytuj</a>
-                    <a href="#" class="fw-bold text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#decisionModal" onclick="SetOfferId('<?php echo $experience_id; ?>')"><span class="bi bi-trash3-fill fs-6 me-2 violetColor"></span>Usuń</a>
+                    <a href="#" class="fw-bold text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#decisionModal" onclick="SetDeleteData('<?php echo $experience_id; ?>', 'experienceDeleteForm', 'experience')"><span class="bi bi-trash3-fill fs-6 me-2 violetColor"></span>Usuń</a>
                   </div>
                 </div>
                 <div class="d-flex align-items-center mb-2">
@@ -250,7 +283,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   <p class="m-0 mx-2 fs-5"><?php echo $row["peroid_from"]; ?> - <?php echo $row["peroid_to"]; ?></p>
                 </div>
               </div>
-            <?php } ?>
+            <?php
+              }
+            } else{
+              echo "<h5 class='fw-bold m-0'>Brak danych</h5><p class='m-0'>W tym miejscu wyświetlą się doświadczenia.</p>";
+            }
+            ?>
           </div>
         </div>
         <div class="mt-5">
@@ -260,23 +298,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex"><span class="bi bi-pencil-fill fs-6 me-2"></span>Edytuj</a>
           </div>
           <div class="profileBox2">
-            <h4 class="fs-3 fw-bold mx-4">Nazwa szkoły</h4>
-            <div class="d-flex align-items-center mx-4 mb-2">
-              <i class="bi bi-bar-chart fs-4 violetColor"></i>
-              <p class="m-0 mx-2 fs-5">Poziom Wykształcenie</p>
-            </div>
-            <div class="d-flex align-items-center mx-4 mb-2">
-              <i class="bi bi-mortarboard-fill fs-4 violetColor"></i>
-              <p class="m-0 mx-2 fs-5">Kierunek</p>
-            </div>
-            <div class="d-flex align-items-center mx-4 mb-2">
-              <i class="bi bi-geo-alt fs-4 violetColor"></i>
-              <p class="m-0 mx-2 fs-5">Miejscowość</p>
-            </div>
-            <div class="d-flex align-items-center mx-4">
-              <i class="bi bi-clock fs-4 violetColor"></i>
-              <p class="m-0 mx-2 fs-5">okres nauki</p>
-            </div>
+            <?php
+            if ($educationResult->num_rows > 0) {
+              while ($row = mysqli_fetch_assoc($educationResult)) {
+                $education_id = $row["education_id"];
+                $school_name = $row["school_name"];
+                $education_level = $row["education_level"];
+                $major = $row["major"];
+                $location = $row["location"];
+                $peroid_from = $row["peroid_from"];
+                $peroid_to = $row["peroid_to"];
+            ?>
+              <div class="p-3">
+                <div class="d-flex">
+                  <h4 class="fw-semibold"><?php echo $row["school_name"]; ?></h4>
+                  <div class="d-flex ms-auto gap-4">
+                    <a href="#" class="fw-bold text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#experienceModal" onclick="EditExperience('<?php echo $experience_id; ?>', '<?php echo $position; ?>', '<?php echo $company_name; ?>' , '<?php echo $location; ?>', '<?php echo $peroid_from ?>', '<?php echo $peroid_to ?>')"><span class="bi bi-pencil-fill fs-6 me-2 violetColor"></span>Edytuj</a>
+                    <a href="#" class="fw-bold text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#decisionModal" onclick="SetDeleteData('<?php echo $education_id; ?>', 'educationDeleteForm', 'education')"><span class="bi bi-trash3-fill fs-6 me-2 violetColor"></span>Usuń</a>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center mb-2">
+                  <i class="bi bi-bar-chart fs-4 violetColor"></i>
+                  <p class="m-0 mx-2 fs-5"><?php echo $row["education_level"]; ?></p>
+                </div>
+                <div class="d-flex align-items-centermb-2">
+                  <i class="bi bi-mortarboard-fill fs-4 violetColor"></i>
+                  <p class="m-0 mx-2 fs-5"><?php echo $row["major"]; ?></p>
+                </div>
+                <div class="d-flex align-items-centermb-2">
+                  <i class="bi bi-geo-alt fs-4 violetColor"></i>
+                  <p class="m-0 mx-2 fs-5"><?php echo $row["location"]; ?></p>
+                </div>
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-clock fs-4 violetColor"></i>
+                  <p class="m-0 mx-2 fs-5"><?php echo $row["peroid_from"]; ?> - <?php echo $row["peroid_to"]; ?></p>
+                </div>
+              </div>
+            <?php
+              }
+            } else{
+              echo "<h5 class='fw-bold m-0'>Brak danych</h5><p class='m-0'>W tym miejscu wyświetlą się wykształcenia.</p>";
+            }
+            ?>
           </div>
         </div>
         <div class="mt-5">
@@ -286,32 +349,64 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex"><span class="bi bi-pencil-fill fs-6 me-2"></span>Edytuj</a>
           </div>
           <div class="profileBox2">
-            <h4 class="fs-3 fw-bold mx-4 mt-4">Nazwa kursu</h4>
-            <div class="d-flex align-items-center mx-4 mb-2">
-              <i class="bi bi-person fs-4 violetColor"></i>
-              <p class="m-0 mx-2 fs-5">Ogranizator</p>
-            </div>
-            <div class="d-flex align-items-center mx-4">
-              <i class="bi bi-clock fs-4 violetColor"></i>
-              <p class="m-0 mx-2 fs-5">okres nauki</p>
-            </div>
+            <?php
+            if ($certificatesResult->num_rows > 0) {
+              while ($row = mysqli_fetch_assoc($certificatesResult)) {
+                $cert_id = $row["certificate_id"];
+                $cert_name = $row["name"];
+                $cert_organizer = $row["organizer"];
+                $peroid_from = $row["peroid_from"];
+                $peroid_to = $row["peroid_to"];
+            ?>
+              <div class="p-3">
+                <div class="d-flex">
+                  <h4 class="fw-semibold"><?php echo $row["name"]; ?></h4>
+                  <div class="d-flex ms-auto gap-4">
+                    <a href="#" class="fw-bold text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#experienceModal" onclick="EditExperience('<?php echo $experience_id; ?>', '<?php echo $position; ?>', '<?php echo $company_name; ?>' , '<?php echo $location; ?>', '<?php echo $peroid_from ?>', '<?php echo $peroid_to ?>')"><span class="bi bi-pencil-fill fs-6 me-2 violetColor"></span>Edytuj</a>
+                    <a href="#" class="fw-bold text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#decisionModal" onclick="SetDeleteData('<?php echo $cert_id; ?>', 'certificateDeleteForm', 'certificate')"><span class="bi bi-trash3-fill fs-6 me-2 violetColor"></span>Usuń</a>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center mb-2">
+                  <i class="bi bi-person fs-4 violetColor"></i>
+                  <p class="m-0 mx-2 fs-5"><?php echo $row["organizer"]; ?></p>
+                </div>
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-clock fs-4 violetColor"></i>
+                  <p class="m-0 mx-2 fs-5"><?php echo $row["peroid_from"]; ?> - <?php echo $row["peroid_to"]; ?></p>
+                </div>
+              </div>
+            <?php
+              }
+            } else{
+              echo "<h5 class='fw-bold m-0'>Brak danych</h5><p class='m-0'>W tym miejscu wyświetlą się Kursy, szkolenia lub certyfikaty.</p>";
+            }
+            ?>
           </div>
         </div>
         <div class="mt-5 mb-5">
           <div class="d-flex mb-3 align-items-center">
             <h4 class="align-items-center d-flex fw-regular m-0">Umiejętności</h4>
-            <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
-            <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex"><span class="bi bi-pencil-fill fs-6 me-2"></span>Edytuj</a>
+            <a href="#" class="ms-auto me-0 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
           </div>
           <div class="profileBox2">
-            <div class="d-flex align-items-center mx-4 mt-2">
-              <i class="bi bi-star fs-2 violetColor"></i>
-              <p class="m-0 mx-3 fs-5">Umiejętność1</p>
-            </div>
-            <div class="d-flex align-items-center mx-4 mt-2">
-              <i class="bi bi-star fs-2 violetColor"></i>
-              <p class="m-0 mx-3 fs-5">Umiejętność2</p>
-            </div>
+            <?php
+            if($skillsResult->num_rows > 0){
+              while ($row = mysqli_fetch_assoc($skillsResult)) {
+                $skill_id = $row["skill_id"];
+            ?>
+              <div class="d-flex">
+                <div class="d-flex align-items-center mx-2 mt-2">
+                  <i class="bi bi-star fs-2 violetColor"></i>
+                  <p class="m-0 mx-3 fs-5"><?php echo $row['skill']; ?></p>
+                </div>
+                <a href="#" class="fw-bold ms-auto mx-2 text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#decisionModal" onclick="SetDeleteData('<?php echo $skill_id; ?>', 'skillDeleteForm', 'skill')"><span class="bi bi-trash3-fill fs-6 me-2 violetColor"></span>Usuń</a>
+              </div>
+            <?php
+              }
+            } else{
+              echo "<h5 class='fw-bold m-0'>Brak danych</h5><p class='m-0'>W tym miejscu wyświetlą się umiejętności.</p>";
+            }
+            ?>
           </div>
         </div>
       </div>
@@ -398,16 +493,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-success" data-bs-dismiss="modal">Anuluj</button>
-            <button type="button" class="btn btn-danger" onclick="SendDeleteForm('experienceDeleteForm', 'experience')">Tak</button>
+            <button type="button" class="btn btn-danger" onclick="SendDeleteForm()">Tak</button>
           </div>
         </div>
       </div>
     </div>
     <form id="experienceDeleteForm" method="post"></form>
+    <form id="langDeleteForm" method="post"></form>
+    <form id="skillDeleteForm" method="post"></form>
+    <form id="certificateDeleteForm" method="post"></form>
+    <form id="educationDeleteForm" method="post"></form>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <script>
-    var currentOfferId;
+    var deleteId;
+    var deleteFromId;
+    var dataType;
 
     function replaceParagraphsWithInputs() {
       var profileInfoData = document.querySelector('.profileInfoData');
@@ -474,21 +575,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       }
     });
 
-    function SendDeleteForm(formId, dataType) {
-      var form = document.getElementById(formId);
+    function SendDeleteForm() {
+      var form = document.getElementById(deleteFromId);
 
       var hiddenInput = document.createElement("input");
       hiddenInput.setAttribute("type", "hidden");
       hiddenInput.setAttribute("name", "delete_" + dataType);
-      hiddenInput.setAttribute("value", currentOfferId);
+      hiddenInput.setAttribute("value", deleteId);
+
+      console.log(hiddenInput);
 
       form.appendChild(hiddenInput);
       form.submit();
-      currentOfferId = 0;
+      deleteId = 0;
     }
 
-    function SetOfferId(offerId) {
-      currentOfferId = offerId;
+    function SetDeleteData(elementId, formId, elementType) {
+      deleteId = elementId;
+      deleteFromId = formId;
+      dataType = elementType;
     }
   </script>
 </body>
