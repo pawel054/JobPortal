@@ -11,6 +11,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->query("DELETE FROM profile_experience WHERE experience_id='$experience_id'");
   }
 
+  if (isset($_POST["delete_summary"])) {
+    $profile_id = $_POST["delete_summary"];
+    $conn->query("UPDATE `profile` SET career_summary = null WHERE profile_id='$profile_id'");
+  }
+
+  if (isset($_POST["delete_position"])) {
+    $profile_id = $_POST["delete_position"];
+    $conn->query("UPDATE `profile` SET job_position = null, job_position_description = null WHERE profile_id='$profile_id'");
+  }
+
   if(isset($_POST["delete_language"])){
     $lang_id = $_POST["delete_language"];
     $conn->query("DELETE FROM profile_languages WHERE language_id='$lang_id'");
@@ -151,9 +161,8 @@ function DisplayShortText($text, $maxSymbols)
       <div class="col-lg-5">
         <div class="profileBox">
           <div class="profileBoxPart d-flex">
-            <h4 class="text-light mx-4 align-items-center d-flex profileInfoTitle">Mój profil</h4>
-            <a href="#" style="visibility: collapse;" class="text-light ms-auto mx-2 fs-5 profileBtnLink profileInfoTitle align-items-center d-flex" id="dataCancel"><span class="bi bi-x-lg profileIcon me-2"></span><span class="actionText">Anuluj</span></a>
-            <a href="#" onclick="replaceParagraphsWithInputs()" class="text-light ms-auto me-4 fs-5 profileBtnLink profileInfoTitle align-items-center d-flex"><span class="bi bi-pencil-fill profileIcon me-2"></span><span class="actionText">Edytuj</span></a>
+            <h4 class="text-light mx-4 align-items-center d-flex profileInfoTitle">Mój profil</h4>  
+            <a href="#" id="informationsEditBtn" onclick="replaceParagraphsWithInputs()" class="text-light ms-auto me-4 fs-5 profileBtnLink profileInfoTitle align-items-center d-flex"><span class="bi bi-pencil-fill profileIcon me-2"></span><span class="actionText">Edytuj</span></a>
           </div>
           <div class="profileInfoData mx-4">
             <form method="post">
@@ -192,12 +201,26 @@ function DisplayShortText($text, $maxSymbols)
         <div class="mt-5">
           <div class="d-flex mb-3 align-items-center">
             <h4 class="align-items-center d-flex fw-regular m-0">Aktualne stanowisko</h4>
-            <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
-            <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex"><span class="bi bi-pencil-fill fs-6 me-2"></span>Edytuj</a>
+            <?php
+            if ($jobPosition != null && $jobPositionDesc != null) {
+            ?>
+            <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-pencil-fill me-2 fs-5 fw-semibold"></span>Edytuj</a>
+            <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex" data-bs-toggle="modal" data-bs-target="#decisionModal" onclick="SetDeleteData('<?php echo $profileID; ?>', 'positionDeleteForm', 'position')"><span class="bi bi-trash3-fill fs-6 me-2"></span>Usuń</a>
+            <?php } else{ ?>
+              <a href="#" class="ms-auto me-0 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
+            <?php } ?>
           </div>
           <div class="profileBox2">
-            <h4 class="fs-3 fw-bold mx-4 mt-4"><?php echo $jobPosition; ?></h4>
-            <p class="mx-4 mb-1"><?php echo $jobPositionDesc; ?></p>
+          <?php
+            if ($jobPosition != null && $jobPositionDesc != null) {
+          ?>
+            <h4 class="fw-bold mx-2"><?php echo $jobPosition; ?></h4>
+            <p class="mx-2 mb-1"><?php echo $jobPositionDesc; ?></p>
+          <?php
+            } else{
+              echo "<h5 class='fw-bold m-0'>Brak danych</h5><p class='m-0'>W tym miejscu wyświetli się aktualne stanowisko  </p>";
+            }
+          ?>
           </div>
         </div>
         <div class="mt-5">
@@ -231,8 +254,14 @@ function DisplayShortText($text, $maxSymbols)
         <div>
           <div class="d-flex mb-3 align-items-center">
             <h4 class="align-items-center d-flex fw-regular m-0">Podsumowanie zawodowe</h4>
-            <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
-            <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex"><span class="bi bi-pencil-fill fs-6 me-2"></span>Edytuj</a>
+            <?php
+            if ($careerSummary != null) {
+            ?>
+            <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-pencil-fill me-2 fs-5 fw-semibold"></span>Edytuj</a>
+            <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex" data-bs-toggle="modal" data-bs-target="#decisionModal" onclick="SetDeleteData('<?php echo $profileID; ?>', 'summaryDeleteForm', 'summary')"><span class="bi bi-trash3-fill fs-6 me-2"></span>Usuń</a>
+            <?php } else{ ?>
+              <a href="#" class="ms-auto me-0 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
+            <?php } ?>
           </div>
           <div class="profileBox2">
             <?php
@@ -294,8 +323,7 @@ function DisplayShortText($text, $maxSymbols)
         <div class="mt-5">
           <div class="d-flex mb-3 align-items-center">
             <h4 class="align-items-center d-flex fw-regular m-0">Wykształcenie</h4>
-            <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
-            <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex"><span class="bi bi-pencil-fill fs-6 me-2"></span>Edytuj</a>
+            <a href="#" class="ms-auto me-0 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold" data-bs-toggle="modal" data-bs-target="#educationModal"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
           </div>
           <div class="profileBox2">
             <?php
@@ -305,7 +333,7 @@ function DisplayShortText($text, $maxSymbols)
                 $school_name = $row["school_name"];
                 $education_level = $row["education_level"];
                 $major = $row["major"];
-                $location = $row["location"];
+                $school_adress = $row["location"];
                 $peroid_from = $row["peroid_from"];
                 $peroid_to = $row["peroid_to"];
             ?>
@@ -313,7 +341,7 @@ function DisplayShortText($text, $maxSymbols)
                 <div class="d-flex">
                   <h4 class="fw-semibold"><?php echo $row["school_name"]; ?></h4>
                   <div class="d-flex ms-auto gap-4">
-                    <a href="#" class="fw-bold text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#experienceModal" onclick="EditExperience('<?php echo $experience_id; ?>', '<?php echo $position; ?>', '<?php echo $company_name; ?>' , '<?php echo $location; ?>', '<?php echo $peroid_from ?>', '<?php echo $peroid_to ?>')"><span class="bi bi-pencil-fill fs-6 me-2 violetColor"></span>Edytuj</a>
+                    <a href="#" class="fw-bold text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#educationModal" onclick="EditEducation('<?php echo $education_id; ?>', '<?php echo $school_name; ?>', '<?php echo $education_level; ?>' , '<?php echo $major; ?>', '<?php echo $school_adress ?>', '<?php echo $peroid_from ?>', '<?php echo $peroid_to ?>')"><span class="bi bi-pencil-fill fs-6 me-2 violetColor"></span>Edytuj</a>
                     <a href="#" class="fw-bold text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#decisionModal" onclick="SetDeleteData('<?php echo $education_id; ?>', 'educationDeleteForm', 'education')"><span class="bi bi-trash3-fill fs-6 me-2 violetColor"></span>Usuń</a>
                   </div>
                 </div>
@@ -345,8 +373,7 @@ function DisplayShortText($text, $maxSymbols)
         <div class="mt-5">
           <div class="d-flex mb-3 align-items-center">
             <h4 class="align-items-center d-flex fw-regular m-0">Kursy, szkolenia, certyfikaty</h4>
-            <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
-            <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex"><span class="bi bi-pencil-fill fs-6 me-2"></span>Edytuj</a>
+            <a href="#" class="ms-auto me-0 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
           </div>
           <div class="profileBox2">
             <?php
@@ -416,7 +443,7 @@ function DisplayShortText($text, $maxSymbols)
         <div class="modal-content rounded-4">
           <div class="modal-header">
             <h4 class="modal-title" id="experienceModalLabel">Doświadczenie zawodowe</h4>
-            <button type="button" onclick="AddExtraInput2('testDiv2')" class="btn violetButtonsDropdown rounded-4 mx-3 align-self-center" id="addExperienceBtn">
+            <button type="button" onclick="AddExtraInput2('testDiv2','experienceElement')" class="btn violetButtonsDropdown rounded-4 mx-3 align-self-center addNewElementButton">
               <i class="bi bi-plus-lg text-white me-2"></i>Dodaj
             </button>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -424,10 +451,10 @@ function DisplayShortText($text, $maxSymbols)
           <div class="modal-body p-2">
             <form method="post" action="../actions/profileData.php">
               <input type="hidden" name="experienceForm" value="true" id="experienceForm">
-              <input type="hidden" name="isEdit" value="false" id="isEditExperience">
+              <input type="hidden" name="isEdit" value="false" id="isEditExperience" class="editElement">
               <div class="container">
                 <div id="testDiv2">
-                  <div class="d-flex flex-column justify-content-center mt-3" id="divvvv2">
+                  <div class="d-flex flex-column justify-content-center mt-3" id="experienceElement">
                     <div class="m-0 d-flex justify-content-between">
                       <p class="m-0 violetColor fw-semibold">Nowe doświadczenie</p>
                       <p class="m-0 violetColor fw-semibold deleteElement invisible"><i class="bi bi-trash3-fill me-1"></i>Usuń</p>
@@ -478,6 +505,79 @@ function DisplayShortText($text, $maxSymbols)
       </div>
     </div>
 
+    <div class="modal fade" id="educationModal" tabindex="-1" aria-labelledby="educationModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content rounded-4">
+          <div class="modal-header">
+            <h4 class="modal-title" id="educationModalLabel">Wykształcenie</h4>
+            <button type="button" onclick="AddExtraInput2('educationDivModal', 'educationElement')" class="btn violetButtonsDropdown rounded-4 mx-3 align-self-center addNewElementButton">
+              <i class="bi bi-plus-lg text-white me-2"></i>Dodaj
+            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body p-2">
+            <form method="post" action="../actions/profileData.php">
+              <input type="hidden" name="educationForm" value="true" id="educationForm">
+              <input type="hidden" name="isEdit" value="false" id="isEditEducation" class="editElement">
+              <div class="container">
+                <div id="educationDivModal">
+                  <div class="d-flex flex-column justify-content-center mt-3" id="educationElement">
+                    <div class="m-0 d-flex justify-content-between">
+                      <p class="m-0 violetColor fw-semibold">Nowe wykształcenie</p>
+                      <p class="m-0 violetColor fw-semibold deleteElement invisible"><i class="bi bi-trash3-fill me-1"></i>Usuń</p>
+                    </div>
+                    <hr class="violetHr m-0">
+                    <div class="row mt-4">
+                      <div class="col-12">
+                        <div class="form-floating mb-3">
+                          <input type="text" class="form-control adminInput" id="school_name" name="education[]" placeholder="" maxlength="60" required>
+                          <label>Nazwa szkoły</label>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-floating mb-3">
+                          <input type="text" class="form-control adminInput" id="education_level" name="education[]" placeholder="" maxlength="60" required>
+                          <label>Poziom wykształcenia</label>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-floating mb-3">
+                          <input type="text" class="form-control adminInput" id="major" name="education[]" placeholder="" maxlength="60" required>
+                          <label>Kierunek</label>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="form-floating mb-3">
+                          <input type="text" class="form-control adminInput" id="school_adress" name="education[]" placeholder="" maxlength="60" required>
+                          <label>Adres szkoły</label>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-floating mb-3">
+                          <input type="date" class="form-control adminInput" id="studying_from" name="education[]" placeholder="" maxlength="60" required>
+                          <label>Okres uczęszczania (od)</label>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-floating mb-3">
+                          <input type="date" class="form-control adminInput" id="studying_to" name="education[]" placeholder="" maxlength="60" required>
+                          <label>Okres uczęszczania (do)</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <input type="submit" class="btn btn-primary">
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
 
 
     <div class="modal bounce-in" id="decisionModal" tabindex="-1" aria-labelledby="decisionModalLabel" aria-hidden="true">
@@ -503,6 +603,8 @@ function DisplayShortText($text, $maxSymbols)
     <form id="skillDeleteForm" method="post"></form>
     <form id="certificateDeleteForm" method="post"></form>
     <form id="educationDeleteForm" method="post"></form>
+    <form id="summaryDeleteForm" method="post"></form>
+    <form id="positionDeleteForm" method="post"></form>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <script>
@@ -523,9 +625,9 @@ function DisplayShortText($text, $maxSymbols)
       });
     }
 
-    function AddExtraInput2(divContainer) {
+    function AddExtraInput2(divContainer, cloneElement) {
       var urlsDiv = document.getElementById(divContainer);
-      var template = document.getElementById("divvvv2");
+      var template = document.getElementById(cloneElement);
 
       var newExperience = template.cloneNode(true);
       newExperience.style.display = "block";
@@ -553,27 +655,42 @@ function DisplayShortText($text, $maxSymbols)
       document.getElementById('working_from').value = workingTime1;
       document.getElementById('working_to').value = workingTime2;
       document.getElementById('isEditExperience').value = true;
-      document.getElementById('addExperienceBtn').classList.add("invisible");
+      document.querySelector('.addNewElementButton').classList.add("invisible");
       document.getElementById('experienceForm').value = id;
     }
 
-    var myModal = document.querySelector('.modal');
+    function EditEducation(id, school_name, education_level, major, school_adress, studying_from, studying_to) {
+      document.getElementById('school_name').value = school_name;
+      document.getElementById('education_level').value = education_level;
+      document.getElementById('major').value = major;
+      document.getElementById('school_adress').value = school_adress;
+      document.getElementById('studying_from').value = studying_from;
+      document.getElementById('studying_to').value = studying_to;
+      document.getElementById('isEditEducation').value = true;
+      document.querySelector('.addNewElementButton').classList.add("invisible");
+      document.getElementById('educationForm').value = id;
+    }
 
-    myModal.addEventListener('hidden.bs.modal', function() {
+    var myModal = document.getElementsByClassName('modal');
+
+    for (let i = 0; i < myModal.length-1; i++) {
+      var testtt = document.getElementById(myModal[i].id);
+      testtt.addEventListener('hidden.bs.modal', function() {
       var form = this.querySelector('form');
       if (form) {
         form.reset();
-        var formInput = form.querySelector('#isEdit');
+        var formInput = form.querySelector('.editElement');
         if (formInput) {
           formInput.value = 'false';
         }
-        document.getElementById('addExperienceBtn').classList.remove("invisible");
+        document.querySelector('.addNewElementButton').classList.remove("invisible");
         var extraDivs = form.querySelectorAll('.extraDiv');
         extraDivs.forEach(function(extraDiv) {
           extraDiv.remove();
         });
       }
     });
+    }
 
     function SendDeleteForm() {
       var form = document.getElementById(deleteFromId);

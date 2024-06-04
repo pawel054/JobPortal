@@ -9,33 +9,6 @@ if ($conn->connect_errno != 0) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST["experienceForm"])) {
             if ($_POST["isEdit"] == "false") {
-                /*
-                if ($conn->query("INSERT INTO offer VALUES (NULL, '$company_id', '$position_name', '$position_level', '$contract_type', '$job_type','$salary','$working_time', '$working_hours', '$working_days', '$expiration_date', '$gmaps', '$adress', '$category_id')")) {
-                    $newOffer_id = mysqli_insert_id($conn);
-
-                    if (isset($_POST["duties"])) {
-                        $duties = $_POST["duties"];
-                        foreach ($duties as $duty) {
-                            $conn->query("INSERT INTO offer_duties VALUES (NULL, '$duty', '$newOffer_id')");
-                        }
-                    }
-
-                    if (isset($_POST["requirements"])) {
-                        $requirements = $_POST["requirements"];
-                        foreach ($requirements as $requirement) {
-                            $conn->query("INSERT INTO offer_requirements VALUES (NULL, '$requirement', '$newOffer_id')");
-                        }
-                    }
-
-                    if (isset($_POST["benefits"])) {
-                        $benefits = $_POST["benefits"];
-                        foreach ($benefits as $benefit) {
-                            $conn->query("INSERT INTO offer_benefits VALUES (NULL, '$benefit', '$newOffer_id')");
-                        }
-                    }
-                }
-                */
-
                 if (isset($_POST["experience"])) {
                     $experience = $_POST["experience"];
                     $experienceCount = count(($experience));
@@ -56,9 +29,31 @@ if ($conn->connect_errno != 0) {
                     $conn->query("UPDATE profile_experience SET position = '$experience[0]', company_name = '$experience[1]', profile_experience.location = '$experience[2]', peroid_from='$experience[3]', peroid_to = '$experience[4]' WHERE experience_id = '$experience_id';");
                 }
             }
-            header('Location: ../user/profile.php');
+        }
+        if (isset($_POST["educationForm"])) {
+            if ($_POST["isEdit"] == "false") {
+                if (isset($_POST["education"])) {
+                    $education = $_POST["education"];
+                    $educationCount = count(($education));
+
+                    if ($educationCount % 6 == 0) {
+                        for($i = 0; $i < $educationCount; $i += 6){
+                            $data = array_slice($education, $i, 6);
+                            $conn->query("INSERT INTO profile_education VALUES (NULL, '$data[0]', '$data[1]', '$data[2]', '$data[3]', '$data[4]', '$data[5]', '$profile_id')");
+                        }
+                    }
+                }
+            } else{
+                if (isset($_POST["education"])) {
+                    $education = $_POST["education"];
+                    $education_id = $_POST["educationForm"];
+
+                    $conn->query("UPDATE profile_education SET school_name = '$education[0]', education_level = '$education[1]', major='$education[2]', `location` = '$education[3]', peroid_from='$education[4]', peroid_to = '$education[5]' WHERE education_id = '$education_id';");
+                }
+            }
         }
 
     }
+    header('Location: ../user/profile.php');
 }
 mysqli_close($conn);
