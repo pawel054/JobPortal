@@ -21,21 +21,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->query("UPDATE `profile` SET job_position = null, job_position_description = null WHERE profile_id='$profile_id'");
   }
 
-  if(isset($_POST["delete_language"])){
+  if (isset($_POST["delete_language"])) {
     $lang_id = $_POST["delete_language"];
     $conn->query("DELETE FROM profile_languages WHERE language_id='$lang_id'");
   }
 
-  if(isset($_POST["delete_skill"])){
+  if (isset($_POST["delete_skill"])) {
     $skill_id = $_POST["delete_skill"];
     $conn->query("DELETE FROM profile_skills WHERE skill_id='$skill_id'");
   }
 
-  if(isset($_POST["delete_certificate"])){
+  if (isset($_POST["delete_certificate"])) {
     $certificate_id = $_POST["delete_certificate"];
     $conn->query("DELETE FROM profile_certificates WHERE certificate_id='$certificate_id'");
   }
-  if(isset($_POST["delete_education"])){
+  if (isset($_POST["delete_education"])) {
     $edu_id = $_POST["delete_education"];
     $conn->query("DELETE FROM profile_education WHERE education_id='$edu_id'");
   }
@@ -161,7 +161,7 @@ function DisplayShortText($text, $maxSymbols)
       <div class="col-lg-5">
         <div class="profileBox">
           <div class="profileBoxPart d-flex">
-            <h4 class="text-light mx-4 align-items-center d-flex profileInfoTitle">Mój profil</h4>  
+            <h4 class="text-light mx-4 align-items-center d-flex profileInfoTitle">Mój profil</h4>
             <a href="#" id="informationsEditBtn" onclick="replaceParagraphsWithInputs()" class="text-light ms-auto me-4 fs-5 profileBtnLink profileInfoTitle align-items-center d-flex"><span class="bi bi-pencil-fill profileIcon me-2"></span><span class="actionText">Edytuj</span></a>
           </div>
           <div class="profileInfoData mx-4">
@@ -204,46 +204,46 @@ function DisplayShortText($text, $maxSymbols)
             <?php
             if ($jobPosition != null && $jobPositionDesc != null) {
             ?>
-            <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-pencil-fill me-2 fs-5 fw-semibold"></span>Edytuj</a>
-            <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex" data-bs-toggle="modal" data-bs-target="#decisionModal" onclick="SetDeleteData('<?php echo $profileID; ?>', 'positionDeleteForm', 'position')"><span class="bi bi-trash3-fill fs-6 me-2"></span>Usuń</a>
-            <?php } else{ ?>
+              <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-pencil-fill me-2 fs-5 fw-semibold"></span>Edytuj</a>
+              <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex" data-bs-toggle="modal" data-bs-target="#decisionModal" onclick="SetDeleteData('<?php echo $profileID; ?>', 'positionDeleteForm', 'position')"><span class="bi bi-trash3-fill fs-6 me-2 profileBtnLinkIcon"></span>Usuń</a>
+            <?php } else { ?>
               <a href="#" class="ms-auto me-0 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
             <?php } ?>
           </div>
           <div class="profileBox2">
-          <?php
+            <?php
             if ($jobPosition != null && $jobPositionDesc != null) {
-          ?>
-            <h4 class="fw-bold mx-2"><?php echo $jobPosition; ?></h4>
-            <p class="mx-2 mb-1"><?php echo $jobPositionDesc; ?></p>
-          <?php
-            } else{
+            ?>
+              <h4 class="fw-bold mx-2"><?php echo $jobPosition; ?></h4>
+              <p class="mx-2 mb-1"><?php echo $jobPositionDesc; ?></p>
+            <?php
+            } else {
               echo "<h5 class='fw-bold m-0'>Brak danych</h5><p class='m-0'>W tym miejscu wyświetli się aktualne stanowisko  </p>";
             }
-          ?>
+            ?>
           </div>
         </div>
         <div class="mt-5">
           <div class="d-flex mb-3 align-items-center">
             <h4 class="align-items-center d-flex fw-regular m-0">Języki</h4>
-            <a href="#" class="ms-auto me-0 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
+            <a href="#" class="ms-auto me-0 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold" data-bs-toggle="modal" data-bs-target="#languageModal"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
           </div>
           <div class="profileBox2">
             <?php
-            if($languageResult->num_rows > 0){
+            if ($languageResult->num_rows > 0) {
               while ($row = mysqli_fetch_assoc($languageResult)) {
                 $lang_id = $row["language_id"];
             ?>
-              <div class="d-flex">
-                <div class="d-flex align-items-center mx-2 mt-2">
-                  <i class="bi bi-globe-americas fs-2 violetColor"></i>
-                  <p class="m-0 mx-3 fs-5"><?php echo $row['language']; ?> <span class="linkMark"><?php echo $row['level']; ?></span></p>
+                <div class="d-flex">
+                  <div class="d-flex align-items-center mx-2 mt-2">
+                    <i class="bi bi-globe-americas fs-2 violetColor"></i>
+                    <p class="m-0 mx-3 fs-5"><?php echo $row['language']; ?> <span class="linkMark"><?php echo $row['level']; ?></span></p>
+                  </div>
+                  <a href="#" class="fw-bold ms-auto mx-2 text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#decisionModal" onclick="SetDeleteData('<?php echo $lang_id; ?>', 'langDeleteForm', 'language')"><span class="bi bi-trash3-fill fs-6 me-2 violetColor"></span>Usuń</a>
                 </div>
-                <a href="#" class="fw-bold ms-auto mx-2 text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#decisionModal" onclick="SetDeleteData('<?php echo $lang_id; ?>', 'langDeleteForm', 'language')"><span class="bi bi-trash3-fill fs-6 me-2 violetColor"></span>Usuń</a>
-              </div>
             <?php
               }
-            } else{
+            } else {
               echo "<h5 class='fw-bold m-0'>Brak danych</h5><p class='m-0'>W tym miejscu wyświetlą się języki.</p>";
             }
             ?>
@@ -257,9 +257,9 @@ function DisplayShortText($text, $maxSymbols)
             <?php
             if ($careerSummary != null) {
             ?>
-            <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-pencil-fill me-2 fs-5 fw-semibold"></span>Edytuj</a>
-            <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex" data-bs-toggle="modal" data-bs-target="#decisionModal" onclick="SetDeleteData('<?php echo $profileID; ?>', 'summaryDeleteForm', 'summary')"><span class="bi bi-trash3-fill fs-6 me-2"></span>Usuń</a>
-            <?php } else{ ?>
+              <a href="#" class="ms-auto me-3 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-pencil-fill me-2 fs-5 fw-semibold profileBtnLinkIcon"></span>Edytuj</a>
+              <a href="#" class=" fs-6 fw-semibold profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex" data-bs-toggle="modal" data-bs-target="#decisionModal" onclick="SetDeleteData('<?php echo $profileID; ?>', 'summaryDeleteForm', 'summary')"><span class="bi bi-trash3-fill fs-6 me-2 profileBtnLinkIcon"></span>Usuń</a>
+            <?php } else { ?>
               <a href="#" class="ms-auto me-0 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
             <?php } ?>
           </div>
@@ -267,9 +267,9 @@ function DisplayShortText($text, $maxSymbols)
             <?php
             if ($careerSummary != null) {
             ?>
-            <p class="mx-4 mb-1"><?php echo $careerSummary; ?></p>
+              <p class="mx-4 mb-1"><?php echo $careerSummary; ?></p>
             <?php
-            } else{
+            } else {
               echo "<h5 class='fw-bold m-0'>Brak danych</h5><p class='m-0'>W tym miejscu wyświetli się podsumowanie zawodowe</p>";
             }
             ?>
@@ -278,7 +278,7 @@ function DisplayShortText($text, $maxSymbols)
         <div class="mt-5">
           <div class="d-flex mb-3 align-items-center">
             <h4 class="align-items-center d-flex fw-regular m-0">Doświadczenie zawodowe</h4>
-            <a href="#" class="ms-auto me-0 fs-6 profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex fw-semibold mx-auto" data-bs-toggle="modal" data-bs-target="#experienceModal"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
+            <a href="#" class="ms-auto me-0 fs-6 profileBtnLink px-3 pe-3 rounded-5 align-items-center d-flex fw-semibold mx-auto" data-bs-toggle="modal" data-bs-target="#experienceModal"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold profileBtnLinkIcon"></span>Dodaj</a>
           </div>
           <div class="profileBox2">
             <?php
@@ -291,30 +291,30 @@ function DisplayShortText($text, $maxSymbols)
                 $peroid_from = $row["peroid_from"];
                 $peroid_to = $row["peroid_to"];
             ?>
-              <div class="p-3">
-                <div class="d-flex">
-                  <h4 class="fw-semibold"><?php echo $row["position"]; ?></h4>
-                  <div class="d-flex ms-auto gap-4">
-                    <a href="#" class="fw-bold text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#experienceModal" onclick="EditExperience('<?php echo $experience_id; ?>', '<?php echo $position; ?>', '<?php echo $company_name; ?>' , '<?php echo $location; ?>', '<?php echo $peroid_from ?>', '<?php echo $peroid_to ?>')"><span class="bi bi-pencil-fill fs-6 me-2 violetColor"></span>Edytuj</a>
-                    <a href="#" class="fw-bold text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#decisionModal" onclick="SetDeleteData('<?php echo $experience_id; ?>', 'experienceDeleteForm', 'experience')"><span class="bi bi-trash3-fill fs-6 me-2 violetColor"></span>Usuń</a>
+                <div class="p-3">
+                  <div class="d-flex">
+                    <h4 class="fw-semibold"><?php echo $row["position"]; ?></h4>
+                    <div class="d-flex ms-auto gap-4">
+                      <a href="#" class="fw-bold text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#experienceModal" onclick="EditExperience('<?php echo $experience_id; ?>', '<?php echo $position; ?>', '<?php echo $company_name; ?>' , '<?php echo $location; ?>', '<?php echo $peroid_from ?>', '<?php echo $peroid_to ?>')"><span class="bi bi-pencil-fill fs-6 me-2 violetColor"></span>Edytuj</a>
+                      <a href="#" class="fw-bold text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#decisionModal" onclick="SetDeleteData('<?php echo $experience_id; ?>', 'experienceDeleteForm', 'experience')"><span class="bi bi-trash3-fill fs-6 me-2 violetColor"></span>Usuń</a>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center mb-2">
+                    <i class="bi bi-buildings fs-4 violetColor"></i>
+                    <p class="m-0 mx-2 fs-5"><?php echo $row["company_name"]; ?></p>
+                  </div>
+                  <div class="d-flex align-items-centermb-2">
+                    <i class="bi bi-geo-alt fs-4 violetColor"></i>
+                    <p class="m-0 mx-2 fs-5"><?php echo $row["location"]; ?></p>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-clock fs-4 violetColor"></i>
+                    <p class="m-0 mx-2 fs-5"><?php echo $row["peroid_from"]; ?> - <?php echo $row["peroid_to"]; ?></p>
                   </div>
                 </div>
-                <div class="d-flex align-items-center mb-2">
-                  <i class="bi bi-buildings fs-4 violetColor"></i>
-                  <p class="m-0 mx-2 fs-5"><?php echo $row["company_name"]; ?></p>
-                </div>
-                <div class="d-flex align-items-centermb-2">
-                  <i class="bi bi-geo-alt fs-4 violetColor"></i>
-                  <p class="m-0 mx-2 fs-5"><?php echo $row["location"]; ?></p>
-                </div>
-                <div class="d-flex align-items-center">
-                  <i class="bi bi-clock fs-4 violetColor"></i>
-                  <p class="m-0 mx-2 fs-5"><?php echo $row["peroid_from"]; ?> - <?php echo $row["peroid_to"]; ?></p>
-                </div>
-              </div>
             <?php
               }
-            } else{
+            } else {
               echo "<h5 class='fw-bold m-0'>Brak danych</h5><p class='m-0'>W tym miejscu wyświetlą się doświadczenia.</p>";
             }
             ?>
@@ -323,7 +323,7 @@ function DisplayShortText($text, $maxSymbols)
         <div class="mt-5">
           <div class="d-flex mb-3 align-items-center">
             <h4 class="align-items-center d-flex fw-regular m-0">Wykształcenie</h4>
-            <a href="#" class="ms-auto me-0 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold" data-bs-toggle="modal" data-bs-target="#educationModal"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
+            <a href="#" class="ms-auto me-0 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold" data-bs-toggle="modal" data-bs-target="#educationModal"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold profileBtnLinkIcon"></span>Dodaj</a>
           </div>
           <div class="profileBox2">
             <?php
@@ -337,34 +337,34 @@ function DisplayShortText($text, $maxSymbols)
                 $peroid_from = $row["peroid_from"];
                 $peroid_to = $row["peroid_to"];
             ?>
-              <div class="p-3">
-                <div class="d-flex">
-                  <h4 class="fw-semibold"><?php echo $row["school_name"]; ?></h4>
-                  <div class="d-flex ms-auto gap-4">
-                    <a href="#" class="fw-bold text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#educationModal" onclick="EditEducation('<?php echo $education_id; ?>', '<?php echo $school_name; ?>', '<?php echo $education_level; ?>' , '<?php echo $major; ?>', '<?php echo $school_adress ?>', '<?php echo $peroid_from ?>', '<?php echo $peroid_to ?>')"><span class="bi bi-pencil-fill fs-6 me-2 violetColor"></span>Edytuj</a>
-                    <a href="#" class="fw-bold text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#decisionModal" onclick="SetDeleteData('<?php echo $education_id; ?>', 'educationDeleteForm', 'education')"><span class="bi bi-trash3-fill fs-6 me-2 violetColor"></span>Usuń</a>
+                <div class="p-3">
+                  <div class="d-flex">
+                    <h4 class="fw-semibold"><?php echo $row["school_name"]; ?></h4>
+                    <div class="d-flex ms-auto gap-4">
+                      <a href="#" class="fw-bold text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#educationModal" onclick="EditEducation('<?php echo $education_id; ?>', '<?php echo $school_name; ?>', '<?php echo $education_level; ?>' , '<?php echo $major; ?>', '<?php echo $school_adress ?>', '<?php echo $peroid_from ?>', '<?php echo $peroid_to ?>')"><span class="bi bi-pencil-fill fs-6 me-2 violetColor"></span>Edytuj</a>
+                      <a href="#" class="fw-bold text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#decisionModal" onclick="SetDeleteData('<?php echo $education_id; ?>', 'educationDeleteForm', 'education')"><span class="bi bi-trash3-fill fs-6 me-2 violetColor"></span>Usuń</a>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center mb-2">
+                    <i class="bi bi-bar-chart fs-4 violetColor"></i>
+                    <p class="m-0 mx-2 fs-5"><?php echo $row["education_level"]; ?></p>
+                  </div>
+                  <div class="d-flex align-items-centermb-2">
+                    <i class="bi bi-mortarboard-fill fs-4 violetColor"></i>
+                    <p class="m-0 mx-2 fs-5"><?php echo $row["major"]; ?></p>
+                  </div>
+                  <div class="d-flex align-items-centermb-2">
+                    <i class="bi bi-geo-alt fs-4 violetColor"></i>
+                    <p class="m-0 mx-2 fs-5"><?php echo $row["location"]; ?></p>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-clock fs-4 violetColor"></i>
+                    <p class="m-0 mx-2 fs-5"><?php echo $row["peroid_from"]; ?> - <?php echo $row["peroid_to"]; ?></p>
                   </div>
                 </div>
-                <div class="d-flex align-items-center mb-2">
-                  <i class="bi bi-bar-chart fs-4 violetColor"></i>
-                  <p class="m-0 mx-2 fs-5"><?php echo $row["education_level"]; ?></p>
-                </div>
-                <div class="d-flex align-items-centermb-2">
-                  <i class="bi bi-mortarboard-fill fs-4 violetColor"></i>
-                  <p class="m-0 mx-2 fs-5"><?php echo $row["major"]; ?></p>
-                </div>
-                <div class="d-flex align-items-centermb-2">
-                  <i class="bi bi-geo-alt fs-4 violetColor"></i>
-                  <p class="m-0 mx-2 fs-5"><?php echo $row["location"]; ?></p>
-                </div>
-                <div class="d-flex align-items-center">
-                  <i class="bi bi-clock fs-4 violetColor"></i>
-                  <p class="m-0 mx-2 fs-5"><?php echo $row["peroid_from"]; ?> - <?php echo $row["peroid_to"]; ?></p>
-                </div>
-              </div>
             <?php
               }
-            } else{
+            } else {
               echo "<h5 class='fw-bold m-0'>Brak danych</h5><p class='m-0'>W tym miejscu wyświetlą się wykształcenia.</p>";
             }
             ?>
@@ -373,7 +373,7 @@ function DisplayShortText($text, $maxSymbols)
         <div class="mt-5">
           <div class="d-flex mb-3 align-items-center">
             <h4 class="align-items-center d-flex fw-regular m-0">Kursy, szkolenia, certyfikaty</h4>
-            <a href="#" class="ms-auto me-0 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
+            <a href="#" class="ms-auto me-0 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold" data-bs-toggle="modal" data-bs-target="#certificatesModal"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold profileBtnLinkIcon"></span>Dodaj</a>
           </div>
           <div class="profileBox2">
             <?php
@@ -385,26 +385,26 @@ function DisplayShortText($text, $maxSymbols)
                 $peroid_from = $row["peroid_from"];
                 $peroid_to = $row["peroid_to"];
             ?>
-              <div class="p-3">
-                <div class="d-flex">
-                  <h4 class="fw-semibold"><?php echo $row["name"]; ?></h4>
-                  <div class="d-flex ms-auto gap-4">
-                    <a href="#" class="fw-bold text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#experienceModal" onclick="EditExperience('<?php echo $experience_id; ?>', '<?php echo $position; ?>', '<?php echo $company_name; ?>' , '<?php echo $location; ?>', '<?php echo $peroid_from ?>', '<?php echo $peroid_to ?>')"><span class="bi bi-pencil-fill fs-6 me-2 violetColor"></span>Edytuj</a>
-                    <a href="#" class="fw-bold text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#decisionModal" onclick="SetDeleteData('<?php echo $cert_id; ?>', 'certificateDeleteForm', 'certificate')"><span class="bi bi-trash3-fill fs-6 me-2 violetColor"></span>Usuń</a>
+                <div class="p-3">
+                  <div class="d-flex">
+                    <h4 class="fw-semibold"><?php echo $row["name"]; ?></h4>
+                    <div class="d-flex ms-auto gap-4">
+                      <a href="#" class="fw-bold text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#certificatesModal" onclick="EditCertificate('<?php echo $cert_id; ?>', '<?php echo $cert_name; ?>', '<?php echo $cert_organizer; ?>' , '<?php echo $peroid_from; ?>', '<?php echo $peroid_to ?>')"><span class="bi bi-pencil-fill fs-6 me-2 violetColor"></span>Edytuj</a>
+                      <a href="#" class="fw-bold text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#decisionModal" onclick="SetDeleteData('<?php echo $cert_id; ?>', 'certificateDeleteForm', 'certificate')"><span class="bi bi-trash3-fill fs-6 me-2 violetColor"></span>Usuń</a>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center mb-2">
+                    <i class="bi bi-person fs-4 violetColor"></i>
+                    <p class="m-0 mx-2 fs-5"><?php echo $row["organizer"]; ?></p>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-clock fs-4 violetColor"></i>
+                    <p class="m-0 mx-2 fs-5"><?php echo $row["peroid_from"]; ?> - <?php echo $row["peroid_to"]; ?></p>
                   </div>
                 </div>
-                <div class="d-flex align-items-center mb-2">
-                  <i class="bi bi-person fs-4 violetColor"></i>
-                  <p class="m-0 mx-2 fs-5"><?php echo $row["organizer"]; ?></p>
-                </div>
-                <div class="d-flex align-items-center">
-                  <i class="bi bi-clock fs-4 violetColor"></i>
-                  <p class="m-0 mx-2 fs-5"><?php echo $row["peroid_from"]; ?> - <?php echo $row["peroid_to"]; ?></p>
-                </div>
-              </div>
             <?php
               }
-            } else{
+            } else {
               echo "<h5 class='fw-bold m-0'>Brak danych</h5><p class='m-0'>W tym miejscu wyświetlą się Kursy, szkolenia lub certyfikaty.</p>";
             }
             ?>
@@ -413,24 +413,24 @@ function DisplayShortText($text, $maxSymbols)
         <div class="mt-5 mb-5">
           <div class="d-flex mb-3 align-items-center">
             <h4 class="align-items-center d-flex fw-regular m-0">Umiejętności</h4>
-            <a href="#" class="ms-auto me-0 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold"></span>Dodaj</a>
+            <a href="#" class="ms-auto me-0 fs-6 profileBtnLink px-3 pe-3  rounded-5 align-items-center d-flex fw-semibold" data-bs-toggle="modal" data-bs-target="#skillsModal"><span class="bi bi-plus-lg me-2 fs-5 fw-semibold profileBtnLinkIcon"></span>Dodaj</a>
           </div>
           <div class="profileBox2">
             <?php
-            if($skillsResult->num_rows > 0){
+            if ($skillsResult->num_rows > 0) {
               while ($row = mysqli_fetch_assoc($skillsResult)) {
                 $skill_id = $row["skill_id"];
             ?>
-              <div class="d-flex">
-                <div class="d-flex align-items-center mx-2 mt-2">
-                  <i class="bi bi-star fs-2 violetColor"></i>
-                  <p class="m-0 mx-3 fs-5"><?php echo $row['skill']; ?></p>
+                <div class="d-flex">
+                  <div class="d-flex align-items-center mx-2 mt-2">
+                    <i class="bi bi-star fs-2 violetColor"></i>
+                    <p class="m-0 mx-3 fs-5"><?php echo $row['skill']; ?></p>
+                  </div>
+                  <a href="#" class="fw-bold ms-auto mx-2 text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#decisionModal" onclick="SetDeleteData('<?php echo $skill_id; ?>', 'skillDeleteForm', 'skill')"><span class="bi bi-trash3-fill fs-6 me-2 violetColor profileBtnLinkIcon"></span>Usuń</a>
                 </div>
-                <a href="#" class="fw-bold ms-auto mx-2 text-decoration-none align-items-center violetColor d-flex" data-bs-toggle="modal" data-bs-target="#decisionModal" onclick="SetDeleteData('<?php echo $skill_id; ?>', 'skillDeleteForm', 'skill')"><span class="bi bi-trash3-fill fs-6 me-2 violetColor"></span>Usuń</a>
-              </div>
             <?php
               }
-            } else{
+            } else {
               echo "<h5 class='fw-bold m-0'>Brak danych</h5><p class='m-0'>W tym miejscu wyświetlą się umiejętności.</p>";
             }
             ?>
@@ -578,6 +578,164 @@ function DisplayShortText($text, $maxSymbols)
       </div>
     </div>
 
+    <div class="modal fade" id="certificatesModal" tabindex="-1" aria-labelledby="certificatesModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content rounded-4">
+          <div class="modal-header">
+            <h4 class="modal-title" id="certificatesModalLabel">Kursy, szkolenia, certyfikaty</h4>
+            <button type="button" onclick="AddExtraInput2('certificatesDivModal', 'certificatesElement')" class="btn violetButtonsDropdown rounded-4 mx-3 align-self-center addNewElementButton">
+              <i class="bi bi-plus-lg text-white me-2"></i>Dodaj
+            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body p-2">
+            <form method="post" action="../actions/profileData.php">
+              <input type="hidden" name="certificatesForm" value="true" id="certificatesForm">
+              <input type="hidden" name="isEdit" value="false" id="isEditCertificate" class="editElement">
+              <div class="container">
+                <div id="certificatesDivModal">
+                  <div class="d-flex flex-column justify-content-center mt-3" id="certificatesElement">
+                    <div class="m-0 d-flex justify-content-between">
+                      <p class="m-0 violetColor fw-semibold">Nowy element</p>
+                      <p class="m-0 violetColor fw-semibold deleteElement invisible"><i class="bi bi-trash3-fill me-1"></i>Usuń</p>
+                    </div>
+                    <hr class="violetHr m-0">
+                    <div class="row mt-4">
+                      <div class="col-12">
+                        <div class="form-floating mb-3">
+                          <input type="text" class="form-control adminInput" id="cert_name" name="certificates[]" placeholder="" maxlength="60" required>
+                          <label>Nazwa kursu</label>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="form-floating mb-3">
+                          <input type="text" class="form-control adminInput" id="organizer" name="certificates[]" placeholder="" maxlength="60" required>
+                          <label>Organizator</label>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-floating mb-3">
+                          <input type="date" class="form-control adminInput" id="cert_peroid_from" name="certificates[]" placeholder="" maxlength="60" required>
+                          <label>Okres uczęszczania (od)</label>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-floating mb-3">
+                          <input type="date" class="form-control adminInput" id="cert_peroid_to" name="certificates[]" placeholder="" maxlength="60" required>
+                          <label>Okres uczęszczania (do)</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <input type="submit" class="btn btn-primary">
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="skillsModal" tabindex="-1" aria-labelledby="skillsModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content rounded-4">
+          <div class="modal-header">
+            <h4 class="modal-title" id="skillsModalLabel">Umiejętności</h4>
+            <button type="button" onclick="AddExtraInput2('skillsDivModal', 'skillsElement')" class="btn violetButtonsDropdown rounded-4 mx-3 align-self-center addNewElementButton">
+              <i class="bi bi-plus-lg text-white me-2"></i>Dodaj
+            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body p-2">
+            <form method="post" action="../actions/profileData.php">
+              <input type="hidden" name="skillsForm" value="true">
+              <div class="container">
+                <div id="skillsDivModal">
+                  <div class="d-flex flex-column justify-content-center mt-3" id="skillsElement">
+                    <div class="m-0 d-flex justify-content-between">
+                      <p class="m-0 violetColor fw-semibold">Nowa umiejętność</p>
+                      <p class="m-0 violetColor fw-semibold deleteElement invisible"><i class="bi bi-trash3-fill me-1"></i>Usuń</p>
+                    </div>
+                    <hr class="violetHr m-0">
+                    <div class="row mt-4">
+                      <div class="col-12">
+                        <div class="form-floating mb-3">
+                          <input type="text" class="form-control adminInput" name="skill[]" placeholder="" maxlength="60" required>
+                          <label>Umiejętność</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <input type="submit" class="btn btn-primary">
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="languageModal" tabindex="-1" aria-labelledby="languageModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content rounded-4">
+          <div class="modal-header">
+            <h4 class="modal-title" id="languageModalLabel">Języki</h4>
+            <button type="button" onclick="AddExtraInput2('langDivModal', 'langElement')" class="btn violetButtonsDropdown rounded-4 mx-3 align-self-center addNewElementButton">
+              <i class="bi bi-plus-lg text-white me-2"></i>Dodaj
+            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body p-2">
+            <form method="post" action="../actions/profileData.php">
+              <input type="hidden" name="langForm" value="true">
+              <div class="container">
+                <div id="langDivModal">
+                  <div class="d-flex flex-column justify-content-center mt-3" id="langElement">
+                    <div class="m-0 d-flex justify-content-between">
+                      <p class="m-0 violetColor fw-semibold">Nowy język</p>
+                      <p class="m-0 violetColor fw-semibold deleteElement invisible"><i class="bi bi-trash3-fill me-1"></i>Usuń</p>
+                    </div>
+                    <hr class="violetHr m-0">
+                    <div class="row mt-4">
+                      <div class="col-9">
+                        <div class="form-floating mb-3">
+                          <input type="text" class="form-control adminInput" name="lang[]" placeholder="" maxlength="60" required>
+                          <label>Język</label>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="form-floating mb-3">
+                          <select class="form-select adminInput" id="kategoria" aria-label="Floating label select example" name="lang[]">
+                            <option>A1</option>
+                            <option>A2</option>
+                            <option>B1</option>
+                            <option>B2</option>
+                            <option>C1</option>
+                            <option>C2</option>
+                          </select>
+                            <label>Poziom</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <input type="submit" class="btn btn-primary">
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
 
 
     <div class="modal bounce-in" id="decisionModal" tabindex="-1" aria-labelledby="decisionModalLabel" aria-hidden="true">
@@ -671,25 +829,35 @@ function DisplayShortText($text, $maxSymbols)
       document.getElementById('educationForm').value = id;
     }
 
+    function EditCertificate(id, cert_name, organizer, peroid_from, peroid_to) {
+      document.getElementById('cert_name').value = cert_name;
+      document.getElementById('organizer').value = organizer;
+      document.getElementById('cert_peroid_from').value = peroid_from;
+      document.getElementById('cert_peroid_to').value = peroid_to;
+      document.getElementById('isEditCertificate').value = true;
+      document.querySelector('.addNewElementButton').classList.add("invisible");
+      document.getElementById('certificatesForm').value = id;
+    }
+
     var myModal = document.getElementsByClassName('modal');
 
-    for (let i = 0; i < myModal.length-1; i++) {
+    for (let i = 0; i < myModal.length - 1; i++) {
       var testtt = document.getElementById(myModal[i].id);
       testtt.addEventListener('hidden.bs.modal', function() {
-      var form = this.querySelector('form');
-      if (form) {
-        form.reset();
-        var formInput = form.querySelector('.editElement');
-        if (formInput) {
-          formInput.value = 'false';
+        var form = this.querySelector('form');
+        if (form) {
+          form.reset();
+          var formInput = form.querySelector('.editElement');
+          if (formInput) {
+            formInput.value = 'false';
+          }
+          document.querySelector('.addNewElementButton').classList.remove("invisible");
+          var extraDivs = form.querySelectorAll('.extraDiv');
+          extraDivs.forEach(function(extraDiv) {
+            extraDiv.remove();
+          });
         }
-        document.querySelector('.addNewElementButton').classList.remove("invisible");
-        var extraDivs = form.querySelectorAll('.extraDiv');
-        extraDivs.forEach(function(extraDiv) {
-          extraDiv.remove();
-        });
-      }
-    });
+      });
     }
 
     function SendDeleteForm() {

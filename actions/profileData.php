@@ -53,6 +53,48 @@ if ($conn->connect_errno != 0) {
             }
         }
 
+        if (isset($_POST["certificatesForm"])) {
+            if (isset($_POST["certificates"])) {
+                $certificates = $_POST["certificates"];
+                $certificatesCount = count(($certificates));
+                $cert_id = $_POST["certificatesForm"];
+
+                if ($_POST["isEdit"] == "false") {
+                    if ($certificatesCount % 4 == 0) {
+                        for ($i = 0; $i < $certificatesCount; $i += 4) {
+                            $data = array_slice($certificates, $i, 4);
+                            $conn->query("INSERT INTO profile_certificates VALUES (NULL, '$data[0]', '$data[1]', '$data[2]', '$data[3]', '$profile_id')");
+                        }
+                    }
+                } else {
+                        $conn->query("UPDATE profile_certificates SET `name` = '$certificates[0]', organizer = '$certificates[1]', peroid_from='$certificates[2]', peroid_to = '$certificates[3]' WHERE certificate_id = '$cert_id';");
+                }
+            }
+        }
+
+        if (isset($_POST["skillsForm"])) {
+            if (isset($_POST["skill"])) {
+                $skills = $_POST["skill"];
+                foreach ($skills as $skill) {
+                    $conn->query("INSERT INTO profile_skills VALUES (NULL, '$skill', '$profile_id')");
+                }
+            }
+        }
+
+        if(isset($_POST["langForm"])){
+            if (isset($_POST["lang"])) {
+                $languages = $_POST["lang"];
+                $languagesCount = count(($languages));
+
+                if ($languagesCount % 2 == 0) {
+                    for ($i = 0; $i < $languagesCount; $i += 2) {
+                        $data = array_slice($languages, $i, 2);
+                        $conn->query("INSERT INTO profile_languages VALUES (NULL, '$data[0]', '$data[1]', '$profile_id')");
+                    }
+                }
+            }
+        }
+
     }
     header('Location: ../user/profile.php');
 }

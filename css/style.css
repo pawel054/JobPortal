@@ -120,10 +120,6 @@
     border-width: 0px;
 }
 
-.modal-backdrop {
-    
-}
-
 .kategoriaGroup{
     font-size: 20px;
     margin-bottom: 40px;
@@ -244,7 +240,7 @@
 }
 
 .profileBoxPart{
-    background-color: #101727;;
+    background-color: #400DD0;;
     border-radius: 30px 30px 0px 0px;
     height: 150px;
 }
@@ -256,9 +252,22 @@
 
 .profileBtnLink{
     text-decoration: none;
-    border: 2px solid #101727;
-    color: #101727;
+    border: 2px solid #30099B;
+    color: #30099B;
     height: 35px;
+}
+
+.profileBtnLink:hover{
+    color: #483874;
+    border-color: #483874;
+
+    .profileBtnLinkIcon{
+        color: #483874;
+    }
+}
+
+.profileBtnLinkIcon{
+    color: #30099B;
 }
 
 .profileInfoData{
