@@ -161,6 +161,22 @@
                     header('Location: ../admin/applications.php');
                 }
             }
+
+            if(isset($_POST["DeleteFavoriteOffer"])){
+                $deleteId = $_POST["DeleteFavoriteOffer"];
+                $headerAdress = $_POST["return_url"];
+                echo $headerAdress;
+                $conn->query("DELETE FROM user_favourites WHERE favourite_id = '$deleteId'");
+                header('Location: '.$headerAdress);
+            }
+
+        if (isset($_POST["DeleteApplicationOffer"])) {
+            $deleteId = $_POST["DeleteApplicationOffer"];
+            $headerAdress = $_POST["return_url"];
+            echo $headerAdress;
+            $conn->query("DELETE FROM user_applications WHERE application_id = '$deleteId'");
+            header('Location: ' . $headerAdress);
+        }
         }
 
         

@@ -50,7 +50,9 @@
                             $_SESSION['profile_id'] = $row2['profile_id'];
                         }
                         else{
-                            $_SESSION['profile_id'] = -1;
+                            if($createProfileResult = $conn->query("INSERT INTO `profile` VALUES (NULL, 'Brak danych', '', '2024-06-05', 'Brak danych', 'imgs/UI/login_user.png', 'Brak danych', '', '', '', '$user_id');")){
+                                $_SESSION['profile_id'] = $conn->insert_id;
+                            }
                         }
                     }
                 }

@@ -95,6 +95,78 @@ if ($conn->connect_errno != 0) {
             }
         }
 
+        if (isset($_POST["urlForm"])) {
+            if (isset($_POST["url"])) {
+                $urls = $_POST["url"];
+                $urlsCount = count(($urls));
+
+                if ($urlsCount % 2 == 0) {
+                    for ($i = 0; $i < $urlsCount; $i += 2) {
+                        $data = array_slice($urls, $i, 2);
+                        $conn->query("INSERT INTO profile_urls VALUES (NULL, '$data[0]', '$data[1]', '$profile_id')");
+                    }
+                }
+            }
+        }
+
+        if (isset($_POST["summaryForm"])) {
+            if (isset($_POST["summary"])) {
+                $summary = $_POST["summary"];
+                $conn->query("UPDATE `profile` SET career_summary = '$summary' WHERE profile_id = '$profile_id';");
+            }
+        }
+
+        if (isset($_POST["positionForm"])) {
+            if (isset($_POST["cur_position"]) && isset($_POST["cur_position_desc"])) {
+                $position = $_POST["cur_position"];
+                $description = $_POST["cur_position_desc"];
+                $conn->query("UPDATE `profile` SET job_position = '$position', job_position_description = '$description' WHERE profile_id = '$profile_id';");
+            }
+        }
+
+        if (isset($_POST["baseForm"])) {
+            $nameSurname = $_POST["nameSurname"];
+            $birthdate = $_POST["birthdate"];
+            $email = $_POST["email"];
+            $number = $_POST["number"];
+            $adress = $_POST["adress"];
+
+            $currentAvatarResult = $conn->query("SELECT avatar_src FROM `profile` WHERE profile_id='$profile_id';");
+            if ($currentAvatarResult->num_rows > 0) {
+                $row = $currentAvatarResult->fetch_assoc();
+                $currentImagePath = "../".$row["avatar_src"];
+                $currentImagePathDatabase = $row["avatar_src"];
+                echo $currentImagePath;
+            }
+
+            if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+                $fileTmpPath = $_FILES['file']['tmp_name'];
+                $fileName = $_FILES['file']['name'];
+
+                $allowedExtensions = array("jpg", "jpeg", "png", "gif");
+                $uploadedFileType = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+                if (in_array($uploadedFileType, $allowedExtensions)) {
+                    $newFileName = "userImage-" . bin2hex(random_bytes(16)) . "." . $uploadedFileType;
+                    $targetFilePath  = '../imgs/userImg/' . $newFileName;
+                    if (move_uploaded_file($fileTmpPath, $targetFilePath)) {
+                        $uploadedFilePath = 'imgs/userImg/' . $newFileName;
+                        if (file_exists($currentImagePath) && $currentImagePath != "../imgs/UI/login_user.png") {
+                            unlink($currentImagePath);
+                        }
+                    } else {
+                        $uploadedFilePath = "nie przesieniono";
+                    }
+                } else {
+                    $uploadedFilePath = "nie w tablicyt";
+                }
+            } else {
+                $uploadedFilePath = $currentImagePathDatabase;
+            }
+
+            $nameSurname_parts = explode(" ", $nameSurname, 2);
+            $conn->query("UPDATE `profile` SET `name` = '$nameSurname_parts[0]', surname = '$nameSurname_parts[1]', birth_date = '$birthdate', phone_number = '$number', avatar_src = '$uploadedFilePath', user_adress = '$adress' WHERE profile_id = '$profile_id';");
+        }
+
     }
     header('Location: ../user/profile.php');
 }

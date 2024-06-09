@@ -70,10 +70,26 @@ function DisplayShortText($text, $maxSymbols)
                 </a>
             </div>
             <div class="bottom-menu">
-                <a href="#"><i class="bi bi-speedometer2 menuIconClicked"></i></a>
-                <a href="#"><i class="bi bi-file-earmark-text-fill menuIcon"></i></a>
-                <a href="#"><i class="bi bi-buildings-fill menuIcon"></i></a>
-                <a href="#"><i class="bi bi-people-fill menuIcon"></i></a>
+                <a href="index.php" class="text-center text-decoration-none menuIconDiv">
+                    <i class="bi bi-speedometer2 menuIcon fs-2"></i>
+                    <p class="m-0 menuIconText">Panel</p>
+                </a>
+                <a href="offers.php" class="text-center text-decoration-none menuIconDiv">
+                    <i class="bi bi-file-earmark-text-fill menuIcon fs-2"></i>
+                    <p class="m-0 menuIconText">Ogłoszenia</p>
+                </a>
+                <a href="#" class="text-center text-decoration-none menuIconDiv menuIconClicked">
+                    <i class="bi bi-buildings-fill menuIcon fs-2"></i>
+                    <p class="m-0 menuIconText">Firmy</p>
+                </a>
+                <a href="categories.php" class="text-center text-decoration-none menuIconDiv">
+                    <i class="bi bi-grid-fill menuIcon fs-2"></i>
+                    <p class="m-0 menuIconText">Kategorie</p>
+                </a>
+                <a href="applications.php" class="text-center text-decoration-none menuIconDiv">
+                    <i class="bi bi-people-fill menuIcon fs-2"></i>
+                    <p class="m-0 menuIconText">Aplikacje</p>
+                </a>
             </div>
             <div class="rightCol">
                 <div class="row" style="height: 100%;">

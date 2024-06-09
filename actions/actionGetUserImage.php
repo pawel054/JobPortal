@@ -12,7 +12,7 @@
             echo $row['avatar_src'];
         }
         else{
-            echo "../imgs/UI/login_user.png";
+            echo "imgs/UI/login_user.png";
         }
     }
     $conn->close();

@@ -42,7 +42,7 @@
 
         if($status_ok == true){
             if( $conn->query("INSERT INTO users VALUES (NULL, '$email', '$passwordHash', 0)")){
-                header('Location: zarejestrowano.php');
+                header('Location: ../user/login.php');
                 unset($_SESSION['p_email']);
                 exit();
             }

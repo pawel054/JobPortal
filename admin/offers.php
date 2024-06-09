@@ -40,6 +40,28 @@ function DisplayShortText($text, $maxSymbols)
     else
         echo $text;
 }
+
+$filtersResult = $conn->query("SELECT * FROM `offer_filters`;");
+if ($filtersResult->num_rows > 0) {
+    while ($row = $filtersResult->fetch_assoc()) {
+        if ($row['filters_id'] == 'contract_type') {
+            $content = $row['items'];
+            $contractTypes = explode(";", $content);
+        }
+        if ($row['filters_id'] == 'job_type') {
+            $content2 = $row['items'];
+            $jobTypes = explode(";", $content2);
+        }
+        if ($row['filters_id'] == 'position_level') {
+            $content3 = $row['items'];
+            $positionTypes = explode(";", $content3);
+        }
+        if ($row['filters_id'] == 'working_time') {
+            $content4 = $row['items'];
+            $workingTypes = explode(";", $content4);
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -77,14 +99,30 @@ function DisplayShortText($text, $maxSymbols)
                 </a>
             </div>
             <div class="bottom-menu">
-                <a href="#"><i class="bi bi-speedometer2 menuIconClicked"></i></a>
-                <a href="#"><i class="bi bi-file-earmark-text-fill menuIcon"></i></a>
-                <a href="#"><i class="bi bi-buildings-fill menuIcon"></i></a>
-                <a href="#"><i class="bi bi-people-fill menuIcon"></i></a>
+                <a href="index.php" class="text-center text-decoration-none menuIconDiv">
+                    <i class="bi bi-speedometer2 menuIcon fs-2"></i>
+                    <p class="m-0 menuIconText">Panel</p>
+                </a>
+                <a href="#" class="text-center text-decoration-none menuIconDiv menuIconClicked">
+                    <i class="bi bi-file-earmark-text-fill menuIcon fs-2"></i>
+                    <p class="m-0 menuIconText">Ogłoszenia</p>
+                </a>
+                <a href="companies.php" class="text-center text-decoration-none menuIconDiv">
+                    <i class="bi bi-buildings-fill menuIcon fs-2"></i>
+                    <p class="m-0 menuIconText">Firmy</p>
+                </a>
+                <a href="categories.php" class="text-center text-decoration-none menuIconDiv">
+                    <i class="bi bi-grid-fill menuIcon fs-2"></i>
+                    <p class="m-0 menuIconText">Kategorie</p>
+                </a>
+                <a href="applications.php" class="text-center text-decoration-none menuIconDiv">
+                    <i class="bi bi-people-fill menuIcon fs-2"></i>
+                    <p class="m-0 menuIconText">Aplikacje</p>
+                </a>
             </div>
             <div class="rightCol">
                 <div class="row" style="height: 100%;">
-                    <div class="col-xl-12 d-flex align-items-center bg-light" style="height: 8%;">
+                    <div class="col-xl-12 d-flex align-items-center bg-light" style="height: 80px;">
                         <h3 class="m-0 me-auto fw-bold d-flex align-items-center">Witaj, admin!</h3>
                         <a href="../index.php" class="viewButton"><i class="bi bi-eye-fill"></i>Widok strony</a>
                         <img src="../imgs/UI/login_user.png" class="menuAvatar mx-4">
@@ -225,21 +263,18 @@ function DisplayShortText($text, $maxSymbols)
                                         <div class="form-floating mb-3">
                                             <select class="form-select adminInput" id="umowa" aria-label="Floating label select example" name="umowa">
                                                 <option selected>Wybierz</option>
-                                                <option value="o pracę">o pracę</option>
-                                                <option value="o dzieło">o dzieło</option>
-                                                <option value="o zlecenie">zlecenie</option>
-                                                <option value="B2B">B2B</option>
-                                                <option value="zastępstwo">zastępstwo</option>
-                                                <option value="staż/praktyka">staż/praktyka</option>
+                                                <?php foreach ($contractTypes as $item) { ?>
+                                                    <option value="<?php echo $item; ?>"><?php echo $item; ?></option>
+                                                <?php } ?>
                                             </select>
                                             <label class="floatingInputStyle">Rodzaj umowy</label>
                                         </div>
                                         <div class="form-floating mb-3">
                                             <select class="form-select adminInput" id="etat" aria-label="Floating label select example" name="etat">
                                                 <option selected>Wybierz</option>
-                                                <option value="część etatu">część etatu</option>
-                                                <option value="cały etat">cały etat</option>
-                                                <option value="dodatkowa/tymczasowa">dodatkowa/tymczasowa</option>
+                                                <?php foreach ($workingTypes as $item) { ?>
+                                                    <option value="<?php echo $item; ?>"><?php echo $item; ?></option>
+                                                <?php } ?>
                                             </select>
                                             <label class="floatingInputStyle">Wymiar etatu</label>
                                         </div>
@@ -269,30 +304,23 @@ function DisplayShortText($text, $maxSymbols)
                                         <div class="form-floating mb-3">
                                             <select class="form-select adminInput" id="poziom_stanowisko" aria-label="Floating label select example" name="poziom_stanowisko">
                                                 <option selected>Wybierz</option>
-                                                <option value="praktykant/stażysta">praktykant/stażysta</option>
-                                                <option value="asystent">asystent</option>
-                                                <option value="młodszy specjalista (junior)">młodszy specjalista (junior)</option>
-                                                <option value="specjalista (mid)">specjalista (mid)</option>
-                                                <option value="starszy specjalista (senior)">starszy specjalista (senior)</option>
-                                                <option value="ekspert">ekspert</option>
-                                                <option value="kierownik/koordynator">kierownik/koordynator</option>
-                                                <option value="menedżer">menedżer</option>
-                                                <option value="dyrektor">dyrektor</option>
-                                                <option value="prezes">prezes</option>
+                                                <?php foreach ($positionTypes as $item) { ?>
+                                                    <option value="<?php echo $item; ?>"><?php echo $item; ?></option>
+                                                <?php } ?>
                                             </select>
                                             <label class="floatingInputStyle">Poziom stanowiska</label>
                                         </div>
                                         <div class="form-floating mb-3">
                                             <select class="form-select adminInput" id="tryb_praca" aria-label="Floating label select example" name="tryb_praca">
                                                 <option selected>Wybierz</option>
-                                                <option value="stacjonarna">stacjonarna</option>
-                                                <option value="hybrydowa">hybrydowa</option>
-                                                <option value="zdalna">zdalna</option>
+                                                <?php foreach ($jobTypes as $item) { ?>
+                                                    <option value="<?php echo $item; ?>"><?php echo $item; ?></option>
+                                                <?php } ?>
                                             </select>
                                             <label class="floatingInputStyle">Tryb pracy</label>
                                         </div>
                                         <div class="form-floating mb-3">
-                                            <input type="text" class="form-control adminInput" id="wynagrodzenie" name="wynagrodzenie" placeholder="" maxlength="50" required>
+                                            <input type="text" class="form-control adminInput" id="wynagrodzenie" name="wynagrodzenie" placeholder="" maxlength="50">
                                             <label>Wynagrodzenie</label>
                                         </div>
                                         <div class="form-floating mb-3">

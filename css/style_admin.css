@@ -5,6 +5,10 @@
     font-family:'Inter';
 }
 
+body{
+    color: #29375a !important;
+}
+
 .leftCol{
     background-color: #101727;
     height: 100vb;
@@ -40,16 +44,20 @@
 
 }
 
-.menuIcon{
-    color: gray;
-}
+
 
 .menuIconClicked{
-    color: black;
+    color: #400DD0 !important;
 }
 
-.menuIcon:hover{
-    color: #400DD0;
+
+.menuIconDiv{
+    width: 100px;
+}
+
+.menuIconDiv:hover, .menuIcon:hover{
+    color: #400DD0 !important;
+    font-weight: 600;
 }
 
 a{
@@ -58,6 +66,9 @@ a{
 
 .menuAvatar{
     width: 45px;
+    height: 45px;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
 .viewButton{
@@ -144,9 +155,10 @@ a{
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #400dd0;
-    color: #fff;
-    padding: 20px 0;
+    background-color: white;
+    padding: 10px;
+    border-top: 1px solid rgb(209, 209, 209);
+    box-shadow: 0px 0px 23px -18px rgba(125, 125, 125, 1);
 }
 
 .adminAddButton{
@@ -176,21 +188,25 @@ a{
     background: transparent !important;
 }
 
+.bottom-menu a{
+    color: #29375a;
+}
+
+.menuIconText{
+    font-size: 13px;
+}
+
 
 @media (max-width: 1199px) {
     .bottom-menu {
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 40px;
+        gap: 4%;
     }
 
     .menuIcon{
-        color: white;
-    }
-
-    .menuIconClicked{
-        color: #3e3361;
+       
     }
 
     .leftCol {

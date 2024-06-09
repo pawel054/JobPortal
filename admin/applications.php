@@ -55,10 +55,26 @@ function DisplayShortText($text, $maxSymbols)
                 </a>
             </div>
             <div class="bottom-menu">
-                <a href="#"><i class="bi bi-speedometer2 menuIconClicked"></i></a>
-                <a href="#"><i class="bi bi-file-earmark-text-fill menuIcon"></i></a>
-                <a href="#"><i class="bi bi-buildings-fill menuIcon"></i></a>
-                <a href="#"><i class="bi bi-people-fill menuIcon"></i></a>
+                <a href="index.php" class="text-center text-decoration-none menuIconDiv">
+                    <i class="bi bi-speedometer2 menuIcon fs-2"></i>
+                    <p class="m-0 menuIconText">Panel</p>
+                </a>
+                <a href="offers.php" class="text-center text-decoration-none menuIconDiv">
+                    <i class="bi bi-file-earmark-text-fill menuIcon fs-2"></i>
+                    <p class="m-0 menuIconText">Ogłoszenia</p>
+                </a>
+                <a href="companies.php" class="text-center text-decoration-none menuIconDiv">
+                    <i class="bi bi-buildings-fill menuIcon fs-2"></i>
+                    <p class="m-0 menuIconText">Firmy</p>
+                </a>
+                <a href="categories.php" class="text-center text-decoration-none menuIconDiv">
+                    <i class="bi bi-grid-fill menuIcon fs-2"></i>
+                    <p class="m-0 menuIconText">Kategorie</p>
+                </a>
+                <a href="#" class="text-center text-decoration-none menuIconDiv menuIconClicked">
+                    <i class="bi bi-people-fill menuIcon fs-2"></i>
+                    <p class="m-0 menuIconText">Aplikacje</p>
+                </a>
             </div>
             <div class="rightCol">
                 <div class="row" style="height: 100%;">
@@ -98,7 +114,7 @@ function DisplayShortText($text, $maxSymbols)
                                                     <ul class="dropdown-menu rounded-3">
                                                         <li onclick="SendEditForm('<?php echo $application_id; ?>', 'Zatwierdzono')"><a class="dropdown-item fw-semibold" href="#"><i class="bi bi-check-lg mx-2 me-2"></i>Akceptuj</a></li>
                                                         <li onclick="SendEditForm('<?php echo $application_id; ?>', 'Odrzucono')"><a class="dropdown-item fw-semibold" href="#"><i class="bi bi-x-lg mx-2 me-2"></i>Odrzuć</a></li>
-                                                        <li><a class="dropdown-item fw-semibold" href="#"><i class="bi bi-person-fill mx-2 me-2"></i>Dane</a></li>
+                                                        <li><a class="dropdown-item fw-semibold" href="../user/profile_user.php?id=<?php echo $row["profile_id"]; ?>"><i class="bi bi-person-fill mx-2 me-2"></i>Dane</a></li>
                                                         <li onclick="SetOfferId('<?php echo $application_id; ?>')"><a class="dropdown-item fw-semibold" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i class="bi bi-trash-fill mx-2 me-2"></i>Usuń</a></li>
                                                     </ul>
                                                 </td>

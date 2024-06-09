@@ -36,6 +36,15 @@ input{
     margin-top: 30px;
 }
 
+.userImage{
+  transition: opacity 0.5s ease-in-out;
+  border: 3px solid gray;
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
 .violetButton{
     background-color: #400DD0 !important;
     color: white !important;
@@ -114,6 +123,7 @@ input{
     transition: transform 0.3s ease;
   }
 
+
 @keyframes shake {
     0%, 100% {
       transform: translateX(0);
@@ -129,3 +139,17 @@ input{
   .shake-text {
     animation: shake 0.5s;
   }
+
+    @media (max-width: 992px) {
+      .loginDiv{
+        width: 90%;
+        background-color: white;
+      }
+
+      body{
+        background: none;
+        background-color: #efefef !important;
+      }
+
+    
+    }

@@ -40,18 +40,33 @@ $applicationCount = $conn->query("SELECT COUNT(application_id) FROM `user_applic
                 </a>
             </div>
             <div class="bottom-menu">
-                <a href="#"><i class="bi bi-speedometer2 menuIconClicked"></i></a>
-                <a href="#"><i class="bi bi-file-earmark-text-fill menuIcon"></i></a>
-                <a href="#"><i class="bi bi-buildings-fill menuIcon"></i></a>
-                <a href="#"><i class="bi bi-people-fill menuIcon"></i></a>
-                <img src="../imgs/UI/login_user.png" class="menuAvatar">
+                <a href="#" class="text-center text-decoration-none menuIconDiv menuIconClicked">
+                    <i class="bi bi-speedometer2 menuIcon fs-2"></i>
+                    <p class="m-0 menuIconText">Panel</p>
+                </a>
+                <a href="offers.php" class="text-center text-decoration-none menuIconDiv">
+                    <i class="bi bi-file-earmark-text-fill menuIcon fs-2"></i>
+                    <p class="m-0 menuIconText">Ogłoszenia</p>
+                </a>
+                <a href="companies.php" class="text-center text-decoration-none menuIconDiv">
+                    <i class="bi bi-buildings-fill menuIcon fs-2"></i>
+                    <p class="m-0 menuIconText">Firmy</p>
+                </a>
+                <a href="categories.php" class="text-center text-decoration-none menuIconDiv">
+                    <i class="bi bi-grid-fill menuIcon fs-2"></i>
+                    <p class="m-0 menuIconText">Kategorie</p>
+                </a>
+                <a href="applications.php" class="text-center text-decoration-none menuIconDiv">
+                    <i class="bi bi-people-fill menuIcon fs-2"></i>
+                    <p class="m-0 menuIconText">Aplikacje</p>
+                </a>
             </div>
             <div class="rightCol">
                 <div class="row" style="height: 100%;">
                     <div class="col-xl-12 d-flex align-items-center bg-light" style="height: 8%;">
                         <h3 class="m-0 me-auto fw-bold d-flex align-items-center">Witaj, admin!</h3>
                         <a href="#" class="viewButton"><i class="bi bi-eye-fill"></i>Widok strony</a>
-                        <img src="../imgs/UI/login_user.png" class="menuAvatar mx-4">
+                        <img src="../imgs/userImg/test.jpg" class="menuAvatar mx-4 rounded-circle">
                     </div>
                     <div class="col-xl-12 pe-5 px-5 statsCol" style="height: 20%;">
                         <h3 class="m-0 mb-3 me-auto fw-bold d-flex align-items-center">Panel główny</h3>
@@ -114,9 +129,6 @@ $applicationCount = $conn->query("SELECT COUNT(application_id) FROM `user_applic
                         </div>
                     </div>
                     <div class="col-xl-12 pb-5" style="height: 65%;">
-                        <div class="statsboxPlace mt-4">
-
-                        </div>
                     </div>
                 </div>
             </div>

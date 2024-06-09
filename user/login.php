@@ -53,7 +53,7 @@ if ((isset($_SESSION['logged_in'])) && ($_SESSION['logged_in'] == true)) {
 
   <div class="container d-flex flex-column">
     <div class="d-flex justify-content-center align-self-center z-3" style="width: 130px; margin-bottom:-65px">
-      <img class="img-fluid" src="../imgs/UI/login_user.png" id="userImage" style="border-radius: 50%; transition: opacity 0.5s ease-in-out; border:3px solid gray;">
+      <img class="userImage" src="../imgs/UI/login_user.png" id="userImage">
     </div>
     <div class="loginDiv">
       <div class="tabs mt-5">
@@ -151,7 +151,7 @@ if ((isset($_SESSION['logged_in'])) && ($_SESSION['logged_in'] == true)) {
           imgElement.style.opacity = 0;
 
           imgElement.addEventListener("transitionend", function() {
-            imgElement.src = imagePath;
+            imgElement.src = "../" + imagePath;
             imgElement.style.opacity = 1;
           }, {
             once: true
@@ -184,10 +184,16 @@ if ((isset($_SESSION['logged_in'])) && ($_SESSION['logged_in'] == true)) {
     document.querySelector('.toggle2').addEventListener('click', event => {
       forms.style.transform = 'translateX(-100%)';
       loginSelectBar.style.transform = 'translateX(100%)';
-      container.style.height = '500px';
       loginTab.classList.remove('active');
       signUpTab.classList.add('active');
       signUpView.style.display = "block";
+
+      setTimeout(() => {
+        var containerHeight2 = container.offsetHeight + "px";
+        console.log(containerHeight2);
+        container.style.height = containerHeight2;
+        console.log("Kuirwa" + containerHeight2);
+      }, 0);
     });
   </script>
 </body>
