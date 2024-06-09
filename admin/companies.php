@@ -276,7 +276,7 @@ function DisplayShortText($text, $maxSymbols)
             input.type = "text";
             input.name = inputName;
             input.className = "form-control adminInput w-100";
-            input.required = true; // Wymagane pole URL
+            input.required = true;
             input.maxLength = 60;
             input.required;
 
@@ -317,7 +317,7 @@ function DisplayShortText($text, $maxSymbols)
             currentEditID = editEntryID;
         }
 
-        var myModal = document.getElementById('exampleModal3'); // Zastąp 'MyModal' odpowiednim id twojego modala
+        var myModal = document.getElementById('exampleModal3');
 
         myModal.addEventListener('hidden.bs.modal', function() {
             var form = this.querySelector('form');

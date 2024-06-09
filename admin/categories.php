@@ -205,7 +205,7 @@ function DisplayShortText($text, $maxSymbols)
             input.type = "text";
             input.name = inputName;
             input.className = "form-control adminInput w-100";
-            input.required = true; // Wymagane pole URL
+            input.required = true;
             input.maxLength = 60;
             input.required;
 

@@ -19,38 +19,6 @@ if ((isset($_SESSION['logged_in'])) && ($_SESSION['logged_in'] == true)) {
 </head>
 
 <body>
-  <!--
-  <div class="container">
-    <div class="boxLogin">
-      <div></div>
-      <h1 class="boxTitle">Zaloguj się</h1>
-      <div class="d-flex justify-content-center">
-        <img class="boxAvatar" src="../imgs/UI/login_user.png" id="userIdmage" style="border-radius: 50%; transition: opacity 0.5s ease-in-out;">
-      </div>
-      <div class="boxForm d-flex justify-content-center">
-        <form method="post" action="../actions/actionLogin.php">
-          <div class="form-floating">
-            <input type="text" class="form-control" id="floatingEmail" name="email" placeholder="">
-            <label for="floatingEmail" class="floatingLabelForm">Adres e-mail</label>
-          </div>
-          <div class="form-floating">
-            <input type="password" class="form-control mt-3" id="floatingPass" name="password" placeholder="">
-            <label for="floatingPass" class="floatingLabelForm">Hasło</label>
-          </div>
-            <div class="d-flex justify-content-center wrongData">
-              <h5 class="mt-1 mx-2 shake-text">Nieprawidłowy e-mail lub hasło!</h5>
-            </div>
-          <div class="sendButton d-flex justify-content-center">
-            <button type="submit" class="btn violetButton d-flex align-items-center justify-content-center">Zaloguj</button>
-          </div>
-        </form>
-      </div>
-      <p class="linkRegistration d-flex justify-content-center">Nie masz jeszcze konta?&nbsp; <a class="violetMark" href="register.php">Utwórz konto</a></p>
-    </div>
-  </div>
-  -->
-
-
   <div class="container d-flex flex-column">
     <div class="d-flex justify-content-center align-self-center z-3" style="width: 130px; margin-bottom:-65px">
       <img class="userImage" src="../imgs/UI/login_user.png" id="userImage">

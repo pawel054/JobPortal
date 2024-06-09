@@ -36,9 +36,6 @@ if (!empty($job_position)) {
 if (!empty($selected_categories)) {
   $searchSql .= " AND category_name IN ('" . implode("','", $selected_categories) . "')";
 }
-// if (!empty($selected_companies)) {
-//   $searchSql .= " AND company_name IN ('" . implode("','", $selected_companies) . "')";
-// }
 if (!empty($location)) {
   $searchSql .= " AND adress LIKE '%" . $conn->real_escape_string($location) . "%'";
 }
